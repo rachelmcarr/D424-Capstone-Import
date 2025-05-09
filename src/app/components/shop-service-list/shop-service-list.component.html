@@ -1,0 +1,13 @@
+<h2>All Services</h2>
+
+<ul *ngIf="services.length; else none">
+  <li *ngFor="let s of services">
+    <strong>{{ s.title }}</strong> - {{ s.category }} - ${{ s.price }}
+    <br />{{ s.description }}
+    <hr />
+  </li>
+</ul>
+
+<ng-template #none>
+  <p>No services available.</p>
+</ng-template>

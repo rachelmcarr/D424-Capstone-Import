@@ -1,0 +1,15 @@
+<h2>Add Shop Service</h2>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <input type="text" name="title" [(ngModel)]="service.title" placeholder="Title" required />
+  <input type="text" name="description" [(ngModel)]="service.description" placeholder="Description" />
+  <input type="text" name="location" [(ngModel)]="service.location" placeholder="Location" />
+  <input type="text" name="style" [(ngModel)]="service.style" placeholder="Style" />
+  <input type="text" name="duration" [(ngModel)]="service.duration" placeholder="Duration" />
+  <input type="text" name="status" [(ngModel)]="service.status" placeholder="Status" />
+  <input type="number" name="price" [(ngModel)]="service.price" placeholder="Price" />
+  <input type="text" name="imageURL" [(ngModel)]="service.imageURL" placeholder="Image URL" />
+  <input type="text" name="category" [(ngModel)]="service.category" placeholder="Category (Tattoo or Piercing)" />
+
+  <button type="submit">Submit</button>
+</form>

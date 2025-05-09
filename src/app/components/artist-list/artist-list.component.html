@@ -1,0 +1,16 @@
+<h2>All Artists</h2>
+
+<ul *ngIf="artists.length; else noArtists">
+  <li *ngFor="let artist of artists">
+    <strong>{{ artist.firstName }} {{ artist.lastName }}</strong><br />
+    {{ artist.artistCategory }}<br />
+    Email: {{ artist.email }} | Phone: {{ artist.phone }}<br />
+    <img *ngIf="artist.artistPhoto" [src]="artist.artistPhoto" alt="Photo" width="100" /><br />
+    Portfolio: <a [href]="artist.portfolioURL" target="_blank">{{ artist.portfolioURL }}</a>
+    <hr />
+  </li>
+</ul>
+
+<ng-template #noArtists>
+  <p>No artists found.</p>
+</ng-template>

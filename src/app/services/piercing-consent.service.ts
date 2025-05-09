@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface PiercingConsent {
+  piercingConsentID?: number;
+  intakeID: number;
+  understandsHealingProcess: boolean;
+  agreesToAftercare: boolean;
+  consentsToPiercing: boolean;
+  dateSigned: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PiercingConsentService {
+  private apiUrl = 'http://localhost:8080/api/piercing-consents';
+
+  constructor(private http: HttpClient) {}
+
+  add(consent: PiercingConsent): Observable<PiercingConsent> {
+    return this.http.post<PiercingConsent>(this.apiUrl, consent);
+  }
+
+  getAll(): Observable<PiercingConsent[]> {
+    return this.http.get<PiercingConsent[]>(this.apiUrl);
+  }
+}

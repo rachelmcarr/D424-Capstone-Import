@@ -1,0 +1,15 @@
+<h2>Add Artist</h2>
+
+<form #artistForm="ngForm" (ngSubmit)="onSubmit(artistForm)">
+  <input type="text" name="firstName" [(ngModel)]="artist.firstName" placeholder="First Name" required />
+  <input type="text" name="lastName" [(ngModel)]="artist.lastName" placeholder="Last Name" required />
+  <input type="email" name="email" [(ngModel)]="artist.email" placeholder="Email" />
+  <input type="text" name="phone" [(ngModel)]="artist.phone" placeholder="Phone" />
+  <input type="date" name="birthDate" [(ngModel)]="artist.birthDate" />
+  <input type="text" name="artistCategory" [(ngModel)]="artist.artistCategory" placeholder="Category" />
+  <input type="text" name="artistPhoto" [(ngModel)]="artist.artistPhoto" placeholder="Photo URL" />
+  <input type="text" name="bio" [(ngModel)]="artist.bio" placeholder="Bio" />
+  <input type="text" name="portfolioURL" [(ngModel)]="artist.portfolioURL" placeholder="Portfolio URL" />
+
+  <button type="submit">Submit</button>
+</form>

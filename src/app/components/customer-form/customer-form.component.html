@@ -1,0 +1,17 @@
+<h2>Add Customer</h2>
+
+<form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)">
+  <input type="text" name="firstName" [(ngModel)]="customer.firstName" placeholder="First Name" required />
+  <input type="text" name="lastName" [(ngModel)]="customer.lastName" placeholder="Last Name" required />
+  <input type="email" name="email" [(ngModel)]="customer.email" placeholder="Email" required />
+  <input type="text" name="phone" [(ngModel)]="customer.phone" placeholder="Phone" />
+  <input type="date" name="birthDate" [(ngModel)]="customer.birthDate" />
+  <input type="text" name="driverLicense" [(ngModel)]="customer.driverLicense" placeholder="Driver License" />
+  <input type="text" name="address" [(ngModel)]="customer.address" placeholder="Address" />
+  <input type="text" name="city" [(ngModel)]="customer.city" placeholder="City" />
+  <input type="text" name="state" [(ngModel)]="customer.state" placeholder="State" />
+  <input type="text" name="zip" [(ngModel)]="customer.zip" placeholder="ZIP Code" />
+  <input type="text" name="customerPhoto" [(ngModel)]="customer.customerPhoto" placeholder="Photo URL" />
+
+  <button type="submit">Submit</button>
+</form>

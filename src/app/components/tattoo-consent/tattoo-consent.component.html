@@ -1,0 +1,22 @@
+<h2>Tattoo Consent Form</h2>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required />
+
+  <label>
+    <input type="checkbox" name="understandsPainRisk" [(ngModel)]="consent.understandsPainRisk" />
+    I understand the pain and risks associated with tattoos.
+  </label>
+
+  <label>
+    <input type="checkbox" name="agreesToAftercare" [(ngModel)]="consent.agreesToAftercare" />
+    I agree to follow the aftercare instructions provided.
+  </label>
+
+  <label>
+    <input type="checkbox" name="consentsToTattoo" [(ngModel)]="consent.consentsToTattoo" />
+    I consent to receiving a tattoo.
+  </label>
+
+  <button type="submit">Submit</button>
+</form>

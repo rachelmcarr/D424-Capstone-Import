@@ -1,0 +1,13 @@
+<h2>Parental Consent Form</h2>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required />
+
+  <input type="text" name="parentName" [(ngModel)]="consent.parentName" placeholder="Parent/Guardian Name" required />
+  <input type="text" name="parentPhone" [(ngModel)]="consent.parentPhone" placeholder="Phone Number" />
+  <input type="text" name="relationship" [(ngModel)]="consent.relationship" placeholder="Relationship to Minor" />
+
+  <input type="text" name="signature" [(ngModel)]="consent.signature" placeholder="Signature" />
+
+  <button type="submit">Submit</button>
+</form>
