@@ -1,0 +1,14 @@
+<div *ngIf="artist; else notFound">
+  <h2>{{ artist.name }}</h2>
+  <img [src]="artist.photo" alt="{{ artist.name }}" width="250" />
+  <p>{{ artist.bio }}</p>
+
+  <p>
+    <strong>Portfolio:</strong>
+    <a [href]="artist.portfolioURL" target="_blank">{{ artist.portfolioURL }}</a>
+  </p>
+</div>
+
+<ng-template #notFound>
+  <p>Artist not found.</p>
+</ng-template>

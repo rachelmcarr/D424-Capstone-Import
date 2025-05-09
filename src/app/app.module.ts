@@ -15,12 +15,16 @@ import { ShopServiceFormComponent } from './components/shop-service-form/shop-se
 import { ShopServiceListComponent } from './components/shop-service-list/shop-service-list.component';
 import { TattooConsentComponent } from './components/tattoo-consent/tattoo-consent.component';
 import { PiercingConsentComponent } from './components/piercing-consent/piercing-consent.component';
+import { HomeComponent } from './components/home/home.component';
+import { PortalComponent } from './components/portal/portal.component';
+import { PublicArtistsComponent } from './components/public-artists/public-artists.component';
+import { PublicArtistsDetailComponent } from './components/public-artists-details/public-artists-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerListComponent,
-    CustomerFormComponent, 
+    CustomerFormComponent,
     ArtistFormComponent,
     ArtistListComponent,
     ClientIntakeFormComponent,
@@ -28,7 +32,11 @@ import { PiercingConsentComponent } from './components/piercing-consent/piercing
     ShopServiceFormComponent,
     ShopServiceListComponent,
     TattooConsentComponent,
-    PiercingConsentComponent
+    PiercingConsentComponent,
+    HomeComponent,
+    PortalComponent,
+    PublicArtistsComponent,
+    PublicArtistsDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,7 @@ import { PiercingConsentComponent } from './components/piercing-consent/piercing
     AppRoutingModule
   ],
   providers: [
-    provideHttpClient(withInterceptorsFromDi()) 
+    provideHttpClient(withInterceptorsFromDi()) // ✅ modern HttpClient setup
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { HomeComponent } from './components/home/home.component';
 import { CustomerFormComponent } from './components/customer-form/customer-form.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { ArtistFormComponent } from './components/artist-form/artist-form.component';
@@ -11,9 +12,13 @@ import { PiercingConsentComponent } from './components/piercing-consent/piercing
 import { ShopServiceFormComponent } from './components/shop-service-form/shop-service-form.component';
 import { ShopServiceListComponent } from './components/shop-service-list/shop-service-list.component';
 import { TattooConsentComponent } from './components/tattoo-consent/tattoo-consent.component';
+import { PortalComponent } from './components/portal/portal.component';
+import { PublicArtistsComponent } from './components/public-artists/public-artists.component';
+import { PublicArtistsDetailComponent } from './components/public-artists-details/public-artists-detail.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'customers', pathMatch: 'full' },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent},
     { path: 'customers', component: CustomerListComponent },
     { path: 'add-customer', component: CustomerFormComponent },
     { path: 'artists', component: ArtistListComponent},
@@ -23,7 +28,10 @@ export const routes: Routes = [
     { path: 'piercing-consent', component: PiercingConsentComponent},
     { path: 'add-service', component: ShopServiceFormComponent},
     { path: 'services', component: ShopServiceListComponent},
-    { path: 'tattoo-consent', component: TattooConsentComponent}
+    { path: 'tattoo-consent', component: TattooConsentComponent},
+    { path: 'portal', component: PortalComponent},
+    { path: 'public-artists', component: PublicArtistsComponent},
+    { path: 'public-artists/:id', component: PublicArtistsDetailComponent },
 ];
 
 @NgModule({

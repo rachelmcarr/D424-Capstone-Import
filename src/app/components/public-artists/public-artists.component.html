@@ -1,0 +1,10 @@
+<h2>Meet Our Artists</h2>
+
+<div class="artist-grid">
+  <div class="card" *ngFor="let artist of artists">
+    <img [src]="artist.photo" alt="{{ artist.name }}" />
+    <h4>{{ artist.name }}</h4>
+    <p>{{ artist.bio }}</p>
+    <a [routerLink]="['/public-artists', artist.id]">View Portfolio</a>
+  </div>
+</div>
