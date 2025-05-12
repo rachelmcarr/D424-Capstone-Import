@@ -1,13 +1,17 @@
 <button routerLink="/home">Home</button>
   <nav>
-    <a routerLink="/customers">View Customers</a><br />
-    <a routerLink="/artists">View Artists</a><br />
-    <a routerLink="/add-artist">Add Artists</a><br />
-    <a routerLink="/services">View Services</a><br />
-    <a routerLink="/add-service">Add Service</a><br />
+    <a routerLink="/customers">Manage Customers</a><br />
+    <a routerLink="/artists">Manage Artists</a><br />
+    <a routerLink="/services">Manage Services</a><br />
   </nav>
-<table>
+
+<table class="artist-table">
   <thead>
+    <tr>
+      <th colspan="6" class="add-button-cell">
+        <button routerLink="/add-artist" class="add-artist-button">+ Add Artist</button>
+      </th>
+    </tr>
     <tr>
       <th>Photo</th>
       <th>Name</th>

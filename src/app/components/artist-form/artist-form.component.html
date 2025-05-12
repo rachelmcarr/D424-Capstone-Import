@@ -1,3 +1,10 @@
+<button routerLink="/home">Home</button>
+  <nav>
+    <a routerLink="/customers">Manage Customers</a><br />
+    <a routerLink="/artists">Manage Artists</a><br />
+    <a routerLink="/services">Manage Services</a><br />
+  </nav>
+
 <h2>Add Artist</h2>
 
 <form #artistForm="ngForm" (ngSubmit)="onSubmit(artistForm)">

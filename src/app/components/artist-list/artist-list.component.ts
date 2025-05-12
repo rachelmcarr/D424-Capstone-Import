@@ -3,7 +3,8 @@ import { ArtistService, Artist } from '../../services/artist.service';
 
 @Component({
   selector: 'app-artist-list',
-  templateUrl: './artist-list.component.html'
+  templateUrl: './artist-list.component.html',
+  styleUrls: ['./artist-list.component.css']
 })
 export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
@@ -20,7 +21,7 @@ export class ArtistListComponent implements OnInit {
       error: (err) => console.error('Failed to load artists', err)
     });
   }
-  
+
   deleteArtist(artistID: number): void {
     if (confirm('Are you sure you want to delete this artist?')) {
       this.artistService.delete(artistID).subscribe({
