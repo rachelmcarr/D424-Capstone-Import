@@ -1,31 +1,53 @@
 <h2>Client Intake Form</h2>
 
 <form #intakeForm="ngForm" (ngSubmit)="onSubmit(intakeForm)">
-  <input type="number" name="customerID" [(ngModel)]="intake.customerID" placeholder="Customer ID" required />
-  <input type="number" name="serviceID" [(ngModel)]="intake.serviceID" placeholder="Service ID" required />
+  <label>
+    Customer ID:
+    <input type="number" name="customerID" [(ngModel)]="intake.customerID" placeholder="Customer ID" required />
+  </label>
+  
+  <label>
+    Service ID:
+    <input type="number" name="serviceID" [(ngModel)]="intake.serviceID" placeholder="Service ID" required />
+  </label>
+
 
   <label>
     <input type="checkbox" name="hasAllergies" [(ngModel)]="intake.hasAllergies" />
-    Has allergies?
+    List any allergies:
   </label>
   <input type="text" name="allergyDetails" [(ngModel)]="intake.allergyDetails" placeholder="Allergy details" />
 
   <label>
     <input type="checkbox" name="takesMedications" [(ngModel)]="intake.takesMedications" />
-    Takes medications?
+    List any medications:
   </label>
   <input type="text" name="medicationDetails" [(ngModel)]="intake.medicationDetails" placeholder="Medication details" />
 
-  <label>
-    <input type="checkbox" name="hasMedicalConditions" [(ngModel)]="intake.hasMedicalConditions" />
-    Has medical conditions?
-  </label>
-  <input type="text" name="conditionDetails" [(ngModel)]="intake.conditionDetails" placeholder="Condition details" />
+  <div>
+    <label>Do any of the following apply to you?</label>
+  </div>
+  
+  <div>
+    <label>Select all that apply:</label>
+    <div *ngFor="let condition of medicalConditionsList">
+      <input
+        type="checkbox"
+        [value]="condition"
+        (change)="onConditionChange($event)"
+        [checked]="selectedConditions.includes(condition)"
+      />
+      {{ condition }}
+    </div>
+  
+    <!-- Optional: Include a hidden field to store as comma-separated -->
+    <input type="hidden" [(ngModel)]="intake.conditionDetails" name="conditionDetails" />
+  </div>  
 
   <label>
     <input type="checkbox" name="isMinor" [(ngModel)]="intake.isMinor" />
     Is a minor?
-  </label>
+  </label><br>
 
   <button type="submit">Submit</button>
 </form>

@@ -1,10 +1,19 @@
+<nav class="home-nav">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  <a routerLink="/public-artists" routerLinkActive="active">Artists</a>
+  <a routerLink="/gallery" routerLinkActive="active">Gallery</a>
+  <a routerLink="/about" routerLinkActive="active">About</a>
+  <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  <button routerLink="/portal">Staff Portal</button>
+</nav>
+
 <h2>Meet Our Artists</h2>
 
 <div class="artist-grid">
   <div class="card" *ngFor="let artist of artists">
-    <img [src]="artist.photo" alt="{{ artist.name }}" />
-    <h4>{{ artist.name }}</h4>
+    <img [src]="artist.artistPhoto" alt="{{ artist.firstName }} {{ artist.lastName }}" />
+    <h4>{{ artist.firstName }} {{ artist.lastName }}</h4>
     <p>{{ artist.bio }}</p>
-    <a [routerLink]="['/public-artists', artist.id]">View Portfolio</a>
+    <a [routerLink]="['/public-artists', artist.artistID]">View Portfolio</a>
   </div>
 </div>

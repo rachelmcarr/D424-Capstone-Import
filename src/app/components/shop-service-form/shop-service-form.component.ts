@@ -17,7 +17,9 @@ export class ShopServiceFormComponent {
     price: 0,
     imageURL: '',
     category: '',
-    createdAt: ''
+    createdAt: '',
+    inkInfo: '',
+    jewelryInfo: ''
   };
 
   constructor(private serviceService: ShopServiceService) {}

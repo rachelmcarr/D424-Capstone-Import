@@ -16,7 +16,8 @@ export class ArtistFormComponent {
     artistCategory: '',
     artistPhoto: '',
     bio: '',
-    portfolioURL: ''
+    portfolioURL: '',
+    gallery: []
   };
 
   constructor(private artistService: ArtistService) {}

@@ -20,12 +20,12 @@ export class PiercingConsentComponent {
   onSubmit(form: NgForm) {
     this.consent.dateSigned = new Date().toISOString();
 
-    this.piercingConsentService.add(this.consent).subscribe({
+    this.piercingConsentService.submitConsent(this.consent).subscribe({
       next: () => {
         alert('Piercing consent submitted!');
         form.resetForm();
       },
-      error: err => {
+      error: (err: any) => {
         console.error(err);
         alert('Failed to submit piercing consent.');
       }

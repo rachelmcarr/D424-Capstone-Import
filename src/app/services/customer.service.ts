@@ -34,4 +34,16 @@ export class CustomerService {
   add(customer: Customer): Observable<Customer> {
     return this.http.post<Customer>(this.apiUrl, customer);
   }
+
+  update(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.apiUrl}/${customer.customerID}`, customer);
+  }  
+
+  delete(customerID: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${customerID}`);
+  }  
+
+  searchByName(name: string): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.apiUrl}/search?name=${encodeURIComponent(name)}`);
+  }  
 }

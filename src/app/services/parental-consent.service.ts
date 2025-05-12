@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 export interface ParentalConsent {
   consentID?: number;
   intakeID: number;
+  releaseLiability: boolean,
+  confirmRelationship: boolean,
+  understandsHealing: boolean,
+  serviceDescription: string,
   parentName: string;
   parentPhone: string;
   relationship: string;
@@ -20,11 +24,7 @@ export class ParentalConsentService {
 
   constructor(private http: HttpClient) {}
 
-  add(consent: ParentalConsent): Observable<ParentalConsent> {
+  submitConsent(consent: ParentalConsent): Observable<ParentalConsent> {
     return this.http.post<ParentalConsent>(this.apiUrl, consent);
-  }
-
-  getAll(): Observable<ParentalConsent[]> {
-    return this.http.get<ParentalConsent[]>(this.apiUrl);
   }
 }

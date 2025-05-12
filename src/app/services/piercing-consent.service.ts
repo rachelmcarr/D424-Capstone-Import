@@ -19,11 +19,7 @@ export class PiercingConsentService {
 
   constructor(private http: HttpClient) {}
 
-  add(consent: PiercingConsent): Observable<PiercingConsent> {
+  submitConsent(consent: PiercingConsent): Observable<PiercingConsent> {
     return this.http.post<PiercingConsent>(this.apiUrl, consent);
-  }
-
-  getAll(): Observable<PiercingConsent[]> {
-    return this.http.get<PiercingConsent[]>(this.apiUrl);
   }
 }

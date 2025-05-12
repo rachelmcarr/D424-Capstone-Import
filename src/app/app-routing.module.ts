@@ -15,6 +15,7 @@ import { TattooConsentComponent } from './components/tattoo-consent/tattoo-conse
 import { PortalComponent } from './components/portal/portal.component';
 import { PublicArtistsComponent } from './components/public-artists/public-artists.component';
 import { PublicArtistsDetailComponent } from './components/public-artists-details/public-artists-detail.component';
+import { IntakeWizardComponent } from './components/intake-wizard/intake-wizard.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'portal', component: PortalComponent},
     { path: 'public-artists', component: PublicArtistsComponent},
     { path: 'public-artists/:id', component: PublicArtistsDetailComponent },
+    { path: 'intake-wizard', component: IntakeWizardComponent}
 ];
 
 @NgModule({

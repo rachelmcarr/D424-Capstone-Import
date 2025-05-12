@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ArtistService, Artist } from '../../services/artist.service';
 
 @Component({
   selector: 'app-public-artists-detail',
@@ -7,30 +8,22 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./public-artists-detail.component.css']
 })
 export class PublicArtistsDetailComponent implements OnInit {
-  artistId = '';
-  artist: any;
+  artistId: number = 0;
+  artist?: Artist;
 
-  artists: { [key: number]: { name: string; bio: string; photo: string; portfolioURL: string } } = {
-  1: {
-    name: 'Jessie Steel',
-    bio: 'Jessie specializes in realism and black & grey tattoos.',
-    photo: 'assets/images/artists/artist1.jpg',
-    portfolioURL: 'https://instagram.com/jessieink'
-  },
-  2: {
-    name: 'Max Vane',
-    bio: 'Max delivers bold linework and neo-traditional pieces.',
-    photo: 'assets/images/artists/artist2.jpg',
-    portfolioURL: 'https://instagram.com/maxvane'
-  }
-};
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private artistService: ArtistService
+  ) {}
 
   ngOnInit(): void {
-    this.artistId = this.route.snapshot.paramMap.get('id') || '';
-    const id = Number(this.artistId);
-    this.artist = this.artists[id];
-
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.artistId = +idParam;
+      this.artistService.getById(this.artistId).subscribe({
+        next: (data) => this.artist = data,
+        error: (err) => console.error('Failed to load artist', err)
+      });
+    }
   }
 }

@@ -19,6 +19,8 @@ import { HomeComponent } from './components/home/home.component';
 import { PortalComponent } from './components/portal/portal.component';
 import { PublicArtistsComponent } from './components/public-artists/public-artists.component';
 import { PublicArtistsDetailComponent } from './components/public-artists-details/public-artists-detail.component';
+import { IntakeWizardComponent } from './components/intake-wizard/intake-wizard.component';
+import { CustomerLookupComponent } from './components/customer-lookup/customer-lookup.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { PublicArtistsDetailComponent } from './components/public-artists-detail
     HomeComponent,
     PortalComponent,
     PublicArtistsComponent,
-    PublicArtistsDetailComponent
+    PublicArtistsDetailComponent,
+    IntakeWizardComponent,
+    CustomerLookupComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,118 @@
+<div class="wizard">
+
+  <button routerLink="/home">Home</button>
+  <nav>
+    <a routerLink="/customers">View Customers</a><br />
+    <a routerLink="/artists">View Artists</a><br />
+    <a routerLink="/add-artist">Add Artists</a><br />
+    <a routerLink="/services">View Services</a><br />
+    <a routerLink="/add-service">Add Service</a><br />
+  </nav>
+
+    <!-- Step 1: Select or Add Customer -->
+<div *ngIf="step === 1">
+  <h2>Select or Add Customer</h2>
+  <app-customer-lookup (customerSelected)="useExistingCustomer($event)"></app-customer-lookup>
+
+  <div *ngIf="!customer">
+    <app-customer-form (customerCreated)="useNewCustomer($event)"></app-customer-form>
+  </div>
+
+  <div *ngIf="isIncompleteCustomer">
+    <p class="warning">Please complete this customer's profile before continuing.</p>
+    <app-customer-form
+      [existingCustomer]="customer"
+      (customerUpdated)="onCustomerUpdated($event)">
+    </app-customer-form>
+  </div>
+
+  <button (click)="nextStep()" [disabled]="!customer || isIncompleteCustomer">Next</button>
+</div>
+  
+    <!-- Step 2: Medical Info -->
+    <div *ngIf="step === 2">
+      <h2>Medical Information</h2>
+    
+      <label>Select any medical conditions:</label>
+      <div *ngFor="let condition of medicalConditionsList">
+        <label>
+          <input
+            type="checkbox"
+            [value]="condition"
+            (change)="onConditionChange($event)"
+            [checked]="selectedConditions.includes(condition)"
+          />
+          {{ condition }}
+        </label>
+      </div>
+    
+      <label>Other conditions or notes:</label>
+      <textarea
+        [(ngModel)]="intake.conditionDetails"
+        (input)="updateConditionStatus()"
+        placeholder="List any other medical details"
+      ></textarea>
+    
+      <label>Medications:</label>
+      <textarea
+        [(ngModel)]="intake.medicationDetails"
+        (input)="updateMedicationStatus()"
+        placeholder="List any medications"
+      ></textarea>
+    
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()">Next</button>
+    </div>
+  
+    <!-- Step 3: Service Selection -->
+    <div *ngIf="step === 3">
+      <h2>Select Service</h2>
+
+      <select [(ngModel)]="selectedServiceID" (change)="onServiceSelected()" name="selectedService">
+        <option [ngValue]="null" disabled>Select a service</option>
+        <option *ngFor="let service of services" [value]="service.serviceID">
+          {{ service.title }} — {{ service.category }}
+        </option>
+      </select>
+
+      <p *ngIf="selectedService?.category">You selected: <strong>{{ selectedService.category }}</strong></p>
+
+      <p *ngIf="intake.isMinor"><strong>Note:</strong> This client is a minor. Parental consent is required.</p>
+
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()" [disabled]="!selectedService">Next</button>
+    </div>
+  
+    <!-- Step 4: Parental Consent (if minor) -->
+    <div *ngIf="step === 4 && intake.isMinor">
+      <h2>Parental Consent</h2>
+      <app-parental-consent (consentFilled)="storeParentalConsent($event)"></app-parental-consent>
+    
+      <button (click)="prevStep()">Back</button>
+      <button (click)="nextStep()" [disabled]="!parentalConsent">Next</button>
+    </div>
+  
+    <!-- Step 5: Tattoo or Piercing Consent -->
+    <div *ngIf="step === 5">
+      <ng-container [ngSwitch]="selectedServiceType">
+        <div *ngSwitchCase="'Tattoo'">
+          <h2>Tattoo Consent</h2>
+          <app-tattoo-consent (consentFilled)="storeTattooConsent($event)"></app-tattoo-consent>
+        </div>
+        <div *ngSwitchCase="'Piercing'">
+          <h2>Piercing Consent</h2>
+          <app-piercing-consent (consentFilled)="storePiercingConsent($event)"></app-piercing-consent>
+        </div>
+      </ng-container>
+    
+      <button (click)="prevStep()">Back</button>
+      <button (click)="submitIntake()" [disabled]="!consentComplete">Submit</button>
+    </div>
+  
+    <!-- Confirmation -->
+    <div *ngIf="step === 6">
+      <h2>Thank you!</h2>
+      <p>Intake form submitted successfully.</p>
+    </div>
+  </div>
+  

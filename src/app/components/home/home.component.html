@@ -1,16 +1,20 @@
 <nav class="home-nav">
   <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-  <a routerLink="/public-artists" routerLinkActive="active">Artists</a>
+  <div class="dropdown">
+    <button class="dropbtn">Artists</button>
+    <div class="dropdown-content">
+      <a routerLink="/public-artists/1">Bri Fawvor</a>
+      <a routerLink="/public-artists/2">Sling Shot</a>
+    </div>
+  </div>  
   <a routerLink="/gallery" routerLinkActive="active">Gallery</a>
   <a routerLink="/about" routerLinkActive="active">About</a>
   <a routerLink="/contact" routerLinkActive="active">Contact</a>
-  <a routerLink="/portal" routerLinkActive="active" class="portal-link">Staff Portal</a>
+  <a routerLink="/portal" class="portal-link">🔒 Staff Portal</a>  
 </nav>
 
 <h1>Welcome to Rare Oddities</h1>
 <p>This site showcases our art and experience.</p>
-
-<button routerLink="/portal">Staff Portal</button>
 
 <section class="motto">
     <p><strong>Get inked. Get pierced. Get unique.</strong> Come experience the world of Rare Oddities Tattoos & Piercings.</p>

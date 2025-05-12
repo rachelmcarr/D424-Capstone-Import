@@ -1,0 +1,16 @@
+<h3>Search Existing Customer</h3>
+
+<input
+  type="text"
+  [(ngModel)]="searchTerm"
+  (input)="search()"
+  placeholder="Search by name or phone..."
+/>
+
+<ul *ngIf="results.length > 0">
+  <li *ngFor="let customer of results" (click)="selectCustomer(customer)">
+    {{ customer.firstName }} {{ customer.lastName }} – {{ customer.phone }}
+  </li>
+</ul>
+
+<p *ngIf="results.length === 0 && searchTerm">No matching customers found.</p>

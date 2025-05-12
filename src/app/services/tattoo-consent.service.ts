@@ -3,9 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface TattooConsent {
-  tattooConsentID?: number;
   intakeID: number;
-  understandsPainRisk: boolean;
+  drugsOrAlcohol: boolean;
+  skinCondition: boolean;
+  approveDesign: boolean;
+  isNotPregnant: boolean;
+  hasDisease: boolean;
+  isMinor: boolean;
+  understandsAllergyRisk: boolean;
+  undertandsInfectionRisk: boolean;
+  receiptOfAftercare: boolean;
+  understandsVariation: boolean;
+  understandsPermanence: boolean;
+  understandsChoice: boolean;
+  releaseArtist: boolean;
+  understandsFDA: boolean;
+  understandsMedicalRisk: boolean;
   agreesToAftercare: boolean;
   consentsToTattoo: boolean;
   dateSigned: string;
@@ -19,11 +32,7 @@ export class TattooConsentService {
 
   constructor(private http: HttpClient) {}
 
-  add(consent: TattooConsent): Observable<TattooConsent> {
+  submitConsent(consent: TattooConsent): Observable<TattooConsent> {
     return this.http.post<TattooConsent>(this.apiUrl, consent);
-  }
-
-  getAll(): Observable<TattooConsent[]> {
-    return this.http.get<TattooConsent[]>(this.apiUrl);
   }
 }

@@ -8,8 +8,23 @@ import { TattooConsentService, TattooConsent } from '../../services/tattoo-conse
 })
 export class TattooConsentComponent {
   consent: TattooConsent = {
+
     intakeID: 0,
-    understandsPainRisk: false,
+    drugsOrAlcohol: false,
+    skinCondition: false,
+    approveDesign: false,
+    isNotPregnant: false,
+    hasDisease: false,
+    isMinor: false,
+    understandsAllergyRisk: false,
+    undertandsInfectionRisk: false,
+    receiptOfAftercare: false,
+    understandsVariation: false,
+    understandsPermanence: false,
+    understandsChoice: false,
+    releaseArtist: false,
+    understandsFDA: false,
+    understandsMedicalRisk: false,
     agreesToAftercare: false,
     consentsToTattoo: false,
     dateSigned: ''
@@ -20,12 +35,12 @@ export class TattooConsentComponent {
   onSubmit(form: NgForm) {
     this.consent.dateSigned = new Date().toISOString();
 
-    this.tattooConsentService.add(this.consent).subscribe({
+    this.tattooConsentService.submitConsent(this.consent).subscribe({
       next: () => {
         alert('Tattoo consent submitted!');
         form.resetForm();
       },
-      error: err => {
+      error: (err: any) => {
         console.error(err);
         alert('Failed to submit tattoo consent.');
       }

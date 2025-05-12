@@ -1,6 +1,7 @@
 <h2>Add Customer</h2>
 
 <form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)">
+  <input type="hidden" name="customerID" [(ngModel)]="customer.customerID">
   <input type="text" name="firstName" [(ngModel)]="customer.firstName" placeholder="First Name" required />
   <input type="text" name="lastName" [(ngModel)]="customer.lastName" placeholder="Last Name" required />
   <input type="email" name="email" [(ngModel)]="customer.email" placeholder="Email" required />
@@ -13,5 +14,7 @@
   <input type="text" name="zip" [(ngModel)]="customer.zip" placeholder="ZIP Code" />
   <input type="text" name="customerPhoto" [(ngModel)]="customer.customerPhoto" placeholder="Photo URL" />
 
-  <button type="submit">Submit</button>
+  <button type="submit" [disabled]="!customerForm.valid">
+    {{ existingCustomer ? 'Update' : 'Submit' }}
+  </button>   
 </form>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ParentalConsentService, ParentalConsent } from '../../services/parental-consent.service';
 
@@ -9,6 +9,10 @@ import { ParentalConsentService, ParentalConsent } from '../../services/parental
 export class ParentalConsentComponent {
   consent: ParentalConsent = {
     intakeID: 0,
+    releaseLiability: false,
+    confirmRelationship: false,
+    understandsHealing: false,
+    serviceDescription: '',
     parentName: '',
     parentPhone: '',
     relationship: '',
@@ -18,18 +22,21 @@ export class ParentalConsentComponent {
 
   constructor(private consentService: ParentalConsentService) {}
 
+  @Output() consentFilled = new EventEmitter<any>();
+
   onSubmit(form: NgForm) {
     this.consent.dateSigned = new Date().toISOString();
-
-    this.consentService.add(this.consent).subscribe({
+    this.consentService.submitConsent(this.consent)
+.subscribe({
       next: () => {
+        this.consentFilled.emit(this.consent); // ✅ emits consent to parent
         alert('Parental consent submitted!');
         form.resetForm();
       },
-      error: err => {
+      error: (err) => {
         console.error(err);
-        alert('Failed to submit consent.');
+        alert('Failed to submit parental consent.');
       }
     });
   }
-}
+}  

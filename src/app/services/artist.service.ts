@@ -13,6 +13,7 @@ export interface Artist {
   artistPhoto: string;
   bio: string;
   portfolioURL: string;
+  gallery: string[];
 }
 
 @Injectable({
@@ -27,7 +28,19 @@ export class ArtistService {
     return this.http.get<Artist[]>(this.apiUrl);
   }
 
+  getById(id: number): Observable<Artist> {
+    return this.http.get<Artist>(`${this.apiUrl}/${id}`);
+  }
+
   add(artist: Artist): Observable<Artist> {
     return this.http.post<Artist>(this.apiUrl, artist);
+  }
+
+  update(artist: Artist): Observable<Artist> {
+    return this.http.put<Artist>(`${this.apiUrl}/${artist.artistID}`, artist);
+  }
+
+  delete(artistID: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${artistID}`);
   }
 }

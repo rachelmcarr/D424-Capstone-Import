@@ -1,16 +1,33 @@
-<h2>All Artists</h2>
-
-<ul *ngIf="artists.length; else noArtists">
-  <li *ngFor="let artist of artists">
-    <strong>{{ artist.firstName }} {{ artist.lastName }}</strong><br />
-    {{ artist.artistCategory }}<br />
-    Email: {{ artist.email }} | Phone: {{ artist.phone }}<br />
-    <img *ngIf="artist.artistPhoto" [src]="artist.artistPhoto" alt="Photo" width="100" /><br />
-    Portfolio: <a [href]="artist.portfolioURL" target="_blank">{{ artist.portfolioURL }}</a>
-    <hr />
-  </li>
-</ul>
-
-<ng-template #noArtists>
-  <p>No artists found.</p>
-</ng-template>
+<button routerLink="/home">Home</button>
+  <nav>
+    <a routerLink="/customers">View Customers</a><br />
+    <a routerLink="/artists">View Artists</a><br />
+    <a routerLink="/add-artist">Add Artists</a><br />
+    <a routerLink="/services">View Services</a><br />
+    <a routerLink="/add-service">Add Service</a><br />
+  </nav>
+<table>
+  <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let artist of artists">
+      <td><img [src]="artist.artistPhoto" alt="{{ artist.firstName }}" width="80" /></td>
+      <td>{{ artist.firstName }} {{ artist.lastName }}</td>
+      <td>{{ artist.artistCategory }}</td>
+      <td>{{ artist.email }}</td>
+      <td>{{ artist.phone }}</td>
+      <td>
+        <button (click)="editArtist(artist)">Edit</button>
+        <button (click)="deleteArtist(artist.artistID!)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

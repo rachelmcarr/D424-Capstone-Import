@@ -14,6 +14,8 @@ export interface ShopService {
   imageURL: string;
   category: string;
   createdAt: string;
+  inkInfo: string;
+  jewelryInfo: string;
 }
 
 @Injectable({

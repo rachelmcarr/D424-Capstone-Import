@@ -1,16 +1,83 @@
 <h2>Tattoo Consent Form</h2>
 
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required />
+
+  <!-- Hidden or pre-filled -->
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required hidden />
 
   <label>
-    <input type="checkbox" name="understandsPainRisk" [(ngModel)]="consent.understandsPainRisk" />
-    I understand the pain and risks associated with tattoos.
+    <input type="checkbox" name="drugsOrAlcohol" [(ngModel)]="consent.drugsOrAlcohol" />
+    I am not under the influence of drugs or alcohol.
+  </label>
+
+  <label>
+    <input type="checkbox" name="skinCondition" [(ngModel)]="consent.skinCondition" />
+    I do not have acne, freckles, miles, or sunburn in the area to be tattooed that might be agitated by the tattoo proccess (healing excluded).
+  </label>
+
+  <label>
+    <input type="checkbox" name="approveDesign" [(ngModel)]="consent.approveDesign" />
+    I have looked over my design, checked the spelling if applicable, and give my full consent to the applicaiton of my tattoo.
+  </label>
+
+  <label>
+    <input type="checkbox" name="isNotPregnant" [(ngModel)]="consent.isNotPregnant" />
+    I confirm that I am not pregnant or nursing.
+  </label>
+
+  <label>
+    <input type="checkbox" name="hasDisease" [(ngModel)]="consent.hasDisease" />
+    I do not have any communicable diseases or bloodborne illnesses.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsAllergyRisk" [(ngModel)]="consent.understandsAllergyRisk" />
+    I acknowledge it is not reasonably possible for the artist and the associates, agents, respresentatives of the artist to determine whether I might have an allergic reaction to the dyes, pigments, or processes used in my tattoo and I agree to accept that such risks are possible.
+  </label>
+
+  <label>
+    <input type="checkbox" name="undertandsInfectionRisk" [(ngModel)]="consent.undertandsInfectionRisk" />
+    I acknowledge that infection is always possible as a result of obtaining a tattoo particularly in that event that I do not take proper care of my tattoo, and I have been advised of the signs and symptoms of infection that indicate a need to seek medical care.
+  </label>
+
+  <label>
+    <input type="checkbox" name="receiptOfAftercare" [(ngModel)]="consent.receiptOfAftercare" />
+    I have received and reviewed aftercare instructions.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsVariation" [(ngModel)]="consent.understandsVariation" />
+    I understand that healing and color retention may vary based on skin type.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsPermanence" [(ngModel)]="consent.understandsPermanence" />
+    I understand that tattoos are permanent and removal can be costly or incomplete.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsChoice" [(ngModel)]="consent.understandsChoice" />
+    I understand I am choosing to be tattooed willingly and voluntarily.
+  </label>
+
+  <label>
+    <input type="checkbox" name="releaseArtist" [(ngModel)]="consent.releaseArtist" />
+    I release the artist and shop from liability related to the tattoo.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsFDA" [(ngModel)]="consent.understandsFDA" />
+    I understand that tattoo inks are not FDA-approved.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsMedicalRisk" [(ngModel)]="consent.understandsMedicalRisk" />
+    I understand that tattooing may have medical risks and complications.
   </label>
 
   <label>
     <input type="checkbox" name="agreesToAftercare" [(ngModel)]="consent.agreesToAftercare" />
-    I agree to follow the aftercare instructions provided.
+    I agree to follow all aftercare instructions as provided.
   </label>
 
   <label>

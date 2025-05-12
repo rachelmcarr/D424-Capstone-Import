@@ -1,13 +1,48 @@
 <h2>Parental Consent Form</h2>
 
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required />
+  <!-- Hidden or pre-filled -->
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" hidden />
 
-  <input type="text" name="parentName" [(ngModel)]="consent.parentName" placeholder="Parent/Guardian Name" required />
-  <input type="text" name="parentPhone" [(ngModel)]="consent.parentPhone" placeholder="Phone Number" />
-  <input type="text" name="relationship" [(ngModel)]="consent.relationship" placeholder="Relationship to Minor" />
+  <label>
+    <input type="checkbox" name="releaseLiability" [(ngModel)]="consent.releaseLiability" required />
+    I release the artist and the studio from any liability regarding this procedure.
+  </label>
 
-  <input type="text" name="signature" [(ngModel)]="consent.signature" placeholder="Signature" />
+  <label>
+    <input type="checkbox" name="confirmRelationship" [(ngModel)]="consent.confirmRelationship" required />
+    I confirm that I am the parent or legal guardian of the minor receiving this service.
+  </label>
+
+  <label>
+    <input type="checkbox" name="understandsHealing" [(ngModel)]="consent.understandsHealing" required />
+    I understand that proper aftercare is essential for healing and take responsibility for monitoring it.
+  </label>
+
+  <label>
+    Service description:
+    <input type="text" name="serviceDescription" [(ngModel)]="consent.serviceDescription" placeholder="e.g., Ear Piercing, Tattoo" required />
+  </label>
+
+  <label>
+    Parent/Guardian Name:
+    <input type="text" name="parentName" [(ngModel)]="consent.parentName" required />
+  </label>
+
+  <label>
+    Phone Number:
+    <input type="tel" name="parentPhone" [(ngModel)]="consent.parentPhone" required />
+  </label>
+
+  <label>
+    Relationship to Minor:
+    <input type="text" name="relationship" [(ngModel)]="consent.relationship" required />
+  </label>
+
+  <label>
+    Signature (type full name):
+    <input type="text" name="signature" [(ngModel)]="consent.signature" required />
+  </label>
 
   <button type="submit">Submit</button>
 </form>
