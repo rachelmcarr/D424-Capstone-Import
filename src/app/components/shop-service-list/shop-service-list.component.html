@@ -1,21 +1,53 @@
-<button routerLink="/home">Home</button>
-  <nav>
-    <a routerLink="/customers">Manage Customers</a><br />
-    <a routerLink="/artists">Manage Artists</a><br />
-    <a routerLink="/services">Manage Services</a><br />
-  </nav>
+<nav class="primaryNav">
+  <button routerLink="/home">Home</button>
+  <a routerLink="/customers">Manage Customers</a><br />
+  <a routerLink="/artists">Manage Artists</a><br />
+  <a routerLink="/services">Manage Services</a><br />
+</nav>
 
-<a routerLink="/add-service">Add Service</a><br />
 <h2>All Services</h2>
 
-<ul *ngIf="services.length; else none">
-  <li *ngFor="let s of services">
-    <strong>{{ s.title }}</strong> - {{ s.category }} - ${{ s.price }}
-    <br />{{ s.description }}
-    <hr />
-  </li>
-</ul>
+<table class="service-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of services">
+      <td>{{ s.title }}</td>
+      <td>{{ s.category }}</td>
+      <td>${{ s.price }}</td>
+      <td>{{ s.description }}</td>
+      <td>
+        <button (click)="editService(s)">Edit</button>
+        <button *ngIf="s.serviceID !== undefined" (click)="deleteService(s.serviceID)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<ng-template #none>
-  <p>No services available.</p>
-</ng-template>
+<!-- Edit Form Panel -->
+<div *ngIf="editingService" class="edit-panel">
+  <h3>Edit Service</h3>
+  <form (ngSubmit)="updateService()" #form="ngForm">
+    <label>Title</label>
+    <input [(ngModel)]="editingService.title" name="title" required />
+
+    <label>Category</label>
+    <input [(ngModel)]="editingService.category" name="category" required />
+
+    <label>Price</label>
+    <input type="number" [(ngModel)]="editingService.price" name="price" required />
+
+    <label>Description</label>
+    <textarea [(ngModel)]="editingService.description" name="description"></textarea>
+
+    <button type="submit">Update</button>
+    <button type="button" (click)="cancelEdit()">Cancel</button>
+  </form>
+</div>

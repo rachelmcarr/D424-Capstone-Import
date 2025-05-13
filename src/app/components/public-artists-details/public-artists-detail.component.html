@@ -1,12 +1,12 @@
 <div *ngIf="artist; else notFound">
   <h2>{{ artist.firstName }} {{ artist.lastName }}</h2>
-  <img [src]="artist.artistPhoto" alt="{{ artist.firstName }}" width="250" />
+  <img [src]="artist.artistPhoto" alt="{{ artist.firstName }} {{ artist.lastName }}" />
   <p>{{ artist.bio }}</p>
 
   <h3>Gallery</h3>
-  <div class="gallery">
-    <img *ngFor="let image of artist.gallery" [src]="image" alt="Artwork" />
-  </div>
+<div class="gallery">
+  <img *ngFor="let image of artist.gallery" [src]="image" alt="Tattoo" />
+</div>
 </div>
 
 <ng-template #notFound>

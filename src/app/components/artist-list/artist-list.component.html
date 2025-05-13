@@ -1,9 +1,9 @@
-<button routerLink="/home">Home</button>
-  <nav>
-    <a routerLink="/customers">Manage Customers</a><br />
-    <a routerLink="/artists">Manage Artists</a><br />
-    <a routerLink="/services">Manage Services</a><br />
-  </nav>
+<nav class="primaryNav">
+  <button routerLink="/home">Home</button>
+  <a routerLink="/customers">Manage Customers</a><br />
+  <a routerLink="/artists">Manage Artists</a><br />
+  <a routerLink="/services">Manage Services</a><br />
+</nav>
 
 <table class="artist-table">
   <thead>
@@ -35,3 +35,39 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Edit Panel -->
+<div *ngIf="editingArtist" class="edit-panel">
+  <h3>Edit Artist</h3>
+  <form (ngSubmit)="saveArtist()" #editForm="ngForm">
+    <label>First Name</label>
+    <input name="firstName" [(ngModel)]="editingArtist.firstName" required />
+
+    <label>Last Name</label>
+    <input name="lastName" [(ngModel)]="editingArtist.lastName" required />
+
+    <label>Email</label>
+    <input name="email" [(ngModel)]="editingArtist.email" type="email" />
+
+    <label>Phone</label>
+    <input name="phone" [(ngModel)]="editingArtist.phone" />
+
+    <label>Birth Date</label>
+    <input name="birthDate" type="date" [(ngModel)]="editingArtist.birthDate" />
+
+    <label>Category</label>
+    <input name="artistCategory" [(ngModel)]="editingArtist.artistCategory" />
+
+    <label>Photo URL</label>
+    <input name="artistPhoto" [(ngModel)]="editingArtist.artistPhoto" />
+
+    <label>Bio</label>
+    <textarea name="bio" [(ngModel)]="editingArtist.bio"></textarea>
+
+    <label>Portfolio URL</label>
+    <input name="portfolioURL" [(ngModel)]="editingArtist.portfolioURL" />
+
+    <button type="submit">Update</button>
+    <button type="button" (click)="cancelEdit()">Cancel</button>
+  </form>
+</div>

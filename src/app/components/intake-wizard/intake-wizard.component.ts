@@ -9,7 +9,6 @@ import { ShopServiceService } from '../../services/shop-service.service';
 @Component({
   selector: 'app-intake-wizard',
   templateUrl: './intake-wizard.component.html',
-  styleUrls: ['./intake-wizard.component.css']
 })
 export class IntakeWizardComponent implements OnInit {
   step = 1;

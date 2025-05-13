@@ -26,11 +26,28 @@ export class ShopServiceService {
 
   constructor(private http: HttpClient) {}
 
+  /** Get all services */
   getAll(): Observable<ShopService[]> {
     return this.http.get<ShopService[]>(this.apiUrl);
   }
 
+  /** Get a service by ID */
+  getById(serviceID: number): Observable<ShopService> {
+    return this.http.get<ShopService>(`${this.apiUrl}/${serviceID}`);
+  }
+
+  /** Add a new service */
   add(service: ShopService): Observable<ShopService> {
     return this.http.post<ShopService>(this.apiUrl, service);
+  }
+
+  /** Update an existing service */
+  update(service: ShopService): Observable<ShopService> {
+    return this.http.put<ShopService>(`${this.apiUrl}/${service.serviceID}`, service);
+  }
+
+  /** Delete a service */
+  delete(serviceID: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${serviceID}`);
   }
 }

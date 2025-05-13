@@ -1,64 +1,52 @@
-<h2>Add Shop Service</h2>
+<nav class="primaryNav">
+  <button routerLink="/home">Home</button>
+  <a routerLink="/customers">Manage Customers</a><br />
+  <a routerLink="/artists">Manage Artists</a><br />
+  <a routerLink="/services">Manage Services</a><br />
+</nav>
 
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <label>
-    Title:
-    <input type="text" name="title" [(ngModel)]="service.title" required />
-  </label>
+<section class="form-section">
+  <h2>Add New Service</h2>
 
-  <label>
-    Description:
-    <textarea name="description" [(ngModel)]="service.description" rows="3"></textarea>
-  </label>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <label>Title</label>
+    <input name="title" [(ngModel)]="service.title" required />
 
-  <label>
-    Location:
-    <input type="text" name="location" [(ngModel)]="service.location" />
-  </label>
+    <label>Category</label>
+    <input name="category" [(ngModel)]="service.category" required />
 
-  <label>
-    Style:
-    <input type="text" name="style" [(ngModel)]="service.style" />
-  </label>
+    <label>Price</label>
+    <input type="number" name="price" [(ngModel)]="service.price" required />
 
-  <label>
-    Duration:
-    <input type="text" name="duration" [(ngModel)]="service.duration" />
-  </label>
+    <label>Description</label>
+    <textarea name="description" [(ngModel)]="service.description"></textarea>
 
-  <label>
-    Ink Info:
-    <input type="text" name="inkInfo" [(ngModel)]="service.inkInfo" placeholder="Colors, manufacturer, lot numbers..." />
-  </label>
+    <label>Style</label>
+    <input name="style" [(ngModel)]="service.style" />
 
-  <label>
-    Jewelry Info:
-    <input type="text" name="jewelryInfo" [(ngModel)]="service.jewelryInfo" placeholder="Size, material, manufacturer..." />
-  </label>
+    <label>Duration</label>
+    <input name="duration" [(ngModel)]="service.duration" />
 
-  <label>
-    Status:
-    <input type="text" name="status" [(ngModel)]="service.status" />
-  </label>
+    <label>Ink Info</label>
+    <input name="inkInfo" [(ngModel)]="service.inkInfo" />
 
-  <label>
-    Price:
-    <input type="number" name="price" [(ngModel)]="service.price" />
-  </label>
+    <label>Jewelry Info</label>
+    <input name="jewelryInfo" [(ngModel)]="service.jewelryInfo" />
 
-  <label>
-    Image URL:
-    <input type="text" name="imageURL" [(ngModel)]="service.imageURL" />
-  </label>
-
-  <label>
-    Category:
-    <select name="category" [(ngModel)]="service.category">
-      <option value="">Select a category</option>
-      <option value="Tattoo">Tattoo</option>
-      <option value="Piercing">Piercing</option>
+    <label>Status</label>
+    <select name="status" [(ngModel)]="service.status">
+      <option value="">-- Select --</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
     </select>
-  </label>
 
-  <button type="submit">Submit</button>
-</form>
+    <label>Image URL</label>
+    <input name="imageURL" [(ngModel)]="service.imageURL" />
+
+    <label>Location</label>
+    <input name="location" [(ngModel)]="service.location" />
+
+    <button type="submit">Save</button>
+  </form>
+</section>
+

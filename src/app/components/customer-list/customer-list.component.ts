@@ -7,7 +7,6 @@ import { Customer, CustomerService } from '../../services/customer.service';
 })
 export class CustomerListComponent implements OnInit {
   customers: Customer[] = [];
-
   editingCustomer: Customer | null = null;
 
   constructor(private customerService: CustomerService) {}
@@ -18,12 +17,8 @@ export class CustomerListComponent implements OnInit {
 
   loadCustomers(): void {
     this.customerService.getAll().subscribe({
-      next: (data) => {
-        this.customers = data;
-      },
-      error: (err) => {
-        console.error('Failed to load customers', err);
-      }
+      next: (data) => this.customers = data,
+      error: (err) => console.error('Failed to load customers', err)
     });
   }
 
@@ -35,8 +30,8 @@ export class CustomerListComponent implements OnInit {
     this.editingCustomer = null;
   }
 
-  updateCustomer(form: any): void {
-    if (!this.editingCustomer) return;
+  updateCustomer(): void {
+    if (!this.editingCustomer?.customerID) return;
 
     this.customerService.update(this.editingCustomer).subscribe({
       next: () => {

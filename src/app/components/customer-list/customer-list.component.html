@@ -1,13 +1,19 @@
-<button routerLink="/home">Home</button>
-  <nav>
-    <a routerLink="/customers">Manage Customers</a><br />
-    <a routerLink="/artists">Manage Artists</a><br />
-    <a routerLink="/services">Manage Services</a><br />
-  </nav>
+<nav class="primaryNav">
+  <button routerLink="/home">Home</button>
+  <a routerLink="/customers">Manage Customers</a><br />
+  <a routerLink="/artists">Manage Artists</a><br />
+  <a routerLink="/services">Manage Services</a><br />
+</nav>
+
 <h2>Customer List</h2>
 
-<table class="customer-table">
+<table class="service-table">
   <thead>
+    <tr>
+      <th colspan="6" class="add-button-cell">
+        <button routerLink="/add-customer" class="add-artist-button">+ Add Customer</button>
+      </th>
+    </tr>
     <tr>
       <th>First Name</th>
       <th>Last Name</th>
@@ -27,25 +33,51 @@
       <td>{{ customer.birthDate | date }}</td>
       <td>{{ customer.driverLicense }}</td>
       <td>
-        <h2 *ngIf="editingCustomer">Edit Customer</h2>
-            <form *ngIf="editingCustomer" #editForm="ngForm" (ngSubmit)="updateCustomer(editForm)">
-                <input type="text" name="firstName" [(ngModel)]="editingCustomer.firstName" required />
-                <input type="text" name="lastName" [(ngModel)]="editingCustomer.lastName" required />
-                <input type="email" name="email" [(ngModel)]="editingCustomer.email" />
-                <input type="text" name="phone" [(ngModel)]="editingCustomer.phone" />
-                <input type="date" name="birthDate" [(ngModel)]="editingCustomer.birthDate" />
-                <input type="text" name="driverLicense" [(ngModel)]="editingCustomer.driverLicense" />
-                <input type="text" name="address" [(ngModel)]="editingCustomer.address" />
-                <input type="text" name="city" [(ngModel)]="editingCustomer.city" />
-                <input type="text" name="state" [(ngModel)]="editingCustomer.state" />
-                <input type="text" name="zip" [(ngModel)]="editingCustomer.zip" />
-                <input type="text" name="customerPhoto" [(ngModel)]="editingCustomer.customerPhoto" />
-                
-                <button type="submit">Update</button>
-                <button type="button" (click)="cancelEdit()">Cancel</button>
-            </form>
-        <button *ngIf="customer.customerID !== undefined" (click)="deleteCustomer(customer.customerID)">Delete</button>
+        <button (click)="editCustomer(customer)">Edit</button>
+        <button (click)="deleteCustomer(customer.customerID!)">Delete</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Edit Form Panel -->
+<div *ngIf="editingCustomer" class="edit-panel">
+  <h3>Edit Customer</h3>
+  <form (ngSubmit)="updateCustomer()" #editForm="ngForm">
+    <label>First Name</label>
+    <input name="firstName" [(ngModel)]="editingCustomer.firstName" required />
+
+    <label>Last Name</label>
+    <input name="lastName" [(ngModel)]="editingCustomer.lastName" required />
+
+    <label>Email</label>
+    <input name="email" [(ngModel)]="editingCustomer.email" />
+
+    <label>Phone</label>
+    <input name="phone" [(ngModel)]="editingCustomer.phone" />
+
+    <label>Birth Date</label>
+    <input name="birthDate" type="date" [(ngModel)]="editingCustomer.birthDate" />
+
+    <label>Driver License</label>
+    <input name="driverLicense" [(ngModel)]="editingCustomer.driverLicense" />
+
+    <label>Address</label>
+    <input name="address" [(ngModel)]="editingCustomer.address" />
+
+    <label>City</label>
+    <input name="city" [(ngModel)]="editingCustomer.city" />
+
+    <label>State</label>
+    <input name="state" [(ngModel)]="editingCustomer.state" />
+
+    <label>Zip</label>
+    <input name="zip" [(ngModel)]="editingCustomer.zip" />
+
+    <label>Customer Photo (URL)</label>
+    <input name="customerPhoto" [(ngModel)]="editingCustomer.customerPhoto" />
+
+    <button type="submit">Update</button>
+    <button type="button" (click)="cancelEdit()">Cancel</button>
+  </form>
+</div>

@@ -4,7 +4,6 @@ import { ArtistService, Artist } from '../../services/artist.service';
 @Component({
   selector: 'app-artist-list',
   templateUrl: './artist-list.component.html',
-  styleUrls: ['./artist-list.component.css']
 })
 export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
@@ -13,12 +12,38 @@ export class ArtistListComponent implements OnInit {
   constructor(private artistService: ArtistService) {}
 
   ngOnInit(): void {
+    this.loadArtists();
+  }
+
+  loadArtists(): void {
     this.artistService.getAll().subscribe({
-      next: (data) => {
-        this.artists = data;
-        console.log('Loaded artists:', this.artists); // ✅ for debugging
-      },
+      next: (data) => this.artists = data,
       error: (err) => console.error('Failed to load artists', err)
+    });
+  }
+
+  editArtist(artist: Artist): void {
+    this.editingArtist = { ...artist };
+  }
+
+  cancelEdit(): void {
+    this.editingArtist = null;
+  }
+
+  saveArtist(): void {
+    if (!this.editingArtist?.artistID) return;
+
+    this.artistService.update(this.editingArtist).subscribe({
+      next: updated => {
+        const index = this.artists.findIndex(a => a.artistID === updated.artistID);
+        if (index !== -1) this.artists[index] = updated;
+        this.editingArtist = null;
+        alert('Artist updated.');
+      },
+      error: err => {
+        console.error('Failed to update artist', err);
+        alert('Error updating artist.');
+      }
     });
   }
 
@@ -27,30 +52,13 @@ export class ArtistListComponent implements OnInit {
       this.artistService.delete(artistID).subscribe({
         next: () => {
           this.artists = this.artists.filter(a => a.artistID !== artistID);
+          alert('Artist deleted.');
         },
-        error: (err: any) => console.error('Failed to delete artist', err)
+        error: err => {
+          console.error('Failed to delete artist', err);
+          alert('Error deleting artist.');
+        }
       });
     }
-  }
-
-  editArtist(artist: Artist): void {
-    this.editingArtist = { ...artist };
-  }
-
-  saveArtist(): void {
-    if (this.editingArtist && this.editingArtist.artistID !== undefined) {
-      this.artistService.update(this.editingArtist).subscribe({
-        next: updated => {
-          const index = this.artists.findIndex(a => a.artistID === updated.artistID);
-          if (index !== -1) this.artists[index] = updated;
-          this.editingArtist = null;
-        },
-        error: (err: any) => console.error('Failed to update artist', err)
-      });
-    }
-  }
-
-  cancelEdit(): void {
-    this.editingArtist = null;
   }
 }
