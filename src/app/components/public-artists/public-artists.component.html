@@ -1,10 +1,16 @@
 <nav class="primaryNav">
-  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-  <a routerLink="/public-artists" routerLinkActive="active">Artists</a>
-  <a routerLink="/gallery" routerLinkActive="active">Gallery</a>
-  <a routerLink="/about" routerLinkActive="active">About</a>
-  <a routerLink="/contact" routerLinkActive="active">Contact</a>
-  <button routerLink="/portal">Staff Portal</button>
+  <a routerLink="/">Home</a>
+  <div class="dropdown">
+    <button class="dropbtn">Artists</button>
+    <div class="dropdown-content">
+      <a routerLink="/public-artists/4">Bri Fawvor</a>
+      <a routerLink="/public-artists/5">Sling Shot</a>
+    </div>
+  </div>
+  <a routerLink="/gallery">Gallery</a>
+  <a routerLink="/about">About</a>
+  <a routerLink="/contact">Contact</a>
+  <a routerLink="/intake-wizard" class="portal-link">🔒</a>
 </nav>
 
 <h2>Meet Our Artists</h2>

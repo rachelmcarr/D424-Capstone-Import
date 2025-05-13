@@ -36,12 +36,24 @@ a, button {
 
 .primaryNav a,
 .primaryNav .dropbtn {
+  all: unset;
   font-weight: 500;
-  background-color: transparent;
   padding: 10px 15px;
   border-radius: 5px;
   border: 1px solid transparent;
   cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.1;
+}
+
+.primaryNav .dropdown {
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
 }
 
 .primaryNav a:hover,
@@ -347,3 +359,4 @@ form {
     display: block;
   }
 }
+

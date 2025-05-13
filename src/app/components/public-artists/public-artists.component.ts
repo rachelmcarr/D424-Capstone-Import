@@ -3,8 +3,7 @@ import { ArtistService, Artist } from '../../services/artist.service';
 
 @Component({
   selector: 'app-public-artists',
-  templateUrl: './public-artists.component.html',
-  styleUrls: ['./public-artists.component.css']
+  templateUrl: './public-artists.component.html'
 })
 export class PublicArtistsComponent implements OnInit {
   artists: Artist[] = [];

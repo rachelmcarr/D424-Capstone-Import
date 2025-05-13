@@ -1,5 +1,20 @@
 <h2>Client Intake Form</h2>
 
+<nav class="primaryNav">
+  <a routerLink="/">Home</a>
+  <div class="dropdown">
+    <button class="dropbtn">Artists</button>
+    <div class="dropdown-content">
+      <a routerLink="/public-artists/4">Bri Fawvor</a>
+      <a routerLink="/public-artists/5">Sling Shot</a>
+    </div>
+  </div>
+  <a routerLink="/gallery">Gallery</a>
+  <a routerLink="/about">About</a>
+  <a routerLink="/contact">Contact</a>
+  <a routerLink="/intake-wizard" class="portal-link">🔒</a>
+</nav>
+
 <form #intakeForm="ngForm" (ngSubmit)="onSubmit(intakeForm)">
   <label>
     Customer ID:

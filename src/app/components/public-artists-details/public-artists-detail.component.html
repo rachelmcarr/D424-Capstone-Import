@@ -1,3 +1,18 @@
+<nav class="primaryNav">
+  <a routerLink="/">Home</a>
+  <div class="dropdown">
+    <button class="dropbtn">Artists</button>
+    <div class="dropdown-content">
+      <a routerLink="/public-artists/4">Bri Fawvor</a>
+      <a routerLink="/public-artists/5">Sling Shot</a>
+    </div>
+  </div>
+  <a routerLink="/gallery">Gallery</a>
+  <a routerLink="/about">About</a>
+  <a routerLink="/contact">Contact</a>
+  <a routerLink="/intake-wizard" class="portal-link">🔒</a>
+</nav>
+
 <div *ngIf="artist; else notFound">
   <h2>{{ artist.firstName }} {{ artist.lastName }}</h2>
   <img [src]="artist.artistPhoto" alt="{{ artist.firstName }} {{ artist.lastName }}" />
