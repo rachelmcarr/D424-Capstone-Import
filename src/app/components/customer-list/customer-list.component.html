@@ -1,83 +1,117 @@
-<nav class="primaryNav">
-  <button routerLink="/home">Home</button>
-  <a routerLink="/customers">Manage Customers</a><br />
-  <a routerLink="/artists">Manage Artists</a><br />
-  <a routerLink="/services">Manage Services</a><br />
-</nav>
+<div class="container py-5">
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a routerLink="/home">Exit Staff Portal</a>
+    </div>
+  </nav>
 
-<h2>Customer List</h2>
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-danger">Customer List</h2>
+    <button routerLink="/add-customer" class="btn btn-danger fw-bold">+ Add Customer</button>
+  </div>
 
-<table class="service-table">
-  <thead>
-    <tr>
-      <th colspan="6" class="add-button-cell">
-        <button routerLink="/add-customer" class="add-artist-button">+ Add Customer</button>
-      </th>
-    </tr>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Date of Birth</th>
-      <th>Driver License</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let customer of customers">
-      <td>{{ customer.firstName }}</td>
-      <td>{{ customer.lastName }}</td>
-      <td>{{ customer.email }}</td>
-      <td>{{ customer.phone }}</td>
-      <td>{{ customer.birthDate | date }}</td>
-      <td>{{ customer.driverLicense }}</td>
-      <td>
-        <button (click)="editCustomer(customer)">Edit</button>
-        <button (click)="deleteCustomer(customer.customerID!)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!-- Customer Table -->
+  <div class="table-responsive">
+    <table class="table table-dark table-bordered table-hover">
+      <thead class="table-light text-dark">
+        <tr>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Birth Date</th>
+          <th>Driver License</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.birthDate | date }}</td>
+          <td>{{ customer.driverLicense }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="editCustomer(customer)">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteCustomer(customer.customerID!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<!-- Edit Form Panel -->
-<div *ngIf="editingCustomer" class="edit-panel">
-  <h3>Edit Customer</h3>
-  <form (ngSubmit)="updateCustomer()" #editForm="ngForm">
-    <label>First Name</label>
-    <input name="firstName" [(ngModel)]="editingCustomer.firstName" required />
+  <!-- Edit Panel -->
+  <div *ngIf="editingCustomer" class="bg-dark border border-light rounded p-4 mt-5 shadow">
+    <h3 class="text-danger mb-3">Edit Customer</h3>
+    <form (ngSubmit)="updateCustomer()" #editForm="ngForm" class="row g-3 text-light">
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input class="form-control bg-black text-white" name="firstName" [(ngModel)]="editingCustomer.firstName" required />
+      </div>
 
-    <label>Last Name</label>
-    <input name="lastName" [(ngModel)]="editingCustomer.lastName" required />
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input class="form-control bg-black text-white" name="lastName" [(ngModel)]="editingCustomer.lastName" required />
+      </div>
 
-    <label>Email</label>
-    <input name="email" [(ngModel)]="editingCustomer.email" />
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input class="form-control bg-black text-white" name="email" [(ngModel)]="editingCustomer.email" />
+      </div>
 
-    <label>Phone</label>
-    <input name="phone" [(ngModel)]="editingCustomer.phone" />
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input class="form-control bg-black text-white" name="phone" [(ngModel)]="editingCustomer.phone" />
+      </div>
 
-    <label>Birth Date</label>
-    <input name="birthDate" type="date" [(ngModel)]="editingCustomer.birthDate" />
+      <div class="col-md-6">
+        <label class="form-label">Birth Date</label>
+        <input type="date" class="form-control bg-black text-white" name="birthDate" [(ngModel)]="editingCustomer.birthDate" />
+      </div>
 
-    <label>Driver License</label>
-    <input name="driverLicense" [(ngModel)]="editingCustomer.driverLicense" />
+      <div class="col-md-6">
+        <label class="form-label">Driver License</label>
+        <input class="form-control bg-black text-white" name="driverLicense" [(ngModel)]="editingCustomer.driverLicense" />
+      </div>
 
-    <label>Address</label>
-    <input name="address" [(ngModel)]="editingCustomer.address" />
+      <div class="col-md-6">
+        <label class="form-label">Address</label>
+        <input class="form-control bg-black text-white" name="address" [(ngModel)]="editingCustomer.address" />
+      </div>
 
-    <label>City</label>
-    <input name="city" [(ngModel)]="editingCustomer.city" />
+      <div class="col-md-6">
+        <label class="form-label">City</label>
+        <input class="form-control bg-black text-white" name="city" [(ngModel)]="editingCustomer.city" />
+      </div>
 
-    <label>State</label>
-    <input name="state" [(ngModel)]="editingCustomer.state" />
+      <div class="col-md-4">
+        <label class="form-label">State</label>
+        <input class="form-control bg-black text-white" name="state" [(ngModel)]="editingCustomer.state" />
+      </div>
 
-    <label>Zip</label>
-    <input name="zip" [(ngModel)]="editingCustomer.zip" />
+      <div class="col-md-4">
+        <label class="form-label">Zip</label>
+        <input class="form-control bg-black text-white" name="zip" [(ngModel)]="editingCustomer.zip" />
+      </div>
 
-    <label>Customer Photo (URL)</label>
-    <input name="customerPhoto" [(ngModel)]="editingCustomer.customerPhoto" />
+      <div class="col-md-12">
+        <label class="form-label">Customer Photo (URL)</label>
+        <input class="form-control bg-black text-white" name="customerPhoto" [(ngModel)]="editingCustomer.customerPhoto" />
+      </div>
 
-    <button type="submit">Update</button>
-    <button type="button" (click)="cancelEdit()">Cancel</button>
-  </form>
+      <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-outline-light me-2">Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

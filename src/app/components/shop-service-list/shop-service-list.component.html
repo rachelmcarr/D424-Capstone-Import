@@ -1,37 +1,51 @@
-<nav class="primaryNav">
-  <button routerLink="/home">Home</button>
-  <a routerLink="/customers">Manage Customers</a><br />
-  <a routerLink="/artists">Manage Artists</a><br />
-  <a routerLink="/services">Manage Services</a><br />
-</nav>
+<div class="container py-5">
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a routerLink="/home">Exit Staff Portal</a>
+    </div>
+  </nav>
 
-<h2>All Services</h2>
+  <!-- Page Heading -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-danger">All Services</h2>
+    <button routerLink="/add-service" class="btn btn-danger fw-bold">+ Add Service</button>
+  </div>
 
-<table class="service-table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Category</th>
-      <th>Price</th>
-      <th>Description</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let s of services">
-      <td>{{ s.title }}</td>
-      <td>{{ s.category }}</td>
-      <td>${{ s.price }}</td>
-      <td>{{ s.description }}</td>
-      <td>
-        <button (click)="editService(s)">Edit</button>
-        <button *ngIf="s.serviceID !== undefined" (click)="deleteService(s.serviceID)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!-- Service Table -->
+  <div class="table-responsive">
+    <table class="table table-dark table-bordered table-hover align-middle text-light">
+      <thead class="table-light text-dark">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of services">
+          <td>{{ s.title }}</td>
+          <td>{{ s.category }}</td>
+          <td>${{ s.price }}</td>
+          <td>{{ s.description }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="editService(s)">Edit</button>
+            <button *ngIf="s.serviceID !== undefined" class="btn btn-sm btn-outline-danger" (click)="deleteService(s.serviceID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<!-- Edit Form Panel -->
+  <!-- Edit Form Panel -->
 <div *ngIf="editingService" class="edit-panel">
   <h3>Edit Service</h3>
   <form (ngSubmit)="updateService()" #form="ngForm">
@@ -41,13 +55,60 @@
     <label>Category</label>
     <input [(ngModel)]="editingService.category" name="category" required />
 
+    <label>Artist</label>
+      <select [(ngModel)]="selectedArtistID" name="artistSelect" class="form-control bg-black text-white">
+        <option [ngValue]="null" disabled>Select an artist</option>
+        <option *ngFor="let artist of artists" [ngValue]="artist.artistID">
+          {{ artist.firstName }} {{ artist.lastName }}
+        </option>
+      </select>
+
     <label>Price</label>
     <input type="number" [(ngModel)]="editingService.price" name="price" required />
 
     <label>Description</label>
     <textarea [(ngModel)]="editingService.description" name="description"></textarea>
 
+    <label>Style</label>
+    <input [(ngModel)]="editingService.style" name="style" />
+
+    <label>Duration</label>
+    <input [(ngModel)]="editingService.duration" name="duration" />
+
+    <label>Ink Info</label>
+    <input [(ngModel)]="editingService.inkInfo" name="inkInfo" />
+
+    <label>Jewelry Info</label>
+    <input [(ngModel)]="editingService.jewelryInfo" name="jewelryInfo" />
+
+    <label>Status</label>
+    <select [(ngModel)]="editingService.status" name="status">
+      <option value="">-- Select --</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+
+    <label>Image URL</label>
+    <input [(ngModel)]="editingService.imageURL" name="imageURL" />
+
+    <label>Location</label>
+    <input [(ngModel)]="editingService.location" name="location" />
+
+    <!-- ✅ New: Completed Photo URL -->
+    <label>Completed Photo URL</label>
+    <input [(ngModel)]="editingService.completedPhotoURL" name="completedPhotoURL" />
+
+    <!-- ✅ New: Add to Gallery Checkbox -->
+    <div class="form-check mt-2">
+      <input class="form-check-input" type="checkbox" [(ngModel)]="addToGallery" name="addToGallery" id="addToGallery" />
+      <label class="form-check-label" for="addToGallery">
+        Add this photo to artist’s gallery?
+      </label>
+    </div>
+
     <button type="submit">Update</button>
     <button type="button" (click)="cancelEdit()">Cancel</button>
   </form>
+</div>
+
 </div>

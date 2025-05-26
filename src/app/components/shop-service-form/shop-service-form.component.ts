@@ -19,7 +19,7 @@ export class ShopServiceFormComponent {
     category: '',
     createdAt: '',
     inkInfo: '',
-    jewelryInfo: ''
+    jewelryInfo: '',
   };
 
   constructor(private serviceService: ShopServiceService) {}

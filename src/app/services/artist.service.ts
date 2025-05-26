@@ -43,4 +43,10 @@ export class ArtistService {
   delete(artistID: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${artistID}`);
   }
+
+  addImageToGallery(artistId: number, imageUrl: string): Observable<Artist> {
+  return this.http.put<Artist>(`${this.apiUrl}/${artistId}/gallery`, imageUrl, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
 }

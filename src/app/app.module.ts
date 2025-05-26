@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppComponent } from './app.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
@@ -45,7 +47,8 @@ import { CustomerLookupComponent } from './components/customer-lookup/customer-l
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()) // ✅ modern HttpClient setup

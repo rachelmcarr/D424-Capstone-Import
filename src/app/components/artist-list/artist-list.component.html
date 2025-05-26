@@ -1,73 +1,105 @@
-<nav class="primaryNav">
-  <button routerLink="/home">Home</button>
-  <a routerLink="/customers">Manage Customers</a><br />
-  <a routerLink="/artists">Manage Artists</a><br />
-  <a routerLink="/services">Manage Services</a><br />
-</nav>
+<div class="container py-5">
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a routerLink="/home">Exit Staff Portal</a>
+    </div>
+  </nav>
 
-<table class="artist-table">
-  <thead>
-    <tr>
-      <th colspan="6" class="add-button-cell">
-        <button routerLink="/add-artist" class="add-artist-button">+ Add Artist</button>
-      </th>
-    </tr>
-    <tr>
-      <th>Photo</th>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let artist of artists">
-      <td><img [src]="artist.artistPhoto" alt="{{ artist.firstName }}" width="80" /></td>
-      <td>{{ artist.firstName }} {{ artist.lastName }}</td>
-      <td>{{ artist.artistCategory }}</td>
-      <td>{{ artist.email }}</td>
-      <td>{{ artist.phone }}</td>
-      <td>
-        <button (click)="editArtist(artist)">Edit</button>
-        <button (click)="deleteArtist(artist.artistID!)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!-- Page Heading -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-danger">Artist List</h2>
+    <button routerLink="/add-artist" class="btn btn-danger fw-bold">+ Add Artist</button>
+  </div>
 
-<!-- Edit Panel -->
-<div *ngIf="editingArtist" class="edit-panel">
-  <h3>Edit Artist</h3>
-  <form (ngSubmit)="saveArtist()" #editForm="ngForm">
-    <label>First Name</label>
-    <input name="firstName" [(ngModel)]="editingArtist.firstName" required />
+  <!-- Artist Table -->
+  <div class="table-responsive">
+    <table class="table table-dark table-bordered table-hover align-middle text-light">
+      <thead class="table-light text-dark">
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let artist of artists">
+          <td><img [src]="artist.artistPhoto" alt="{{ artist.firstName }}" class="img-thumbnail" style="width: 80px;" /></td>
+          <td>{{ artist.firstName }} {{ artist.lastName }}</td>
+          <td>{{ artist.artistCategory }}</td>
+          <td>{{ artist.email }}</td>
+          <td>{{ artist.phone }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="editArtist(artist)">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteArtist(artist.artistID!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <label>Last Name</label>
-    <input name="lastName" [(ngModel)]="editingArtist.lastName" required />
+  <!-- Edit Panel -->
+  <div *ngIf="editingArtist" class="bg-dark border border-light rounded p-4 mt-5 shadow">
+    <h3 class="text-danger mb-3">Edit Artist</h3>
+    <form (ngSubmit)="saveArtist()" #editForm="ngForm" class="row g-3 text-light">
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input class="form-control bg-black text-white" name="firstName" [(ngModel)]="editingArtist.firstName" required />
+      </div>
 
-    <label>Email</label>
-    <input name="email" [(ngModel)]="editingArtist.email" type="email" />
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input class="form-control bg-black text-white" name="lastName" [(ngModel)]="editingArtist.lastName" required />
+      </div>
 
-    <label>Phone</label>
-    <input name="phone" [(ngModel)]="editingArtist.phone" />
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input class="form-control bg-black text-white" name="email" [(ngModel)]="editingArtist.email" type="email" />
+      </div>
 
-    <label>Birth Date</label>
-    <input name="birthDate" type="date" [(ngModel)]="editingArtist.birthDate" />
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input class="form-control bg-black text-white" name="phone" [(ngModel)]="editingArtist.phone" />
+      </div>
 
-    <label>Category</label>
-    <input name="artistCategory" [(ngModel)]="editingArtist.artistCategory" />
+      <div class="col-md-6">
+        <label class="form-label">Birth Date</label>
+        <input class="form-control bg-black text-white" type="date" name="birthDate" [(ngModel)]="editingArtist.birthDate" />
+      </div>
 
-    <label>Photo URL</label>
-    <input name="artistPhoto" [(ngModel)]="editingArtist.artistPhoto" />
+      <div class="col-md-6">
+        <label class="form-label">Category</label>
+        <input class="form-control bg-black text-white" name="artistCategory" [(ngModel)]="editingArtist.artistCategory" />
+      </div>
 
-    <label>Bio</label>
-    <textarea name="bio" [(ngModel)]="editingArtist.bio"></textarea>
+      <div class="col-md-12">
+        <label class="form-label">Photo URL</label>
+        <input class="form-control bg-black text-white" name="artistPhoto" [(ngModel)]="editingArtist.artistPhoto" />
+      </div>
 
-    <label>Portfolio URL</label>
-    <input name="portfolioURL" [(ngModel)]="editingArtist.portfolioURL" />
+      <div class="col-md-12">
+        <label class="form-label">Bio</label>
+        <textarea class="form-control bg-black text-white" name="bio" [(ngModel)]="editingArtist.bio"></textarea>
+      </div>
 
-    <button type="submit">Update</button>
-    <button type="button" (click)="cancelEdit()">Cancel</button>
-  </form>
+      <div class="col-md-12">
+        <label class="form-label">Portfolio URL</label>
+        <input class="form-control bg-black text-white" name="portfolioURL" [(ngModel)]="editingArtist.portfolioURL" />
+      </div>
+
+      <div class="col-12 text-center mt-3">
+        <button type="submit" class="btn btn-outline-light me-2">Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Artist } from './artist.service';
 
 export interface ShopService {
   serviceID?: number;
@@ -16,6 +17,9 @@ export interface ShopService {
   createdAt: string;
   inkInfo: string;
   jewelryInfo: string;
+  completedPhotoURL?: string;
+  artistID?: number;
+  artist?: Artist; 
 }
 
 @Injectable({

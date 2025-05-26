@@ -1,116 +1,121 @@
-<div class="wizard">
+<div class="wizard container py-5">
 
-  <nav class="primaryNav">
-    <button routerLink="/home">Home</button>
-    <a routerLink="/customers">Manage Customers</a><br />
-    <a routerLink="/artists">Manage Artists</a><br />
-    <a routerLink="/services">Manage Services</a><br />
+  <!-- Hero-style Staff Portal Nav -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-5 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a routerLink="/home">Exit Staff Portal</a>
+    </div>
   </nav>
 
-    <!-- Step 1: Select or Add Customer -->
-<div *ngIf="step === 1">
-  <h2>Select or Add Customer</h2>
-  <app-customer-lookup (customerSelected)="useExistingCustomer($event)"></app-customer-lookup>
+  <!-- STEP 1: Customer -->
+  <div *ngIf="step === 1">
+    <h2 class="text-danger text-center mb-4">Step 1: Select or Add Customer</h2>
 
-  <div *ngIf="!customer">
-    <app-customer-form (customerCreated)="useNewCustomer($event)"></app-customer-form>
+    <app-customer-lookup (customerSelected)="useExistingCustomer($event)"></app-customer-lookup>
+
+    <div *ngIf="!customer" class="mt-4">
+      <app-customer-form (customerCreated)="useNewCustomer($event)" [showNav]="false"></app-customer-form>
+    </div>
+
+    <div *ngIf="isIncompleteCustomer" class="mt-4">
+      <p class="warning text-warning text-center fw-bold">Please complete this customer's profile before continuing.</p>
+      <app-customer-form [existingCustomer]="customer" (customerUpdated)="onCustomerUpdated($event)" [showNav]="false"></app-customer-form>
+    </div>
+
+    <div class="text-center mt-4">
+      <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!customer || isIncompleteCustomer">Next</button>
+    </div>
   </div>
 
-  <div *ngIf="isIncompleteCustomer">
-    <p class="warning">Please complete this customer's profile before continuing.</p>
-    <app-customer-form
-      [existingCustomer]="customer"
-      (customerUpdated)="onCustomerUpdated($event)">
-    </app-customer-form>
-  </div>
+  <!-- STEP 2: Medical Info -->
+  <div *ngIf="step === 2">
+    <h2 class="text-danger text-center mb-4">Step 2: Medical Info</h2>
 
-  <button (click)="nextStep()" [disabled]="!customer || isIncompleteCustomer">Next</button>
-</div>
-  
-    <!-- Step 2: Medical Info -->
-    <div *ngIf="step === 2">
-      <h2>Medical Information</h2>
-    
-      <label>Select any medical conditions:</label>
-      <div *ngFor="let condition of medicalConditionsList">
-        <label>
-          <input
-            type="checkbox"
-            [value]="condition"
-            (change)="onConditionChange($event)"
-            [checked]="selectedConditions.includes(condition)"
-          />
-          {{ condition }}
-        </label>
+    <label class="form-label">Select any medical conditions:</label>
+    <div class="row mb-3">
+      <div class="col-md-6" *ngFor="let condition of medicalConditionsList">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [value]="condition" (change)="onConditionChange($event)" [checked]="selectedConditions.includes(condition)">
+          <label class="form-check-label">{{ condition }}</label>
+        </div>
       </div>
-    
-      <label>Other conditions or notes:</label>
-      <textarea
-        [(ngModel)]="intake.conditionDetails"
-        (input)="updateConditionStatus()"
-        placeholder="List any other medical details"
-      ></textarea>
-    
-      <label>Medications:</label>
-      <textarea
-        [(ngModel)]="intake.medicationDetails"
-        (input)="updateMedicationStatus()"
-        placeholder="List any medications"
-      ></textarea>
-    
-      <button (click)="prevStep()">Back</button>
-      <button (click)="nextStep()">Next</button>
     </div>
-  
-    <!-- Step 3: Service Selection -->
-    <div *ngIf="step === 3">
-      <h2>Select Service</h2>
 
-      <select [(ngModel)]="selectedServiceID" (change)="onServiceSelected()" name="selectedService">
-        <option [ngValue]="null" disabled>Select a service</option>
-        <option *ngFor="let service of services" [value]="service.serviceID">
-          {{ service.title }} — {{ service.category }}
-        </option>
-      </select>
+    <label class="form-label">Other conditions or notes:</label>
+    <textarea class="form-control mb-3" [(ngModel)]="intake.conditionDetails" (input)="updateConditionStatus()" placeholder="List any other medical details"></textarea>
 
-      <p *ngIf="selectedService?.category">You selected: <strong>{{ selectedService.category }}</strong></p>
+    <label class="form-label">Medications:</label>
+    <textarea class="form-control mb-4" [(ngModel)]="intake.medicationDetails" (input)="updateMedicationStatus()" placeholder="List any medications"></textarea>
 
-      <p *ngIf="intake.isMinor"><strong>Note:</strong> This client is a minor. Parental consent is required.</p>
-
-      <button (click)="prevStep()">Back</button>
-      <button (click)="nextStep()" [disabled]="!selectedService">Next</button>
-    </div>
-  
-    <!-- Step 4: Parental Consent (if minor) -->
-    <div *ngIf="step === 4 && intake.isMinor">
-      <h2>Parental Consent</h2>
-      <app-parental-consent (consentFilled)="storeParentalConsent($event)"></app-parental-consent>
-    
-      <button (click)="prevStep()">Back</button>
-      <button (click)="nextStep()" [disabled]="!parentalConsent">Next</button>
-    </div>
-  
-    <!-- Step 5: Tattoo or Piercing Consent -->
-    <div *ngIf="step === 5">
-      <ng-container [ngSwitch]="selectedServiceType">
-        <div *ngSwitchCase="'Tattoo'">
-          <h2>Tattoo Consent</h2>
-          <app-tattoo-consent (consentFilled)="storeTattooConsent($event)"></app-tattoo-consent>
-        </div>
-        <div *ngSwitchCase="'Piercing'">
-          <h2>Piercing Consent</h2>
-          <app-piercing-consent (consentFilled)="storePiercingConsent($event)"></app-piercing-consent>
-        </div>
-      </ng-container>
-    
-      <button (click)="prevStep()">Back</button>
-      <button (click)="submitIntake()" [disabled]="!consentComplete">Submit</button>
-    </div>
-  
-    <!-- Confirmation -->
-    <div *ngIf="step === 6">
-      <h2>Thank you!</h2>
-      <p>Intake form submitted successfully.</p>
+    <div class="text-center">
+      <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
+      <button class="btn btn-outline-light" (click)="nextStep()">Next</button>
     </div>
   </div>
-  
+
+  <!-- STEP 3: Service -->
+  <div *ngIf="step === 3">
+    <h2 class="text-danger text-center mb-4">Step 3: Select Service</h2>
+
+    <select class="form-select mb-3" [(ngModel)]="selectedServiceID" (change)="onServiceSelected()" name="selectedService">
+      <option [ngValue]="null" disabled>Select a service</option>
+      <option *ngFor="let service of services" [value]="service.serviceID">
+        {{ service.title }} — {{ service.category }}
+      </option>
+    </select>
+
+    <p *ngIf="selectedService?.category" class="text-center">You selected: <strong>{{ selectedService.category }}</strong></p>
+
+    <p *ngIf="intake.isMinor" class="text-center text-warning">
+      <strong>Note:</strong> This client is a minor. Parental consent is required.
+    </p>
+
+    <div class="text-center">
+      <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
+      <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!selectedService">Next</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Parental Consent -->
+  <div *ngIf="step === 4 && intake.isMinor">
+    <h2 class="text-danger text-center mb-4">Step 4: Parental Consent</h2>
+    <app-parental-consent (consentFilled)="storeParentalConsent($event)"></app-parental-consent>
+
+    <div class="text-center mt-4">
+      <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
+      <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!parentalConsent">Next</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Consent Form -->
+  <div *ngIf="step === 5">
+    <ng-container [ngSwitch]="selectedServiceType">
+      <div *ngSwitchCase="'Tattoo'">
+        <h2 class="text-danger text-center mb-4">Step 5: Tattoo Consent</h2>
+        <app-tattoo-consent (consentFilled)="storeTattooConsent($event)"></app-tattoo-consent>
+      </div>
+      <div *ngSwitchCase="'Piercing'">
+        <h2 class="text-danger text-center mb-4">Step 5: Piercing Consent</h2>
+        <app-piercing-consent (consentFilled)="storePiercingConsent($event)"></app-piercing-consent>
+      </div>
+    </ng-container>
+
+    <div class="text-center mt-4">
+      <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
+      <button class="btn btn-outline-light" (click)="submitIntake()" [disabled]="!consentComplete">Submit</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Complete -->
+  <div *ngIf="step === 6" class="text-center mt-5">
+    <h2 class="text-success mb-3">✅ Thank You!</h2>
+    <p class="lead text-light">Intake form submitted successfully.</p>
+    <a routerLink="/portal" class="btn btn-outline-light mt-3">Return to Staff Portal</a>
+  </div>
+</div>

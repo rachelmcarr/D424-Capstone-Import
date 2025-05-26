@@ -1,14 +1,55 @@
-<h2>Staff Portal</h2>
-<button routerLink="/home">Home</button>
-<nav>
-  <a routerLink="/customers">View Customers</a><br />
-  <a routerLink="/add-customer">Add Customer</a><br />
-  <a routerLink="/artists">View Artists</a><br />
-  <a routerLink="/add-artist">Add Artists</a><br />
-  <a routerLink="/services">View Services</a><br />
-  <a routerLink="/add-service">Add Service</a><br />
-  <a routerLink="/intake">Client Intake Form</a><br />
-  <a routerLink="/tattoo-consent">Tattoo Consent</a><br />
-  <a routerLink="/piercing-consent">Piercing Consent</a><br />
-  <a routerLink="/parental-consent">Parental Consent</a><br />
-</nav>
+<div class="container py-5">
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a routerLink="/home">Exit Staff Portal</a>
+    </div>
+  </nav>
+
+  <!-- Welcome -->
+  <div class="text-center text-light">
+    <h1 class="text-danger fw-bold mb-3">Staff Portal</h1>
+    <p class="lead mb-4">Welcome to the Rare Oddities Staff Portal. Select a section below to manage shop operations or assist new clients.</p>
+  </div>
+
+  <!-- Portal Sections -->
+  <div class="row justify-content-center g-4 mt-4">
+    <div class="col-md-6 col-lg-3">
+      <div class="bg-dark border border-light rounded p-4 h-100 text-center shadow">
+        <h5 class="text-danger">Customers</h5>
+        <p class="text-light">Manage customer records and profiles.</p>
+        <a routerLink="/customers" class="btn btn-outline-light mt-3">Open</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="bg-dark border border-light rounded p-4 h-100 text-center shadow">
+        <h5 class="text-danger">Artists</h5>
+        <p class="text-light">Update artist bios and gallery info.</p>
+        <a routerLink="/artists" class="btn btn-outline-light mt-3">Open</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="bg-dark border border-light rounded p-4 h-100 text-center shadow">
+        <h5 class="text-danger">Services</h5>
+        <p class="text-light">Add or update service offerings.</p>
+        <a routerLink="/services" class="btn btn-outline-light mt-3">Open</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="bg-dark border border-light rounded p-4 h-100 text-center shadow">
+        <h5 class="text-danger">Intake Wizard</h5>
+        <p class="text-light">Begin a new client intake session.</p>
+        <a routerLink="/intake-wizard" class="btn btn-outline-light mt-3">Start Wizard</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,20 +16,23 @@ export class PublicArtistsDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    console.log('Route param:', idParam); // ✅ add this
-  
+  this.route.paramMap.subscribe(params => {
+    const idParam = params.get('id');
     if (idParam) {
       this.artistId = +idParam;
-      this.artistService.getById(this.artistId).subscribe({
-        next: (data) => {
-          console.log('Loaded artist:', data); // ✅ add this
-          this.artist = data;
-        },
-        error: (err) => {
-          console.error('Failed to load artist:', err);
-        }
-      });
+      this.loadArtist(this.artistId);
     }
-  }
+  });
+}
+
+loadArtist(id: number): void {
+  this.artistService.getById(id).subscribe({
+    next: (data) => {
+      this.artist = { ...data }; // clone to trigger change detection
+    },
+    error: (err) => {
+      console.error('Failed to load artist:', err);
+    }
+  });
+}
 }  

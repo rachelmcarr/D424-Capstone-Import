@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
+import { ArtistService, Artist } from '../../services/artist.service';
 
 @Component({
   selector: 'app-shop-service-list',
@@ -8,11 +9,17 @@ import { ShopServiceService, ShopService } from '../../services/shop-service.ser
 export class ShopServiceListComponent implements OnInit {
   services: ShopService[] = [];
   editingService: ShopService | null = null;
+  artists: Artist[] = [];
+  selectedArtistID: number | null = null;
 
-  constructor(private serviceService: ShopServiceService) {}
+  constructor(
+    private serviceService: ShopServiceService,
+    private artistService: ArtistService
+  ) {}
 
   ngOnInit(): void {
     this.loadServices();
+    this.loadArtists();
   }
 
   loadServices(): void {
@@ -24,22 +31,39 @@ export class ShopServiceListComponent implements OnInit {
 
   editService(service: ShopService): void {
     this.editingService = { ...service };
+    this.selectedArtistID = service.artistID ?? null;
   }
 
   cancelEdit(): void {
     this.editingService = null;
+    this.selectedArtistID = null;
   }
 
   updateService(): void {
     if (!this.editingService?.serviceID) return;
 
+    if (this.selectedArtistID) {
+      // Set artist object with just the ID
+      this.editingService.artist = { artistID: this.selectedArtistID } as Artist;
+    }
+
     this.serviceService.update(this.editingService).subscribe({
       next: () => {
         alert('Service updated.');
+
+        // Prompt to add to gallery
+        if (this.editingService?.completedPhotoURL && this.selectedArtistID) {
+          const confirmGallery = confirm('Add completed photo to artist gallery?');
+          if (confirmGallery) {
+            this.addToGallery(this.editingService.completedPhotoURL, this.selectedArtistID);
+          }
+        }
+
         this.editingService = null;
+        this.selectedArtistID = null;
         this.loadServices();
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Failed to update service:', err);
         alert('An error occurred while updating the service.');
       }
@@ -59,5 +83,22 @@ export class ShopServiceListComponent implements OnInit {
         }
       });
     }
+  }
+
+  addToGallery(imageURL: string, artistId: number): void {
+    this.artistService.addImageToGallery(artistId, imageURL).subscribe({
+      next: () => alert('Image added to artist gallery.'),
+      error: (err) => {
+        console.error('Failed to add image to gallery:', err);
+        alert('Failed to add image to artist gallery.');
+      }
+    });
+  }
+
+  loadArtists(): void {
+    this.artistService.getAll().subscribe({
+      next: (data) => this.artists = data,
+      error: (err) => console.error('Failed to load artists', err)
+    });
   }
 }
