@@ -70,6 +70,13 @@
       </option>
     </select>
 
+    <!-- Add New Service Link -->
+    <div class="text-center mb-3">
+      <a [routerLink]="['/add-service']" [queryParams]="{ returnTo: 'intake-wizard' }" class="text-decoration-underline text-light">
+        + Add a new service
+      </a>
+    </div>
+
     <p *ngIf="selectedService?.category" class="text-center">You selected: <strong>{{ selectedService.category }}</strong></p>
 
     <p *ngIf="intake.isMinor" class="text-center text-warning">
@@ -81,6 +88,7 @@
       <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!selectedService">Next</button>
     </div>
   </div>
+
 
   <!-- STEP 4: Parental Consent -->
   <div *ngIf="step === 4 && intake.isMinor">

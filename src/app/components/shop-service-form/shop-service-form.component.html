@@ -23,8 +23,22 @@
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Category</label>
-      <input name="category" [(ngModel)]="service.category" class="form-control bg-black text-white" required />
+      <label class="form-label">Category</label>    
+      <select name="category" [(ngModel)]="service.category" class="form-control bg-black text-white" required>
+        <option value="">-- Select --</option>
+        <option value="tattoo">Tattoo</option>
+        <option value="piercing">Piercing</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label>Artist</label>
+        <select [(ngModel)]="selectedArtistID" name="artistSelect" class="form-control bg-black text-white">
+          <option [ngValue]="null" disabled>Select an artist</option>
+          <option *ngFor="let artist of artists" [ngValue]="artist.artistID">
+            {{ artist.firstName }} {{ artist.lastName }}
+          </option>
+        </select>
     </div>
 
     <div class="col-md-6">
@@ -52,7 +66,7 @@
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Image URL</label>
+      <label class="form-label">Sketch URL</label>
       <input name="imageURL" [(ngModel)]="service.imageURL" class="form-control bg-black text-white" />
     </div>
 
