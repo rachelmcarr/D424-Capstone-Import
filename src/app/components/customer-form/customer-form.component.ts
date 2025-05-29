@@ -42,6 +42,7 @@ export class CustomerFormComponent implements OnChanges {
     if (this.existingCustomer?.customerID) {
       this.customerService.update(this.customer).subscribe({
         next: (updated) => {
+          this.customerService.setCustomer(updated); // ✅ store for wizard
           alert('Customer updated!');
           this.customerUpdated.emit(updated);
         },
@@ -54,6 +55,7 @@ export class CustomerFormComponent implements OnChanges {
       this.customer.createdAt = timestamp;
       this.customerService.add(this.customer).subscribe({
         next: (newCustomer) => {
+          this.customerService.setCustomer(newCustomer); // ✅ store for wizard
           alert('Customer created!');
           this.customerCreated.emit(newCustomer);
           form.resetForm();

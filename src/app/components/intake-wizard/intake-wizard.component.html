@@ -93,8 +93,10 @@
   <!-- STEP 4: Parental Consent -->
   <div *ngIf="step === 4 && intake.isMinor">
     <h2 class="text-danger text-center mb-4">Step 4: Parental Consent</h2>
-    <app-parental-consent (consentFilled)="storeParentalConsent($event)"></app-parental-consent>
-
+    <app-parental-consent
+      [customerID]="customer?.customerID"
+      (consentFilled)="storeParentalConsent($event)">
+    </app-parental-consent>
     <div class="text-center mt-4">
       <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
       <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!parentalConsent">Next</button>
@@ -106,11 +108,17 @@
     <ng-container [ngSwitch]="selectedServiceType">
       <div *ngSwitchCase="'Tattoo'">
         <h2 class="text-danger text-center mb-4">Step 5: Tattoo Consent</h2>
-        <app-tattoo-consent (consentFilled)="storeTattooConsent($event)"></app-tattoo-consent>
+        <app-tattoo-consent
+          [customerID]="customer?.customerID"
+          (consentFilled)="storeTattooConsent($event)">
+        </app-tattoo-consent>
       </div>
       <div *ngSwitchCase="'Piercing'">
         <h2 class="text-danger text-center mb-4">Step 5: Piercing Consent</h2>
-        <app-piercing-consent (consentFilled)="storePiercingConsent($event)"></app-piercing-consent>
+        <app-piercing-consent
+          [customerID]="customer?.customerID"
+          (consentFilled)="storePiercingConsent($event)">
+        </app-piercing-consent>
       </div>
     </ng-container>
 

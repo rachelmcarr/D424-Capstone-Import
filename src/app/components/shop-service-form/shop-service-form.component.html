@@ -26,14 +26,14 @@
       <label class="form-label">Category</label>    
       <select name="category" [(ngModel)]="service.category" class="form-control bg-black text-white" required>
         <option value="">-- Select --</option>
-        <option value="tattoo">Tattoo</option>
-        <option value="piercing">Piercing</option>
+        <option value="Tattoo">Tattoo</option>
+        <option value="Piercing">Piercing</option>
       </select>
     </div>
 
     <div class="col-md-6">
       <label>Artist</label>
-        <select [(ngModel)]="selectedArtistID" name="artistSelect" class="form-control bg-black text-white">
+        <select [(ngModel)]="service.artistID" name="artistID" class="form-control bg-black text-white">
           <option [ngValue]="null" disabled>Select an artist</option>
           <option *ngFor="let artist of artists" [ngValue]="artist.artistID">
             {{ artist.firstName }} {{ artist.lastName }}

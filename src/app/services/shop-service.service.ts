@@ -54,4 +54,9 @@ export class ShopServiceService {
   delete(serviceID: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${serviceID}`);
   }
+
+  assignCustomer(serviceId: number, customerId: number) {
+  return this.http.put(`http://localhost:8080/api/services/${serviceId}/assign-customer/${customerId}`, {});
+}
+
 }

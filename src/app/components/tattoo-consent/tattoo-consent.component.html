@@ -1,9 +1,13 @@
 <h2>Tattoo Consent Form</h2>
 
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-
+<form #form="ngForm">
   <!-- Hidden or pre-filled -->
   <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required hidden />
+
+  <label>
+    Customer ID:
+    <input type="number" name="customerID" [(ngModel)]="consent.customerID" required />
+  </label>
 
   <label>
     <input type="checkbox" name="drugsOrAlcohol" [(ngModel)]="consent.drugsOrAlcohol" />
@@ -84,6 +88,4 @@
     <input type="checkbox" name="consentsToTattoo" [(ngModel)]="consent.consentsToTattoo" />
     I consent to receiving a tattoo.
   </label>
-
-  <button type="submit">Submit</button>
 </form>

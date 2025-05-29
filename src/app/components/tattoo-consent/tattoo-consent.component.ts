@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TattooConsentService, TattooConsent } from '../../services/tattoo-consent.service';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-tattoo-consent',
   templateUrl: './tattoo-consent.component.html'
 })
 export class TattooConsentComponent {
-  consent: TattooConsent = {
+  @Input() customerID!: number; // incoming from wizard
 
+  @Output() consentFilled = new EventEmitter<TattooConsent>();
+
+  finalizeConsent() {
+    this.consent.customerID = this.customerID;
+    this.consent.dateSigned = new Date().toISOString();
+    this.consentFilled.emit(this.consent);
+  }
+
+  consent: TattooConsent = {
     intakeID: 0,
+    customerID: 0,
     drugsOrAlcohol: false,
     skinCondition: false,
     approveDesign: false,
@@ -30,20 +41,21 @@ export class TattooConsentComponent {
     dateSigned: ''
   };
 
-  constructor(private tattooConsentService: TattooConsentService) {}
+  constructor(
+    private tattooConsentService: TattooConsentService,
+    private customerService: CustomerService
+  ) {}
 
-  onSubmit(form: NgForm) {
-    this.consent.dateSigned = new Date().toISOString();
-
-    this.tattooConsentService.submitConsent(this.consent).subscribe({
-      next: () => {
-        alert('Tattoo consent submitted!');
-        form.resetForm();
-      },
-      error: (err: any) => {
-        console.error(err);
-        alert('Failed to submit tattoo consent.');
-      }
-    });
+  ngOnInit() {
+    this.consent.customerID = this.customerID; // ✅ Assign when component loads
   }
+
+  done() {
+  this.consent.customerID = this.customerID;
+  this.consent.dateSigned = new Date().toISOString();
+  console.log("TattooConsent done:", this.consent);
+
+  // Instead of submitting to backend directly, just emit the filled consent
+  this.consentFilled.emit(this.consent);
+}
 }

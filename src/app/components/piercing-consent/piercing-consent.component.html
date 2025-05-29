@@ -1,6 +1,6 @@
 <h2>Piercing Consent Form</h2>
 
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+<form #form="ngForm">
   <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" placeholder="Intake ID" required />
 
   <label>
@@ -17,6 +17,4 @@
     <input type="checkbox" name="consentsToPiercing" [(ngModel)]="consent.consentsToPiercing" />
     I consent to receiving a piercing.
   </label>
-
-  <button type="submit">Submit</button>
 </form>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface TattooConsent {
   intakeID: number;
+  customerID: number;
   drugsOrAlcohol: boolean;
   skinCondition: boolean;
   approveDesign: boolean;
