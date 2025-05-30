@@ -32,6 +32,10 @@ export class ClientIntakeService {
     return this.http.get<ClientIntake[]>(this.apiUrl);
   }
 
+  getByCustomerId(customerId: number): Observable<ClientIntake[]> {
+    return this.http.get<ClientIntake[]>(`${this.apiUrl}/customer/${customerId}`);
+  }
+
   submitIntake(intake: any): Observable<any> {
     return this.http.post('http://localhost:8080/api/client-intakes', intake);
   }

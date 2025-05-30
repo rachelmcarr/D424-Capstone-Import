@@ -1,0 +1,24 @@
+<h2>Customer Details</h2>
+<p><strong>Name:</strong> {{ customer?.firstName }} {{ customer?.lastName }}</p>
+<p><strong>Medical Info:</strong> {{ intake?.conditionDetails }}</p>
+<p><strong>Services:</strong></p>
+<ul>
+  <li *ngFor="let s of services">
+    {{ s.title }} - {{ s.category }}
+  </li>
+</ul>
+
+<div *ngIf="tattooConsent">
+  <h3>Tattoo Consent</h3>
+  <!-- display relevant fields -->
+</div>
+
+<div *ngIf="piercingConsent">
+  <h3>Piercing Consent</h3>
+  <!-- display relevant fields -->
+</div>
+
+<div *ngIf="parentalConsent">
+  <h3>Parental Consent</h3>
+  <!-- display relevant fields -->
+</div>

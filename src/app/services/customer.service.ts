@@ -36,6 +36,10 @@ export class CustomerService {
     console.log('Current customer set to:', customer);
   }
 
+  getById(id: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/${id}`);
+  }
+
   getCustomer(): Customer | null {
     return this.currentCustomer;
   }

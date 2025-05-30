@@ -35,6 +35,10 @@ export class ShopServiceService {
     return this.http.get<ShopService[]>(this.apiUrl);
   }
 
+  getByCustomer(customerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8080/api/shop-services/customer/${customerId}`);
+  }
+
   /** Get a service by ID */
   getById(serviceID: number): Observable<ShopService> {
     return this.http.get<ShopService>(`${this.apiUrl}/${serviceID}`);

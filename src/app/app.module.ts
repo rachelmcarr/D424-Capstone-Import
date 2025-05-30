@@ -23,6 +23,7 @@ import { PublicArtistsComponent } from './components/public-artists/public-artis
 import { PublicArtistsDetailComponent } from './components/public-artists-details/public-artists-detail.component';
 import { IntakeWizardComponent } from './components/intake-wizard/intake-wizard.component';
 import { CustomerLookupComponent } from './components/customer-lookup/customer-lookup.component';
+import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CustomerLookupComponent } from './components/customer-lookup/customer-l
     PublicArtistsComponent,
     PublicArtistsDetailComponent,
     IntakeWizardComponent,
-    CustomerLookupComponent
+    CustomerLookupComponent,
+    CustomerDetailsComponent
   ],
   imports: [
     BrowserModule,

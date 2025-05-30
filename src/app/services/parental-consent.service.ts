@@ -25,6 +25,10 @@ export class ParentalConsentService {
 
   constructor(private http: HttpClient) {}
 
+  getByCustomerId(customerId: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/api/parental-consents/customer/${customerId}`);
+  }
+
   submitConsent(consent: ParentalConsent): Observable<ParentalConsent> {
     return this.http.post<ParentalConsent>(this.apiUrl, consent);
   }

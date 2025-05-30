@@ -42,6 +42,7 @@
           <td>{{ customer.driverLicense }}</td>
           <td>
             <button class="btn btn-sm btn-outline-light me-2" (click)="editCustomer(customer)">Edit</button>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="viewDetails(customer)">View Details</button>
             <button class="btn btn-sm btn-outline-danger" (click)="deleteCustomer(customer.customerID!)">Delete</button>
           </td>
         </tr>

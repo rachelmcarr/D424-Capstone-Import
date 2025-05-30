@@ -20,6 +20,10 @@ export class PiercingConsentService {
 
   constructor(private http: HttpClient) {}
 
+  getByCustomerId(customerId: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/api/piercing-consents/customer/${customerId}`);
+  }
+
   submitConsent(consent: PiercingConsent): Observable<PiercingConsent> {
     return this.http.post<PiercingConsent>(this.apiUrl, consent);
   }

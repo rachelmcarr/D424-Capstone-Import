@@ -33,6 +33,10 @@ export class TattooConsentService {
 
   constructor(private http: HttpClient) {}
 
+  getByCustomerId(customerId: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/api/tattoo-consents/customer/${customerId}`);
+  }
+
   submitConsent(consent: TattooConsent): Observable<TattooConsent> {
     return this.http.post<TattooConsent>(this.apiUrl, consent);
   }
