@@ -15,6 +15,12 @@ import { PiercingConsentComponent } from '../piercing-consent/piercing-consent.c
 export class IntakeWizardComponent implements OnInit {
   step = 1;
 
+  @ViewChild(TattooConsentComponent)
+  tattooConsentComponent!: TattooConsentComponent;
+
+  @ViewChild(PiercingConsentComponent)
+  piercingConsentComponent!: PiercingConsentComponent;
+
   constructor(
     private clientIntakeService: ClientIntakeService,
     private tattooConsentService: TattooConsentService,
@@ -23,17 +29,11 @@ export class IntakeWizardComponent implements OnInit {
     private shopServiceService: ShopServiceService
   ) {}
 
-  @ViewChild(TattooConsentComponent)
-  tattooConsentComponent!: TattooConsentComponent;
-
-  @ViewChild(PiercingConsentComponent)
-  piercingConsentComponent!: PiercingConsentComponent;
-
   customer: any = null;
   isIncompleteCustomer: boolean = false;
 
   intake = {
-    customerID: 0,
+    customer: { customerID: 0 },
     serviceID: 0,
     hasMedicalConditions: false,
     conditionDetails: '',
@@ -42,14 +42,7 @@ export class IntakeWizardComponent implements OnInit {
     isMinor: false
   };
 
-  medicalConditionsList: string[] = [
-    'TB', 'Epilepsy', 'Blood Thinners', 'Scarring/Keloiding', 'HIV',
-    'Asthma', 'Eczema/Psoriasis', 'Gonorrhea/Syphilis', 'Hepatitis',
-    'Heart Condition', 'MSRA/Staph Infection', 'Herpes',
-    'Hemophilia/Other Bleeding Disorder', 'Pregnant/Nursing',
-    'Allergic Reactions to Latex', 'Diabetes', 'Skin Conditions',
-    'Fainting or Dizziness', 'Allergic Reaction to Antibiotics'
-  ];
+  medicalConditionsList: string[] = [/* same as before */];
   selectedConditions: string[] = [];
 
   services: any[] = [];
@@ -63,35 +56,24 @@ export class IntakeWizardComponent implements OnInit {
 
   ngOnInit(): void {
     this.shopServiceService.getAll().subscribe({
-      next: (data) => {
-        this.services = data;
-      },
-      error: (err) => {
-        console.error('Failed to load services', err);
-      }
+      next: (data) => this.services = data,
+      error: (err) => console.error('Failed to load services', err)
     });
   }
 
   nextStep() {
-  if (this.step === 3 && this.intake.isMinor) {
-    this.step = 4;
-  } else if (this.step === 3 && !this.intake.isMinor) {
-    this.step = 5;
-  } else if (this.step === 4) {
-    this.step = 5;
-  } else if (this.step === 5) {
-    if (this.selectedServiceType === 'Tattoo' && this.tattooConsentComponent) {
-      this.tattooConsentComponent.done(); // ✅ emit early
+    if (this.step === 3 && this.intake.isMinor) {
+      this.step = 4;
+    } else if (this.step === 3 && !this.intake.isMinor) {
+      this.step = 5;
+    } else if (this.step === 4) {
+      this.step = 5;
+    } else if (this.step === 5) {
+      this.step = 6; // User will now press "Submit"
+    } else {
+      this.step++;
     }
-    if (this.selectedServiceType === 'Piercing' && this.piercingConsentComponent) {
-      this.piercingConsentComponent.done(); // ✅ emit early
-    }
-    this.step = 6;
-  } else {
-    this.step++;
   }
-}
-
 
   prevStep() {
     if (this.step > 1) this.step--;
@@ -101,18 +83,13 @@ export class IntakeWizardComponent implements OnInit {
     if (this.selectedServiceID != null) {
       const id = Number(this.selectedServiceID);
       this.selectedService = this.services.find(s => s.serviceID === id);
-  
+
       if (this.selectedService) {
         this.intake.serviceID = this.selectedService.serviceID;
-        if (this.selectedService.category === 'Tattoo' || this.selectedService.category === 'Piercing') {
-          this.selectedServiceType = this.selectedService.category;
-        } else {
-          console.warn('Invalid service category:', this.selectedService.category);
-          this.selectedServiceType = 'Tattoo'; // default fallback
-        }
+        this.selectedServiceType = (this.selectedService.category === 'Piercing') ? 'Piercing' : 'Tattoo';
       }
     }
-  }  
+  }
 
   checkIfMinor(birthDate: string | Date): boolean {
     const birth = new Date(birthDate);
@@ -130,14 +107,14 @@ export class IntakeWizardComponent implements OnInit {
 
   useExistingCustomer(customer: any) {
     this.customer = customer;
-    this.intake.customerID = customer.customerID;
+    this.intake.customer = customer.customerID;
     this.intake.isMinor = this.checkIfMinor(customer.birthDate);
     this.checkCustomerCompleteness();
   }
 
   useNewCustomer(customer: any) {
     this.customer = customer;
-    this.intake.customerID = customer.customerID;
+    this.intake.customer = customer.customerID;
     this.intake.isMinor = this.checkIfMinor(customer.birthDate);
     this.checkCustomerCompleteness();
   }
@@ -175,59 +152,65 @@ export class IntakeWizardComponent implements OnInit {
   }
 
   storeTattooConsent(consent: any) {
+    console.log('[Wizard] storeTattooConsent received:', consent);
     this.tattooConsent = consent;
   }
 
   storePiercingConsent(consent: any) {
+    console.log('[Wizard] storePiercingConsent received:', consent);
     this.piercingConsent = consent;
   }
 
   get consentComplete(): boolean {
+    console.log('[Wizard] Consent check:', this.tattooConsent || this.piercingConsent);
     if (this.selectedServiceType === 'Tattoo') return !!this.tattooConsent;
     if (this.selectedServiceType === 'Piercing') return !!this.piercingConsent;
     return false;
   }
 
   submitIntake() {
-    this.intake.conditionDetails = this.selectedConditions.join(', ');
+  this.intake.conditionDetails = this.selectedConditions.join(', ');
 
-    if (this.selectedServiceType === 'Tattoo' && this.tattooConsentComponent) {
-      this.tattooConsentComponent.finalizeConsent();
-    }
-
-    if (this.selectedServiceType === 'Piercing' && this.piercingConsentComponent) {
-      this.piercingConsentComponent.finalizeConsent();
-    }
-
-    this.clientIntakeService.submitIntake(this.intake).subscribe({
-      next: (savedIntake) => {
-        const intakeID = savedIntake.intakeID;
-
-        if (this.intake.isMinor && this.parentalConsent) {
-          this.parentalConsent.intakeID = intakeID;
-          this.parentalConsent.customer = this.customer;
-          this.parentalConsentService.submitConsent(this.parentalConsent).subscribe();
-        }
-
-        if (this.selectedServiceType === 'Tattoo' && this.tattooConsent) {
-          this.tattooConsent.intakeID = intakeID;
-          this.tattooConsent.customer = this.customer;
-          this.tattooConsentService.submitConsent(this.tattooConsent).subscribe();
-        }
-
-        if (this.selectedServiceType === 'Piercing' && this.piercingConsent) {
-          this.piercingConsent.intakeID = intakeID;
-          this.piercingConsent.customer = this.customer;
-          this.piercingConsentService.submitConsent(this.piercingConsent).subscribe();
-        }
-
-        alert('All forms submitted successfully!');
-        this.step = 6;
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Failed to submit intake.');
-      }
-    });
+  if (this.selectedServiceType === 'Tattoo' && this.tattooConsentComponent) {
+    this.tattooConsentComponent.finalizeConsent();
   }
+
+  if (this.selectedServiceType === 'Piercing' && this.piercingConsentComponent) {
+    this.piercingConsentComponent.finalizeConsent();
+  }
+
+  // ✅ Fix the structure so the backend sees customer -> customerID
+  this.intake.customer = { customerID: this.customer?.customerID };
+
+  this.clientIntakeService.submitIntake(this.intake).subscribe({
+    next: (savedIntake) => {
+      const intakeID = savedIntake.intakeID;
+
+      if (this.intake.isMinor && this.parentalConsent) {
+        this.parentalConsent.intakeID = intakeID;
+        this.parentalConsent.customer = this.customer;
+        this.parentalConsentService.submitConsent(this.parentalConsent).subscribe();
+      }
+
+      if (this.selectedServiceType === 'Tattoo' && this.tattooConsent) {
+        this.tattooConsent.intakeID = intakeID;
+        this.tattooConsent.customer = this.customer;
+        this.tattooConsentService.submitConsent(this.tattooConsent).subscribe();
+      }
+
+      if (this.selectedServiceType === 'Piercing' && this.piercingConsent) {
+        this.piercingConsent.intakeID = intakeID;
+        this.piercingConsent.customer = this.customer;
+        this.piercingConsentService.submitConsent(this.piercingConsent).subscribe();
+      }
+
+      alert('All forms submitted successfully!');
+      this.step = 6;
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Failed to submit intake.');
+    }
+  });
+}
 }

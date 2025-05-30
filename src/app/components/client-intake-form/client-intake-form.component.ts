@@ -9,7 +9,7 @@ import { ShopServiceService } from '../../services/shop-service.service';
 })
 export class ClientIntakeFormComponent {
   intake: ClientIntake = {
-    customerID: 0,
+    customer: { customerID: 0 },
     serviceID: 0,
     dateSubmitted: '',
     hasAllergies: false,
@@ -39,7 +39,7 @@ export class ClientIntakeFormComponent {
 
   // Call this when customer is selected (e.g., step 1 of wizard)
   onCustomerSelected(customerId: number) {
-    this.intake.customerID = customerId;
+    this.intake.customer = { customerID: customerId };
   }
 
   // Call this when an existing service is selected
@@ -47,8 +47,8 @@ export class ClientIntakeFormComponent {
     this.intake.serviceID = serviceId;
 
     // Optionally associate the service with the customer in backend
-    if (this.intake.customerID) {
-      this.shopServiceService.assignCustomer(serviceId, this.intake.customerID).subscribe({
+    if (this.intake.customer) {
+      this.shopServiceService.assignCustomer(serviceId, this.intake.customer.customerID).subscribe({
         next: () => console.log('Service associated with customer'),
         error: (err: any) => console.error('Failed to associate service:', err)
       });

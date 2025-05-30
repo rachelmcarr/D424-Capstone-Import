@@ -12,12 +12,6 @@ export class PiercingConsentComponent {
 
   @Output() consentFilled = new EventEmitter<PiercingConsent>();
 
-  finalizeConsent() {
-  this.consent.customerID = this.customerID;
-  this.consent.dateSigned = new Date().toISOString();
-  this.consentFilled.emit(this.consent);
-}
-
   consent: PiercingConsent = {
     intakeID: 0,
     customerID: 0,
@@ -27,17 +21,14 @@ export class PiercingConsentComponent {
     dateSigned: ''
   };
 
-  constructor(
-    private piercingConsentService: PiercingConsentService,
-    private customerService: CustomerService
-  ) {}
+  ngOnInit() {
+    this.consent.customerID = this.customerID;
+  }
 
-  done() {
-  this.consent.customerID = this.customerID;
-  this.consent.dateSigned = new Date().toISOString();
-  console.log("PiercingConsent done:", this.consent);
-
-  // Instead of submitting to backend directly, just emit the filled consent
-  this.consentFilled.emit(this.consent);
-}
+  finalizeConsent() {
+    this.consent.customerID = this.customerID;
+    this.consent.dateSigned = new Date().toISOString();
+    console.log("PiercingConsent finalized:", this.consent);
+    this.consentFilled.emit(this.consent);
+  }
 }

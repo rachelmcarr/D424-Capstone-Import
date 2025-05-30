@@ -1,22 +1,13 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { TattooConsentService, TattooConsent } from '../../services/tattoo-consent.service';
-import { CustomerService } from '../../services/customer.service';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { TattooConsent } from '../../services/tattoo-consent.service';
 
 @Component({
   selector: 'app-tattoo-consent',
   templateUrl: './tattoo-consent.component.html'
 })
-export class TattooConsentComponent {
-  @Input() customerID!: number; // incoming from wizard
-
+export class TattooConsentComponent implements OnInit {
+  @Input() customerID!: number;
   @Output() consentFilled = new EventEmitter<TattooConsent>();
-
-  finalizeConsent() {
-    this.consent.customerID = this.customerID;
-    this.consent.dateSigned = new Date().toISOString();
-    this.consentFilled.emit(this.consent);
-  }
 
   consent: TattooConsent = {
     intakeID: 0,
@@ -41,21 +32,15 @@ export class TattooConsentComponent {
     dateSigned: ''
   };
 
-  constructor(
-    private tattooConsentService: TattooConsentService,
-    private customerService: CustomerService
-  ) {}
-
   ngOnInit() {
-    this.consent.customerID = this.customerID; // ✅ Assign when component loads
+    this.consent.customerID = this.customerID;
   }
 
-  done() {
-  this.consent.customerID = this.customerID;
-  this.consent.dateSigned = new Date().toISOString();
-  console.log("TattooConsent done:", this.consent);
-
-  // Instead of submitting to backend directly, just emit the filled consent
-  this.consentFilled.emit(this.consent);
-}
+  finalizeConsent() {
+    this.consent.customerID = this.customerID;
+    this.consent.dateSigned = new Date().toISOString();
+    console.log('[TattooConsentComponent] finalizeConsent called');
+    console.log("TattooConsent finalized:", this.consent);
+    this.consentFilled.emit(this.consent);
+  }
 }
