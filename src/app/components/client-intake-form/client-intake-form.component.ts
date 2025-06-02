@@ -29,7 +29,7 @@ export class ClientIntakeFormComponent {
     'Hepatitis', 'Heart Condition', 'MSRA/Staph Infection', 'Herpes',
     'Hemophilia/Other Bleeding Disorder', 'Pregnant/Nursing',
     'Allergic Reactions to Latex', 'Diabetes', 'Skin Conditions',
-    'Fainting or Dizziness', 'Allergic Reaction to Antibiotics'
+    'Fainting or Dizziness', 'Allergic Reaction to Antibiotics', "Other"
   ];
 
   constructor(

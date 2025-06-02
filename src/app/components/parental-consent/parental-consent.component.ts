@@ -9,9 +9,13 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class ParentalConsentComponent {
   @Input() customerID!: number;
+  @Input() shopServiceID!: number;
+  @Output() consentFilled = new EventEmitter<any>();
+
   consent: ParentalConsent = {
     intakeID: 0,
     customerID: 0,
+    shopServiceID: 0,
     releaseLiability: false,
     confirmRelationship: false,
     understandsHealing: false,
@@ -25,31 +29,34 @@ export class ParentalConsentComponent {
 
   constructor(
     private consentService: ParentalConsentService,
-  private customerService: CustomerService
+    private customerService: CustomerService
 ) {}
 
-  @Output() consentFilled = new EventEmitter<any>();
+  ngOnInit() {
+    if (this.customerID) {
+      this.consent.customerID = this.customerID;
+    }
 
-  onSubmit(form: NgForm) {
-    const customerID = this.customerService.getCustomerID();
-    if (!customerID) {
-      alert('No customer selected. Please complete customer info first.');
+    if (this.shopServiceID) {
+      this.consent.shopServiceID = this.shopServiceID;
+    } else {
+      console.error("ParentalConsentComponent is missing shopServiceID input!");
+    }
+  }
+
+
+  finalizeConsent() {
+    this.consent.customerID = this.customerID;
+    this.consent.shopServiceID = this.shopServiceID;
+
+    if (!this.consent.shopServiceID || this.consent.shopServiceID === 0) {
+      console.error("Cannot finalize consent: invalid shopServiceID.");
       return;
     }
-    this.consent.customerID = this.customerID;
+
     this.consent.dateSigned = new Date().toISOString();
-    console.log("ParentalConsent before submit:", this.consent);
-    this.consentService.submitConsent(this.consent)
-.subscribe({
-      next: () => {
-        this.consentFilled.emit(this.consent); // ✅ emits consent to parent
-        alert('Parental consent submitted!');
-        form.resetForm();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Failed to submit parental consent.');
-      }
-    });
+    console.log("ParentalConsent finalized:", this.consent);
+    this.consentFilled.emit(this.consent);
   }
-}  
+
+}

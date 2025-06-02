@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface ClientIntake {
   intakeID?: number;
   customer: { customerID: number };
-  serviceID: number;
+  serviceID: number | null;
   dateSubmitted: string;
   hasAllergies: boolean;
   allergyDetails: string;

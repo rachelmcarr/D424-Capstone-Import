@@ -7,7 +7,7 @@ import { Customer, CustomerService } from '../../services/customer.service';
   templateUrl: './customer-form.component.html'
 })
 export class CustomerFormComponent implements OnChanges {
-  @Input() existingCustomer?: Customer;
+  @Input() existingCustomer?: Customer | null;
   @Input() showNav: boolean = true;
   @Output() customerCreated = new EventEmitter<Customer>();
   @Output() customerUpdated = new EventEmitter<Customer>();

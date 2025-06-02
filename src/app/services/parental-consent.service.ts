@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface ParentalConsent {
   consentID?: number;
   customerID: number;
+  shopServiceID: number;
   intakeID: number;
   releaseLiability: boolean,
   confirmRelationship: boolean,

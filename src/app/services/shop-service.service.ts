@@ -5,6 +5,7 @@ import { Artist } from './artist.service';
 
 export interface ShopService {
   serviceID?: number;
+  customer?: { customerID: number };
   title: string;
   description: string;
   location: string;
@@ -36,7 +37,7 @@ export class ShopServiceService {
   }
 
   getByCustomer(customerId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/api/shop-services/customer/${customerId}`);
+    return this.http.get<any[]>(`http://localhost:8080/api/services/customer/${customerId}`);
   }
 
   /** Get a service by ID */

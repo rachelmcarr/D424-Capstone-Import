@@ -1,24 +1,47 @@
-<h2>Customer Details</h2>
-<p><strong>Name:</strong> {{ customer?.firstName }} {{ customer?.lastName }}</p>
-<p><strong>Medical Info:</strong> {{ intake?.conditionDetails }}</p>
-<p><strong>Services:</strong></p>
-<ul>
-  <li *ngFor="let s of services">
-    {{ s.title }} - {{ s.category }}
-  </li>
-</ul>
+<div class="container py-5">
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a routerLink="/home">Exit Staff Portal</a>
+    </div>
+  </nav>
 
-<div *ngIf="tattooConsent">
-  <h3>Tattoo Consent</h3>
-  <!-- display relevant fields -->
-</div>
+  <!-- Customer Details -->
+  <div class="text-light">
+    <h2 class="text-danger">Customer Details</h2>
+    <p><strong>Name:</strong> {{ customer?.firstName }} {{ customer?.lastName }}</p>
+    <p><strong>Email:</strong> {{ customer?.email }}</p>
+    <p><strong>Phone:</strong> {{ customer?.phone }}</p>
+    <p><strong>Birth Date:</strong> {{ customer?.birthDate | date }}</p>
+    <p><strong>Driver License:</strong> {{ customer?.driverLicense }}</p>
+    <p><strong>Medical Info:</strong> {{ intake?.conditionDetails }}</p>
 
-<div *ngIf="piercingConsent">
-  <h3>Piercing Consent</h3>
-  <!-- display relevant fields -->
-</div>
+    <h4 class="mt-4">Services</h4>
+    <ul>
+      <li *ngFor="let s of services">
+        {{ s.title }} - {{ s.category }}
+      </li>
+    </ul>
 
-<div *ngIf="parentalConsent">
-  <h3>Parental Consent</h3>
-  <!-- display relevant fields -->
+    <div *ngIf="tattooConsent">
+      <h4 class="text-danger mt-4">Tattoo Consent</h4>
+      <!-- Add fields as needed -->
+    </div>
+
+    <div *ngIf="piercingConsent">
+      <h4 class="text-danger mt-4">Piercing Consent</h4>
+      <!-- Add fields as needed -->
+    </div>
+
+    <div *ngIf="parentalConsent">
+      <h4 class="text-danger mt-4">Parental Consent</h4>
+      <!-- Add fields as needed -->
+    </div>
+  </div>
 </div>

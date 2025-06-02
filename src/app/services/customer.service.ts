@@ -57,8 +57,12 @@ export class CustomerService {
   }
 
   update(customer: Customer): Observable<Customer> {
+    if (customer.customerID == null) {
+      throw new Error('Cannot update customer without an ID');
+    }
     return this.http.put<Customer>(`${this.apiUrl}/${customer.customerID}`, customer);
   }
+
 
   delete(customerID: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${customerID}`);

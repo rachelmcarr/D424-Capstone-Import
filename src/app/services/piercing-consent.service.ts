@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface PiercingConsent {
   piercingConsentID?: number;
   customerID: number;
+  shopServiceID: number;
   intakeID: number;
   understandsHealingProcess: boolean;
   agreesToAftercare: boolean;

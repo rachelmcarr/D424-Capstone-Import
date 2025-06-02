@@ -16,7 +16,6 @@
   <!-- STEP 1: Customer -->
   <div *ngIf="step === 1">
     <h2 class="text-danger text-center mb-4">Step 1: Select or Add Customer</h2>
-
     <app-customer-lookup (customerSelected)="useExistingCustomer($event)"></app-customer-lookup>
 
     <div *ngIf="!customer" class="mt-4">
@@ -25,7 +24,7 @@
 
     <div *ngIf="isIncompleteCustomer" class="mt-4">
       <p class="warning text-warning text-center fw-bold">Please complete this customer's profile before continuing.</p>
-      <app-customer-form [existingCustomer]="customer" (customerUpdated)="onCustomerUpdated($event)" [showNav]="false"></app-customer-form>
+      <app-customer-form [existingCustomer]="customer ?? undefined" (customerUpdated)="onCustomerUpdated($event)" [showNav]="false"></app-customer-form>
     </div>
 
     <div class="text-center mt-4">
@@ -41,17 +40,24 @@
     <div class="row mb-3">
       <div class="col-md-6" *ngFor="let condition of medicalConditionsList">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" [value]="condition" (change)="onConditionChange($event)" [checked]="selectedConditions.includes(condition)">
+          <input 
+            class="form-check-input"
+            type="checkbox"
+            [value]="condition"
+            [checked]="selectedConditions.includes(condition)"
+            (change)="onConditionChange($event)"
+            [attr.name]="'condition_' + condition"
+          />
           <label class="form-check-label">{{ condition }}</label>
         </div>
       </div>
     </div>
 
     <label class="form-label">Other conditions or notes:</label>
-    <textarea class="form-control mb-3" [(ngModel)]="intake.conditionDetails" (input)="updateConditionStatus()" placeholder="List any other medical details"></textarea>
+    <textarea class="form-control mb-3" [(ngModel)]="intake.conditionDetails" name="conditionDetails" (input)="updateConditionStatus()" placeholder="List any other medical details"></textarea>
 
     <label class="form-label">Medications:</label>
-    <textarea class="form-control mb-4" [(ngModel)]="intake.medicationDetails" (input)="updateMedicationStatus()" placeholder="List any medications"></textarea>
+    <textarea class="form-control mb-4" [(ngModel)]="intake.medicationDetails" name="medicationDetails" (input)="updateMedicationStatus()" placeholder="List any medications"></textarea>
 
     <div class="text-center">
       <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
@@ -63,21 +69,31 @@
   <div *ngIf="step === 3">
     <h2 class="text-danger text-center mb-4">Step 3: Select Service</h2>
 
-    <select class="form-select mb-3" [(ngModel)]="selectedServiceID" (change)="onServiceSelected()" name="selectedService">
+    <select
+      class="form-select mb-3"
+      [(ngModel)]="selectedServiceID"
+      name="selectedServiceID"
+      (change)="onServiceSelected()"
+    >
       <option [ngValue]="null" disabled>Select a service</option>
-      <option *ngFor="let service of services" [value]="service.serviceID">
+      <option *ngFor="let service of services" [ngValue]="service.serviceID!">
         {{ service.title }} — {{ service.category }}
       </option>
     </select>
 
-    <!-- Add New Service Link -->
     <div class="text-center mb-3">
-      <a [routerLink]="['/add-service']" [queryParams]="{ returnTo: 'intake-wizard' }" class="text-decoration-underline text-light">
+      <a
+        [routerLink]="['/add-service']"
+        [queryParams]="{ returnTo: 'intake-wizard' }"
+        class="text-decoration-underline text-light"
+      >
         + Add a new service
       </a>
     </div>
 
-    <p *ngIf="selectedService?.category" class="text-center">You selected: <strong>{{ selectedService.category }}</strong></p>
+    <p *ngIf="selectedService?.category" class="text-center">
+      You selected: <strong>{{ selectedService?.category }}</strong>
+    </p>
 
     <p *ngIf="intake.isMinor" class="text-center text-warning">
       <strong>Note:</strong> This client is a minor. Parental consent is required.
@@ -85,16 +101,18 @@
 
     <div class="text-center">
       <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
-      <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!selectedService">Next</button>
+      <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!selectedServiceID">
+        Next
+      </button>
     </div>
   </div>
-
 
   <!-- STEP 4: Parental Consent -->
   <div *ngIf="step === 4 && intake.isMinor">
     <h2 class="text-danger text-center mb-4">Step 4: Parental Consent</h2>
     <app-parental-consent
       [customerID]="customer?.customerID"
+      [shopServiceID]="selectedServiceID"
       (consentFilled)="storeParentalConsent($event)">
     </app-parental-consent>
     <div class="text-center mt-4">
@@ -110,6 +128,7 @@
         <h2 class="text-danger text-center mb-4">Step 5: Tattoo Consent</h2>
         <app-tattoo-consent
           [customerID]="customer?.customerID"
+          [shopServiceID]="selectedServiceID"
           (consentFilled)="storeTattooConsent($event)">
         </app-tattoo-consent>
       </div>
@@ -117,6 +136,7 @@
         <h2 class="text-danger text-center mb-4">Step 5: Piercing Consent</h2>
         <app-piercing-consent
           [customerID]="customer?.customerID"
+          [shopServiceID]="selectedServiceID"
           (consentFilled)="storePiercingConsent($event)">
         </app-piercing-consent>
       </div>
