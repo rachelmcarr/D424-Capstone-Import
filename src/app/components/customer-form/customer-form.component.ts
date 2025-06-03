@@ -9,6 +9,7 @@ import { Customer, CustomerService } from '../../services/customer.service';
 export class CustomerFormComponent implements OnChanges {
   @Input() existingCustomer?: Customer | null;
   @Input() showNav: boolean = true;
+  @Input() isMinor: boolean = false;
   @Output() customerCreated = new EventEmitter<Customer>();
   @Output() customerUpdated = new EventEmitter<Customer>();
 

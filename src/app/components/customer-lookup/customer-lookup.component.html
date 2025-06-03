@@ -1,16 +1,36 @@
-<h3>Search Existing Customer</h3>
+<!-- Search Field -->
+<!-- Aligned Search Bar -->
+<div class="container my-3">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control bg-black text-light"
+          placeholder="Search by name"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="search()"
+        />
+        <button type="button" class="btn btn-outline-light" (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<input
-  type="text"
-  [(ngModel)]="searchTerm"
-  (input)="search()"
-  placeholder="Search by name or phone..."
-/>
-
-<ul *ngIf="results.length > 0">
-  <li *ngFor="let customer of results" (click)="selectCustomer(customer)">
-    {{ customer.firstName }} {{ customer.lastName }} – {{ customer.phone }}
-  </li>
-</ul>
-
-<p *ngIf="results.length === 0 && searchTerm">No matching customers found.</p>
+<!-- Matching Results -->
+<div *ngIf="matchingCustomers.length" class="list-group mt-3">
+  <div
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-dark text-light border-light mb-2 rounded shadow"
+    *ngFor="let c of matchingCustomers"
+    (mouseenter)="hoveredCustomer = c.customerID"
+    (mouseleave)="hoveredCustomer = null"
+    [ngClass]="{ 'bg-secondary': hoveredCustomer === c.customerID }"
+  >
+    <div>
+      <h6 class="mb-1">{{ c.firstName }} {{ c.lastName }}</h6>
+      <p class="mb-0"><strong>DOB:</strong> {{ c.birthDate | date }}</p>
+      <p class="mb-0"><strong>Email:</strong> {{ c.email }}</p>
+    </div>
+    <button class="btn btn-sm btn-outline-light" (click)="selectCustomer(c)">Select</button>
+  </div>
+</div>

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Artist } from './artist.service';
+import { TattooConsent } from './tattoo-consent.service';
+import { PiercingConsent } from './piercing-consent.service';
+import { ParentalConsent } from './parental-consent.service';
 
 export interface ShopService {
   serviceID?: number;
@@ -21,6 +24,9 @@ export interface ShopService {
   completedPhotoURL?: string;
   artistID?: number;
   artist?: Artist; 
+  tattooConsent?: TattooConsent;
+  piercingConsent?: PiercingConsent;
+  parentalConsent?: ParentalConsent;
 }
 
 @Injectable({

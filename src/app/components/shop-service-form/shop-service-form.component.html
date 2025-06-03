@@ -18,12 +18,12 @@
   <!-- Add Service Form -->
   <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="row g-3 text-light bg-dark p-4 rounded border border-light shadow">
     <div class="col-md-6">
-      <label class="form-label">Title</label>
+      <label class="form-label required">Title</label>
       <input name="title" [(ngModel)]="service.title" class="form-control bg-black text-white" required />
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Category</label>    
+      <label class="form-label required">Category</label>    
       <select name="category" [(ngModel)]="service.category" class="form-control bg-black text-white" required>
         <option value="">-- Select --</option>
         <option value="Tattoo">Tattoo</option>
@@ -32,17 +32,17 @@
     </div>
 
     <div class="col-md-6">
-      <label>Artist</label>
-        <select [(ngModel)]="service.artistID" name="artistID" class="form-control bg-black text-white">
-          <option [ngValue]="null" disabled>Select an artist</option>
-          <option *ngFor="let artist of artists" [ngValue]="artist.artistID">
-            {{ artist.firstName }} {{ artist.lastName }}
-          </option>
-        </select>
+      <label class="form-label">Artist</label>
+      <select [(ngModel)]="service.artistID" name="artistID" class="form-control bg-black text-white">
+        <option [ngValue]="null" disabled>Select an artist</option>
+        <option *ngFor="let artist of artists" [ngValue]="artist.artistID">
+          {{ artist.firstName }} {{ artist.lastName }}
+        </option>
+      </select>
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Price</label>
+      <label class="form-label required">Price</label>
       <input type="number" name="price" [(ngModel)]="service.price" class="form-control bg-black text-white" required />
     </div>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="col-12 text-center mt-4">
-      <button type="submit" class="btn btn-outline-light">Save</button>
+      <button type="submit" class="btn btn-outline-light" [disabled]="!form.valid">Save</button>
     </div>
   </form>
 </div>

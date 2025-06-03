@@ -1,16 +1,16 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ParentalConsentService, ParentalConsent } from '../../services/parental-consent.service';
-import { CustomerService } from '../../services/customer.service';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { ParentalConsent } from '../../services/parental-consent.service';
+import { Customer } from '../../services/customer.service';
+import { ShopService } from '../../services/shop-service.service';
 
 @Component({
   selector: 'app-parental-consent',
   templateUrl: './parental-consent.component.html'
 })
-export class ParentalConsentComponent {
-  @Input() customerID!: number;
-  @Input() shopServiceID!: number;
-  @Output() consentFilled = new EventEmitter<any>();
+export class ParentalConsentComponent implements OnInit {
+  @Input() customer!: Customer;
+  @Input() selectedService!: ShopService;
+  @Output() consentFilled = new EventEmitter<ParentalConsent>();
 
   consent: ParentalConsent = {
     intakeID: 0,
@@ -24,39 +24,36 @@ export class ParentalConsentComponent {
     parentPhone: '',
     relationship: '',
     signature: '',
-    dateSigned: ''
+    dateSigned: '',
+    customer: {} as Customer,
+    service: {} as ShopService
   };
 
-  constructor(
-    private consentService: ParentalConsentService,
-    private customerService: CustomerService
-) {}
-
   ngOnInit() {
-    if (this.customerID) {
-      this.consent.customerID = this.customerID;
+    if (this.customer) {
+      this.consent.customerID = this.customer.customerID!;
+      this.consent.customer = this.customer;
     }
 
-    if (this.shopServiceID) {
-      this.consent.shopServiceID = this.shopServiceID;
+    if (this.selectedService) {
+      this.consent.shopServiceID = this.selectedService.serviceID!;
+      this.consent.service = this.selectedService;
     } else {
-      console.error("ParentalConsentComponent is missing shopServiceID input!");
+      console.error("ParentalConsentComponent is missing selectedService input!");
     }
   }
 
-
   finalizeConsent() {
-    this.consent.customerID = this.customerID;
-    this.consent.shopServiceID = this.shopServiceID;
-
-    if (!this.consent.shopServiceID || this.consent.shopServiceID === 0) {
+    if (!this.selectedService?.serviceID) {
       console.error("Cannot finalize consent: invalid shopServiceID.");
       return;
     }
 
     this.consent.dateSigned = new Date().toISOString();
+    this.consent.customer = this.customer;
+    this.consent.service = this.selectedService;
+
     console.log("ParentalConsent finalized:", this.consent);
     this.consentFilled.emit(this.consent);
   }
-
 }

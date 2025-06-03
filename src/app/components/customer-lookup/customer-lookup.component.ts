@@ -7,25 +7,32 @@ import { CustomerService, Customer } from '../../services/customer.service';
 })
 export class CustomerLookupComponent {
   searchTerm: string = '';
-  results: Customer[] = [];
+  matchingCustomers: Customer[] = [];
+  hoveredCustomer: number | null | undefined = null;
 
   @Output() customerSelected = new EventEmitter<Customer>();
 
   constructor(private customerService: CustomerService) {}
 
-  search() {
-    if (!this.searchTerm.trim()) {
-      this.results = [];
+  search(): void {
+    const trimmed = this.searchTerm.trim();
+    if (!trimmed) {
+      this.matchingCustomers = [];
       return;
     }
 
-    this.customerService.searchByName(this.searchTerm).subscribe({
-      next: (data) => this.results = data,
-      error: (err) => console.error('Search failed', err)
+    this.customerService.searchByName(trimmed).subscribe({
+      next: (data: Customer[]) => {
+        this.matchingCustomers = Array.isArray(data) ? data : [];
+      },
+      error: (err) => {
+        console.error('Error searching for customers:', err);
+        this.matchingCustomers = [];
+      }
     });
   }
 
-  selectCustomer(customer: Customer) {
+  selectCustomer(customer: Customer): void {
     this.customerSelected.emit(customer);
   }
 }

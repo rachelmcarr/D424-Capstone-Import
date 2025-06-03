@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ShopService } from './shop-service.service';
+import { Customer } from './customer.service';
 
 export interface TattooConsent {
   intakeID: number;
   customerID: number;
+  customer: Customer;
   shopServiceID: number;
+  service: ShopService;
   drugsOrAlcohol: boolean;
   skinCondition: boolean;
   approveDesign: boolean;

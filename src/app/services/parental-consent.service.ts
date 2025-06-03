@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Customer } from './customer.service';
+import { ShopService } from './shop-service.service';
 
 export interface ParentalConsent {
   consentID?: number;
   customerID: number;
+  customer?: Customer;
   shopServiceID: number;
+  service?: ShopService;
   intakeID: number;
   releaseLiability: boolean,
   confirmRelationship: boolean,

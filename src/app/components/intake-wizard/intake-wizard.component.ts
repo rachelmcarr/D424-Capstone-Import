@@ -7,6 +7,7 @@ import { Customer } from '../../services/customer.service';
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
 import { TattooConsentComponent } from '../tattoo-consent/tattoo-consent.component';
 import { PiercingConsentComponent } from '../piercing-consent/piercing-consent.component';
+import { ShopServiceFormComponent } from '../shop-service-form/shop-service-form.component';
 
 @Component({
   selector: 'app-intake-wizard',
@@ -14,12 +15,16 @@ import { PiercingConsentComponent } from '../piercing-consent/piercing-consent.c
 })
 export class IntakeWizardComponent implements OnInit {
   step = 1;
+  totalSteps = 6;
 
   @ViewChild(TattooConsentComponent)
   tattooConsentComponent!: TattooConsentComponent;
 
   @ViewChild(PiercingConsentComponent)
   piercingConsentComponent!: PiercingConsentComponent;
+
+  @ViewChild(ShopServiceFormComponent)
+  shopServiceFormComponent!: ShopServiceFormComponent;
 
   constructor(
     private clientIntakeService: ClientIntakeService,
@@ -30,7 +35,7 @@ export class IntakeWizardComponent implements OnInit {
   ) {}
 
   customer: Customer | null | undefined = undefined;
-  isIncompleteCustomer: boolean = false;
+  isIncompleteCustomer = false;
 
   intake: ClientIntake = {
     customer: { customerID: 0 },
@@ -51,7 +56,7 @@ export class IntakeWizardComponent implements OnInit {
     'Hepatitis', 'Heart Condition', 'MSRA/Staph Infection', 'Herpes',
     'Hemophilia/Other Bleeding Disorder', 'Pregnant/Nursing',
     'Allergic Reactions to Latex', 'Diabetes', 'Skin Conditions',
-    'Fainting or Dizziness', 'Allergic Reaction to Antibiotics', 'Other'
+    'Fainting or Dizziness', 'Allergic Reaction to Antibiotics', 'Other', 'None'
   ];
   selectedConditions: string[] = [];
 
@@ -64,6 +69,15 @@ export class IntakeWizardComponent implements OnInit {
   tattooConsent: any = null;
   piercingConsent: any = null;
 
+  stepLabels: string[] = [
+    'Customer',
+    'Medical Info',
+    'Service',
+    'Parental Consent',
+    'Consent Form'
+  ];
+
+
   ngOnInit(): void {
     this.shopServiceService.getAll().subscribe({
       next: (data) => this.services = data,
@@ -72,27 +86,37 @@ export class IntakeWizardComponent implements OnInit {
   }
 
   nextStep() {
-    if (this.step === 3 && this.intake.isMinor) {
-      this.step = 4;
-    } else if (this.step === 3 && !this.intake.isMinor) {
-      this.step = 5;
-    } else if (this.step === 4) {
-      this.step = 5;
-    } else if (this.step === 5) {
-      this.step = 6;
-    } else {
-      this.step++;
+    if (this.step === 3 && !this.selectedService) {
+      this.shopServiceFormComponent.triggerSubmit();
+      return;
     }
+
+    if (this.step === 3 && this.intake.isMinor) this.step = 4;
+    else if (this.step === 3) this.step = 5;
+    else if (this.step === 4) this.step = 5;
+    else if (this.step === 5) this.step = 6;
+    else this.step++;
   }
 
   prevStep() {
     if (this.step > 1) this.step--;
   }
 
-  onServiceSelected() {
-    if (this.selectedServiceID != null) {
-      this.selectedService = this.services.find(s => s.serviceID === this.selectedServiceID) || null;
-      this.intake.serviceID = this.selectedServiceID;
+  goToStep(targetStep: number) {
+    if (targetStep < this.step || this.canNavigateTo(targetStep)) {
+      this.step = targetStep;
+    }
+  }
+
+  canNavigateTo(step: number): boolean {
+    switch (step) {
+      case 1: return true;
+      case 2: return !!this.customer && !this.isIncompleteCustomer;
+      case 3: return !!this.customer;
+      case 4: return this.intake.isMinor && !!this.selectedService;
+      case 5: return !!this.selectedService;
+      case 6: return this.consentComplete;
+      default: return false;
     }
   }
 
@@ -125,7 +149,15 @@ export class IntakeWizardComponent implements OnInit {
   }
 
   checkCustomerCompleteness() {
-    this.isIncompleteCustomer = !this.customer?.birthDate || !this.customer?.driverLicense;
+    if (!this.customer) {
+      this.isIncompleteCustomer = true;
+      return;
+    }
+
+    const isMinor = this.checkIfMinor(this.customer.birthDate);
+    this.isIncompleteCustomer =
+      !this.customer.birthDate ||
+      (!isMinor && !this.customer.driverLicense);
   }
 
   onCustomerUpdated(updated: Customer) {
@@ -152,6 +184,13 @@ export class IntakeWizardComponent implements OnInit {
     this.intake.takesMedications = !!this.intake.medicationDetails?.trim();
   }
 
+  onServiceSelected() {
+    if (this.selectedServiceID != null) {
+      this.selectedService = this.services.find(s => s.serviceID === this.selectedServiceID) || null;
+      this.intake.serviceID = this.selectedServiceID;
+    }
+  }
+
   storeParentalConsent(consent: any) {
     this.parentalConsent = consent;
   }
@@ -164,6 +203,20 @@ export class IntakeWizardComponent implements OnInit {
     this.piercingConsent = consent;
   }
 
+  handleServiceCreated(service: ShopService) {
+    this.selectedService = service;
+    this.selectedServiceID = service.serviceID!;
+    this.intake.serviceID = service.serviceID!;
+
+    if (service.category === 'Tattoo') {
+      this.selectedServiceType = 'Tattoo';
+    } else if (service.category === 'Piercing') {
+      this.selectedServiceType = 'Piercing';
+    }
+
+    this.nextStep();
+  }
+
   get consentComplete(): boolean {
     if (this.selectedServiceType === 'Tattoo') return !!this.tattooConsent;
     if (this.selectedServiceType === 'Piercing') return !!this.piercingConsent;
@@ -173,17 +226,7 @@ export class IntakeWizardComponent implements OnInit {
   submitIntake() {
     this.intake.conditionDetails = this.selectedConditions.join(', ');
 
-    if (this.selectedServiceType === 'Tattoo' && this.tattooConsentComponent) {
-      this.tattooConsentComponent.finalizeConsent();
-    }
-
-    if (this.selectedServiceType === 'Piercing' && this.piercingConsentComponent) {
-      this.piercingConsentComponent.finalizeConsent();
-    }
-
-    // ⚠️ Ensure customer and selectedServiceID are present
     if (!this.customer || this.selectedServiceID === null) {
-      console.error('Customer or selected service ID is missing.');
       alert('Please select a customer and a service before submitting.');
       return;
     }
@@ -192,7 +235,6 @@ export class IntakeWizardComponent implements OnInit {
       next: (savedIntake) => {
         const intakeID = savedIntake.intakeID;
 
-        // 🟢 Use non-null-asserted values here since we validated them above
         if (this.intake.isMinor && this.parentalConsent) {
           this.parentalConsent.intakeID = intakeID;
           this.parentalConsent.customer = this.customer;
@@ -223,5 +265,4 @@ export class IntakeWizardComponent implements OnInit {
       }
     });
   }
-
 }

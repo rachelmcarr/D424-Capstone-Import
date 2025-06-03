@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,14 @@ import { ArtistService, Artist } from '../../services/artist.service';
   selector: 'app-shop-service-form',
   templateUrl: './shop-service-form.component.html'
 })
+
 export class ShopServiceFormComponent {
+
+  @Output() serviceCreated = new EventEmitter<ShopService>();
+  @Input() customerID!: number;
+
+  @ViewChild('serviceForm') serviceForm!: NgForm;
+
   service: ShopService = {
     title: '',
     description: '',
@@ -19,7 +26,7 @@ export class ShopServiceFormComponent {
     price: 0,
     imageURL: '',
     category: '',
-    createdAt: '',
+    createdAt: new Date().toISOString(),
     inkInfo: '',
     jewelryInfo: '',
     artistID: undefined,
@@ -41,24 +48,25 @@ export class ShopServiceFormComponent {
     });
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form?: NgForm) {
     this.service.createdAt = new Date().toISOString();
+    if (this.customerID) {
+      this.service.customer = { customerID: this.customerID };
+    }
 
     this.serviceService.add(this.service).subscribe({
-      next: () => {
-        const returnTo = this.route.snapshot.queryParamMap.get('returnTo');
-
-        if (returnTo) {
-          this.router.navigateByUrl(`/${returnTo}`);
-        } else {
-          alert('Service added!');
-          form.resetForm();
-        }
+      next: (newService) => {
+        this.serviceCreated.emit(newService); // ✅ emit to wizard
+        form?.resetForm();
       },
       error: err => {
         console.error(err);
         alert('Failed to save service.');
       }
     });
+  }
+
+  public triggerSubmit() {
+    this.onSubmit();
   }
 }
