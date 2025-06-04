@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ClientIntakeService, ClientIntake } from '../../services/client-intake.service';
-import { ShopServiceService } from '../../services/shop-service.service';
+import { ShopServiceService, ShopService } from '../../services/shop-service.service';
+import { Customer } from '../../services/customer.service';
 
 @Component({
   selector: 'app-client-intake-form',
@@ -9,8 +10,8 @@ import { ShopServiceService } from '../../services/shop-service.service';
 })
 export class ClientIntakeFormComponent {
   intake: ClientIntake = {
-    customer: { customerID: 0 },
-    serviceID: 0,
+    customer: {} as Customer,
+    service: {} as ShopService,
     dateSubmitted: '',
     hasAllergies: false,
     allergyDetails: '',
@@ -37,27 +38,24 @@ export class ClientIntakeFormComponent {
     private shopServiceService: ShopServiceService
   ) {}
 
-  // Call this when customer is selected (e.g., step 1 of wizard)
-  onCustomerSelected(customerId: number) {
-    this.intake.customer = { customerID: customerId };
+  // Replace number with full object
+  onCustomerSelected(customer: Customer) {
+    this.intake.customer = customer;
   }
 
-  // Call this when an existing service is selected
-  onServiceSelected(serviceId: number) {
-    this.intake.serviceID = serviceId;
+  onServiceSelected(service: ShopService) {
+    this.intake.service = service;
 
-    // Optionally associate the service with the customer in backend
-    if (this.intake.customer) {
-      this.shopServiceService.assignCustomer(serviceId, this.intake.customer.customerID).subscribe({
+    if (this.intake.customer?.customerID && this.intake.service?.serviceID) {
+      this.shopServiceService.assignCustomer(service.serviceID!, this.intake.customer.customerID).subscribe({
         next: () => console.log('Service associated with customer'),
-        error: (err: any) => console.error('Failed to associate service:', err)
+        error: (err) => console.error('Failed to associate service:', err)
       });
     }
   }
 
-  // Call this when a new service is created
-  onServiceCreated(newService: any) {
-    this.intake.serviceID = newService.serviceID;
+  onServiceCreated(newService: ShopService) {
+    this.intake.service = newService;
   }
 
   onConditionChange(event: any) {

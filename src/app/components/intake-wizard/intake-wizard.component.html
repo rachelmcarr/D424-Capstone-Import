@@ -111,48 +111,54 @@
   </div>
 
   <!-- STEP 4: Parental Consent -->
-  <div *ngIf="step === 4 && intake.isMinor">
-    <h2 class="text-danger text-center mb-4">Step 4: Parental Consent</h2>
-    <app-parental-consent
-      *ngIf="customer?.customerID != null && selectedServiceID != null"
-      [customer]="customer!"
-      [selectedService]="selectedService!"
-      (consentFilled)="storeParentalConsent($event)">
-    </app-parental-consent>
-    <div class="text-center mt-4">
-      <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
-      <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!parentalConsent">Next</button>
-    </div>
-  </div>
+<div *ngIf="step === 4 && intake.isMinor">
+  <h2 class="text-danger text-center mb-4">Step 4: Parental Consent</h2>
+  <app-parental-consent
+    *ngIf="customer?.customerID != null && selectedServiceID != null"
+    [customer]="customer!"
+    [selectedService]="selectedService!"
+    [showSaveButton]="false"
+    (consentFilled)="storeParentalConsent($event)">
+  </app-parental-consent>
 
-  <!-- STEP 5: Consent Form -->
-  <div *ngIf="step === 5">
-    <ng-container [ngSwitch]="selectedServiceType">
-      <div *ngSwitchCase="'Tattoo'">
-        <h2 class="text-danger text-center mb-4">Step 5: Tattoo Consent</h2>
-        <app-tattoo-consent
-          *ngIf="customer?.customerID != null && selectedServiceID != null"
-          [customer]="customer!"
-          [selectedService]="selectedService!"
-          (consentFilled)="storeTattooConsent($event)">
-        </app-tattoo-consent>
-      </div>
-      <div *ngSwitchCase="'Piercing'">
-        <h2 class="text-danger text-center mb-4">Step 5: Piercing Consent</h2>
-        <app-piercing-consent
-          *ngIf="customer?.customerID != null && selectedServiceID != null"
-          [customer]="customer!"
-          [selectedService]="selectedService!"
-          (consentFilled)="storePiercingConsent($event)">
-        </app-piercing-consent>
-      </div>
-    </ng-container>
-
-    <div class="text-center mt-4">
-      <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
-      <button class="btn btn-outline-light" (click)="submitIntake()" [disabled]="!consentComplete">Submit</button>
-    </div>
+  <div class="text-center mt-4">
+    <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
+    <button class="btn btn-outline-light" (click)="nextStep()" [disabled]="!parentalConsent">Next</button>
   </div>
+</div>
+
+<!-- STEP 5: Consent Form -->
+<div *ngIf="step === 5">
+  <ng-container [ngSwitch]="selectedServiceType">
+    <div *ngSwitchCase="'Tattoo'">
+      <h2 class="text-danger text-center mb-4">Step 5: Tattoo Consent</h2>
+      <app-tattoo-consent
+        *ngIf="customer?.customerID != null && selectedServiceID != null"
+        [customer]="customer!"
+        [selectedService]="selectedService!"
+        [showSaveButton]="false"
+        (consentFilled)="storeTattooConsent($event)">
+      </app-tattoo-consent>
+    </div>
+
+    <div *ngSwitchCase="'Piercing'">
+      <h2 class="text-danger text-center mb-4">Step 5: Piercing Consent</h2>
+      <app-piercing-consent
+        *ngIf="customer?.customerID != null && selectedServiceID != null"
+        [customer]="customer!"
+        [selectedService]="selectedService!"
+        [showSaveButton]="false"
+        (consentFilled)="storePiercingConsent($event)">
+      </app-piercing-consent>
+    </div>
+  </ng-container>
+
+  <div class="text-center mt-4">
+    <button class="btn btn-outline-light me-2" (click)="prevStep()">Back</button>
+    <button class="btn btn-outline-light" (click)="submitIntake()" [disabled]="!consentComplete">Submit</button>
+  </div>
+</div>
+
 
   <!-- STEP 6: Complete -->
   <div *ngIf="step === 6" class="text-center mt-5">

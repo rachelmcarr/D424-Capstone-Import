@@ -36,7 +36,7 @@
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Phone</label>
+      <label class="form-label required">Phone</label>
       <input type="text" name="phone" [(ngModel)]="customer.phone" required #phone="ngModel" class="form-control bg-black text-white" />
       <div *ngIf="phone.invalid && phone.touched" class="form-error">Valid phone number is required.</div>
     </div>

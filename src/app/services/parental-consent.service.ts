@@ -5,16 +5,16 @@ import { Customer } from './customer.service';
 import { ShopService } from './shop-service.service';
 
 export interface ParentalConsent {
-  consentID?: number;
-  customerID: number;
-  customer?: Customer;
-  shopServiceID: number;
-  service?: ShopService;
+  parentalConsentID?: number;
   intakeID: number;
-  releaseLiability: boolean,
-  confirmRelationship: boolean,
-  understandsHealing: boolean,
-  serviceDescription: string,
+  customerID: number;
+  customer: Customer;
+  shopServiceID: number;
+  service: ShopService;
+  releaseLiability: boolean;
+  confirmRelationship: boolean;
+  understandsHealing: boolean;
+  serviceDescription: string;
   parentName: string;
   parentPhone: string;
   relationship: string;
@@ -30,11 +30,28 @@ export class ParentalConsentService {
 
   constructor(private http: HttpClient) {}
 
-  getByCustomerId(customerId: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/api/parental-consents/customer/${customerId}`);
-  }
-
+  /** Submit a new parental consent */
   submitConsent(consent: ParentalConsent): Observable<ParentalConsent> {
     return this.http.post<ParentalConsent>(this.apiUrl, consent);
+  }
+
+  /** Get consents by customer ID */
+  getByCustomerId(customerId: number): Observable<ParentalConsent[]> {
+    return this.http.get<ParentalConsent[]>(`${this.apiUrl}/customer/${customerId}`);
+  }
+
+  /** (Optional) Get consent by ID */
+  getById(id: number): Observable<ParentalConsent> {
+    return this.http.get<ParentalConsent>(`${this.apiUrl}/${id}`);
+  }
+
+  /** (Optional) Delete a consent */
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  /** (Optional) Get all parental consents */
+  getAll(): Observable<ParentalConsent[]> {
+    return this.http.get<ParentalConsent[]>(this.apiUrl);
   }
 }

@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { TattooConsent } from '../../services/tattoo-consent.service';
 import { Customer } from '../../services/customer.service';
 import { ShopService } from '../../services/shop-service.service';
@@ -7,15 +8,18 @@ import { ShopService } from '../../services/shop-service.service';
   selector: 'app-tattoo-consent',
   templateUrl: './tattoo-consent.component.html'
 })
-export class TattooConsentComponent implements OnInit {
+export class TattooConsentComponent implements OnInit, AfterViewInit {
   @Input() customer!: Customer;
   @Input() selectedService!: ShopService;
+  @Input() showSaveButton: boolean = true;
   @Output() consentFilled = new EventEmitter<TattooConsent>();
+
+  @ViewChild('form', { static: true }) form!: NgForm;
 
   consent: TattooConsent = {
     intakeID: 0,
     customerID: 0,
-    shopServiceID: 0,
+    serviceID: 0,
     customer: {} as Customer,
     service: {} as ShopService,
     drugsOrAlcohol: false,
@@ -25,7 +29,7 @@ export class TattooConsentComponent implements OnInit {
     hasDisease: false,
     isMinor: false,
     understandsAllergyRisk: false,
-    undertandsInfectionRisk: false,
+    understandsInfectionRisk: false,
     receiptOfAftercare: false,
     understandsVariation: false,
     understandsPermanence: false,
@@ -38,31 +42,55 @@ export class TattooConsentComponent implements OnInit {
     dateSigned: ''
   };
 
+  private alreadyFinalized = false;
+
   ngOnInit() {
+    // Initial setup can stay, but finalizeConsent will overwrite if needed
     if (this.customer) {
       this.consent.customerID = this.customer.customerID!;
       this.consent.customer = this.customer;
     }
 
     if (this.selectedService) {
-      this.consent.shopServiceID = this.selectedService.serviceID!;
+      this.consent.serviceID = this.selectedService.serviceID!;
       this.consent.service = this.selectedService;
     } else {
-      console.error("TattooConsentComponent is missing selectedService input!");
+      console.error('TattooConsentComponent is missing selectedService input!');
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.form?.valueChanges) {
+        this.form.valueChanges.subscribe(() => {
+          if (this.form.valid && !this.alreadyFinalized) {
+            this.finalizeConsent();
+          }
+        });
+      }
+    });
   }
 
   finalizeConsent() {
-    if (!this.selectedService?.serviceID) {
-      console.error("Cannot finalize consent: invalid shopServiceID.");
+    if (this.alreadyFinalized) return;
+
+    if (!this.selectedService?.serviceID || !this.customer?.customerID) {
+      console.error('Cannot finalize consent: missing customer or service ID.');
       return;
     }
 
+    this.consent.customerID = this.customer.customerID;
+    this.consent.serviceID = this.selectedService.serviceID;
     this.consent.dateSigned = new Date().toISOString();
-    this.consent.customer = this.customer;
-    this.consent.service = this.selectedService;
 
-    console.log("TattooConsent finalized:", this.consent);
+    // Remove nested objects before emitting
+    delete (this.consent as any).customer;
+    delete (this.consent as any).service;
+
+    this.alreadyFinalized = true;
+
+    console.log('TattooConsent finalized:', this.consent);
     this.consentFilled.emit(this.consent);
   }
+
 }

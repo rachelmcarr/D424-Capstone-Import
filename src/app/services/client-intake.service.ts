@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Customer } from './customer.service';
+import { ShopService } from './shop-service.service';
 
 export interface ClientIntake {
   intakeID?: number;
-  customer: { customerID: number };
-  serviceID: number | null;
+  customer: Customer;
+  service: ShopService;
   dateSubmitted: string;
   hasAllergies: boolean;
   allergyDetails: string;

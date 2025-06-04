@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ShopService } from './shop-service.service';
-import { Customer } from './customer.service';
 
 export interface TattooConsent {
   intakeID: number;
   customerID: number;
-  customer: Customer;
-  shopServiceID: number;
-  service: ShopService;
+  serviceID: number;
   drugsOrAlcohol: boolean;
   skinCondition: boolean;
   approveDesign: boolean;
@@ -17,7 +13,7 @@ export interface TattooConsent {
   hasDisease: boolean;
   isMinor: boolean;
   understandsAllergyRisk: boolean;
-  undertandsInfectionRisk: boolean;
+  understandsInfectionRisk: boolean;
   receiptOfAftercare: boolean;
   understandsVariation: boolean;
   understandsPermanence: boolean;
@@ -28,6 +24,7 @@ export interface TattooConsent {
   agreesToAftercare: boolean;
   consentsToTattoo: boolean;
   dateSigned: string;
+  tattooConsentID?: number;
 }
 
 @Injectable({
@@ -38,11 +35,19 @@ export class TattooConsentService {
 
   constructor(private http: HttpClient) {}
 
-  getByCustomerId(customerId: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/api/tattoo-consents/customer/${customerId}`);
-  }
-
   submitConsent(consent: TattooConsent): Observable<TattooConsent> {
     return this.http.post<TattooConsent>(this.apiUrl, consent);
+  }
+
+  getByCustomerId(customerId: number): Observable<TattooConsent[]> {
+    return this.http.get<TattooConsent[]>(`${this.apiUrl}/customer/${customerId}`);
+  }
+
+  getByServiceId(serviceId: number): Observable<TattooConsent> {
+    return this.http.get<TattooConsent>(`${this.apiUrl}/service/${serviceId}`);
+  }
+
+  getAll(): Observable<TattooConsent[]> {
+    return this.http.get<TattooConsent[]>(this.apiUrl);
   }
 }

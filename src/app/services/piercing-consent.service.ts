@@ -6,11 +6,11 @@ import { Customer } from './customer.service';
 
 export interface PiercingConsent {
   piercingConsentID?: number;
-  customerID: number;
-  customer?: Customer;
-  shopServiceID: number;
-  service?: ShopService;
   intakeID: number;
+  customerID: number;
+  customer: Customer;
+  shopServiceID: number;
+  service: ShopService;
   understandsHealingProcess: boolean;
   agreesToAftercare: boolean;
   consentsToPiercing: boolean;
@@ -25,11 +25,23 @@ export class PiercingConsentService {
 
   constructor(private http: HttpClient) {}
 
-  getByCustomerId(customerId: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/api/piercing-consents/customer/${customerId}`);
-  }
-
+  /** Submit a piercing consent */
   submitConsent(consent: PiercingConsent): Observable<PiercingConsent> {
     return this.http.post<PiercingConsent>(this.apiUrl, consent);
+  }
+
+  /** Get all consents by customer ID */
+  getByCustomerId(customerId: number): Observable<PiercingConsent[]> {
+    return this.http.get<PiercingConsent[]>(`${this.apiUrl}/customer/${customerId}`);
+  }
+
+  /** Optionally: Get consent by service ID */
+  getByServiceId(serviceId: number): Observable<PiercingConsent> {
+    return this.http.get<PiercingConsent>(`${this.apiUrl}/service/${serviceId}`);
+  }
+
+  /** Optionally: Get all consents (admin/debugging) */
+  getAll(): Observable<PiercingConsent[]> {
+    return this.http.get<PiercingConsent[]>(this.apiUrl);
   }
 }

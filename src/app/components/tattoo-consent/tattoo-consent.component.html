@@ -4,10 +4,10 @@
   <!-- Hidden or pre-filled -->
   <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" required hidden />
 
-  <label class="form-label required">
-    Customer ID:
-    <input type="number" name="customerID" [(ngModel)]="consent.customerID" class="form-control bg-black text-white" required />
-  </label>
+  <div class="form-group">
+    <label class="form-label required">Customer ID:</label>
+    <span class="text-white ms-2">{{ consent.customerID }}</span>
+  </div>
 
   <label class="form-check-label required">
     <input type="checkbox" name="drugsOrAlcohol" [(ngModel)]="consent.drugsOrAlcohol" class="form-check-input me-2" required />
@@ -40,7 +40,7 @@
   </label>
 
   <label class="form-check-label required">
-    <input type="checkbox" name="undertandsInfectionRisk" [(ngModel)]="consent.undertandsInfectionRisk" class="form-check-input me-2" required />
+    <input type="checkbox" name="understandsInfectionRisk" [(ngModel)]="consent.understandsInfectionRisk" class="form-check-input me-2" required />
     I acknowledge that infection is possible and know when to seek medical care.
   </label>
 
@@ -89,7 +89,7 @@
     I consent to receiving a tattoo.
   </label>
 
-  <div class="text-center mt-4">
-    <button type="submit" class="btn btn-outline-light" [disabled]="!form.valid">Save</button>
+  <div class="text-center mt-4" *ngIf="showSaveButton">
+    <button type="submit" class="btn btn-outline-light" [disabled]="!form.valid">Save Consent</button>
   </div>
 </form>
