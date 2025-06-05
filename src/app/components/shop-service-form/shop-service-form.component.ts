@@ -51,12 +51,23 @@ export class ShopServiceFormComponent {
   onSubmit(form?: NgForm) {
     this.service.createdAt = new Date().toISOString();
     if (this.customerID) {
-      this.service.customer = { customerID: this.customerID };
+      this.service.customer = { customerID: this.customerID } as any;
     }
+
+    if (this.service.artistID) {
+      this.service.artist = { artistID: this.service.artistID } as Artist;
+      delete this.service.artistID; // optional but cleaner
+    }
+
+    if (form) {
+      console.log(JSON.stringify(form.value));
+    }
+
+    console.log('Submitting service:', JSON.stringify(this.service));
 
     this.serviceService.add(this.service).subscribe({
       next: (newService) => {
-        this.serviceCreated.emit(newService); // ✅ emit to wizard
+        this.serviceCreated.emit(newService);
         form?.resetForm();
       },
       error: err => {
@@ -65,7 +76,6 @@ export class ShopServiceFormComponent {
       }
     });
   }
-
   public triggerSubmit() {
     this.onSubmit();
   }

@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ShopService } from './shop-service.service';
-import { Customer } from './customer.service';
 
 export interface PiercingConsent {
   piercingConsentID?: number;
   intakeID: number;
   customerID: number;
-  customer: Customer;
-  shopServiceID: number;
-  service: ShopService;
+  serviceID: number;
   understandsHealingProcess: boolean;
   agreesToAftercare: boolean;
   consentsToPiercing: boolean;
@@ -25,23 +21,19 @@ export class PiercingConsentService {
 
   constructor(private http: HttpClient) {}
 
-  /** Submit a piercing consent */
   submitConsent(consent: PiercingConsent): Observable<PiercingConsent> {
-    return this.http.post<PiercingConsent>(this.apiUrl, consent);
+      return this.http.post<PiercingConsent>(this.apiUrl, consent);
+    }
+  
+    getByCustomerId(customerId: number): Observable<PiercingConsent[]> {
+      return this.http.get<PiercingConsent[]>(`${this.apiUrl}/customer/${customerId}`);
+    }
+  
+    getByServiceId(serviceId: number): Observable<PiercingConsent> {
+      return this.http.get<PiercingConsent>(`${this.apiUrl}/service/${serviceId}`);
+    }
+  
+    getAll(): Observable<PiercingConsent[]> {
+      return this.http.get<PiercingConsent[]>(this.apiUrl);
+    }
   }
-
-  /** Get all consents by customer ID */
-  getByCustomerId(customerId: number): Observable<PiercingConsent[]> {
-    return this.http.get<PiercingConsent[]>(`${this.apiUrl}/customer/${customerId}`);
-  }
-
-  /** Optionally: Get consent by service ID */
-  getByServiceId(serviceId: number): Observable<PiercingConsent> {
-    return this.http.get<PiercingConsent>(`${this.apiUrl}/service/${serviceId}`);
-  }
-
-  /** Optionally: Get all consents (admin/debugging) */
-  getAll(): Observable<PiercingConsent[]> {
-    return this.http.get<PiercingConsent[]>(this.apiUrl);
-  }
-}

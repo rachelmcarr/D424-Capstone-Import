@@ -5,10 +5,12 @@ import { Artist } from './artist.service';
 import { TattooConsent } from './tattoo-consent.service';
 import { PiercingConsent } from './piercing-consent.service';
 import { ParentalConsent } from './parental-consent.service';
+import { Customer } from './customer.service';
 
 export interface ShopService {
   serviceID?: number;
-  customer?: { customerID: number };
+  customer?: Customer;
+  customerID?: number;
   title: string;
   description: string;
   location: string;

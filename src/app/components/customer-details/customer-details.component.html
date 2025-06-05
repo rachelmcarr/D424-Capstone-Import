@@ -12,7 +12,7 @@
     </div>
   </nav>
 
-  <!-- Customer Details -->
+  <!-- Customer Info -->
   <div class="text-light">
     <h2 class="text-danger">Customer Details</h2>
     <p><strong>Customer ID:</strong> {{ customer?.customerID }}</p>
@@ -21,7 +21,8 @@
     <p><strong>Phone:</strong> {{ customer?.phone }}</p>
     <p><strong>Birth Date:</strong> {{ customer?.birthDate | date }}</p>
     <p><strong>Driver License:</strong> {{ customer?.driverLicense }}</p>
-    
+
+    <!-- Intake Form -->
     <h4 class="mt-4">Client Intake Form</h4>
     <div *ngIf="intake" class="bg-dark p-3 rounded">
       <p><strong>Date Submitted:</strong> {{ intake.dateSubmitted | date }}</p>
@@ -33,59 +34,76 @@
       <p><strong>Is Minor:</strong> {{ intake.isMinor ? 'Yes' : 'No' }}</p>
     </div>
 
+    <!-- Services & Consents -->
     <h4 class="mt-4">Services & Consents</h4>
     <div *ngFor="let s of services" class="mb-4 border p-3 rounded bg-dark">
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
         <h5 class="text-info mb-0">{{ s.title }} - {{ s.category }}</h5>
-        <button (click)="toggleServiceExpansion(s.serviceID)" class="btn btn-sm btn-outline-light">
+        <button (click)="s.showServiceDetails = !s.showServiceDetails" class="btn btn-sm btn-outline-info mt-2">
+          {{ s.showServiceDetails ? '▲ Hide Service Details' : '▼ View Service Details' }}
+        </button>
+        <button (click)="toggleServiceExpansion(s.serviceID)" class="btn btn-sm btn-outline-light mt-2 ms-2">
           {{ expandedServiceId === s.serviceID ? '▲ Hide Consents' : '▼ View Consents' }}
         </button>
       </div>
+
+      <!-- Service Detail Block -->
+      <div *ngIf="s.showServiceDetails" class="mt-3 ps-3">
+        <p><strong>Description:</strong> {{ s.description || 'N/A' }}</p>
+        <p><strong>Location:</strong> {{ s.location || 'N/A' }}</p>
+        <p><strong>Style:</strong> {{ s.style || 'N/A' }}</p>
+        <p><strong>Duration:</strong> {{ s.duration || 'N/A' }}</p>
+        <p><strong>Status:</strong> {{ s.status || 'N/A' }}</p>
+        <p><strong>Price:</strong> ${{ s.price }}</p>
+        <p><strong>Created:</strong> {{ s.createdAt | date:'short' }}</p>
+        <p *ngIf="s.inkInfo"><strong>Ink Info:</strong> {{ s.inkInfo }}</p>
+        <p *ngIf="s.jewelryInfo"><strong>Jewelry Info:</strong> {{ s.jewelryInfo }}</p>
+        <img *ngIf="s.imageURL" [src]="s.imageURL" class="img-fluid rounded mt-2" alt="Service image" style="max-height: 300px; object-fit: contain;" />
+      </div>
+
+      <!-- Consent Section -->
       <div *ngIf="expandedServiceId === s.serviceID" class="mt-3">
-      <!-- Tattoo Consent -->
-      <div *ngIf="s.tattooConsent">
-        <h6 class="text-danger">Tattoo Consent</h6>
-        <p><strong>Date Signed:</strong> {{ s.tattooConsent.dateSigned | date }}</p>
-        <p><strong>Customer ID:</strong> {{ s.tattooConsent.customerID }}</p>
-        <p><strong>Under Influence:</strong> {{ s.tattooConsent.drugsOrAlcohol ? 'No' : 'Yes' }}</p>
-        <p><strong>Skin Condition Present:</strong> {{ s.tattooConsent.skinCondition ? 'No' : 'Yes' }}</p>
-        <p><strong>Approved Design:</strong> {{ s.tattooConsent.approveDesign ? 'Yes' : 'No' }}</p>
-        <p><strong>Not Pregnant/Nursing:</strong> {{ s.tattooConsent.isNotPregnant ? 'Yes' : 'No' }}</p>
-        <p><strong>No Communicable Diseases:</strong> {{ s.tattooConsent.hasDisease ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Allergy Risk:</strong> {{ s.tattooConsent.understandsAllergyRisk ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Infection Risk:</strong> {{ s.tattooConsent.undertandsInfectionRisk ? 'Yes' : 'No' }}</p>
-        <p><strong>Received Aftercare Info:</strong> {{ s.tattooConsent.receiptOfAftercare ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Healing Variation:</strong> {{ s.tattooConsent.understandsVariation ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Permanence:</strong> {{ s.tattooConsent.understandsPermanence ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Voluntary Choice:</strong> {{ s.tattooConsent.understandsChoice ? 'Yes' : 'No' }}</p>
-        <p><strong>Releases Artist from Liability:</strong> {{ s.tattooConsent.releaseArtist ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands FDA Info:</strong> {{ s.tattooConsent.understandsFDA ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Medical Risks:</strong> {{ s.tattooConsent.understandsMedicalRisk ? 'Yes' : 'No' }}</p>
-        <p><strong>Agrees to Aftercare:</strong> {{ s.tattooConsent.agreesToAftercare ? 'Yes' : 'No' }}</p>
-        <p><strong>Gives Tattoo Consent:</strong> {{ s.tattooConsent.consentsToTattoo ? 'Yes' : 'No' }}</p>
-      </div>
+        <div *ngIf="s.tattooConsent">
+          <h6 class="text-danger">Tattoo Consent</h6>
+          <p><strong>Date Signed:</strong> {{ s.tattooConsent.dateSigned | date }}</p>
+          <p><strong>Under Influence:</strong> {{ s.tattooConsent.drugsOrAlcohol ? 'No' : 'Yes' }}</p>
+          <p><strong>Skin Condition Present:</strong> {{ s.tattooConsent.skinCondition ? 'No' : 'Yes' }}</p>
+          <p><strong>Approved Design:</strong> {{ s.tattooConsent.approveDesign ? 'Yes' : 'No' }}</p>
+          <p><strong>Not Pregnant/Nursing:</strong> {{ s.tattooConsent.notPregnant ? 'Yes' : 'No' }}</p>
+          <p><strong>No Communicable Diseases:</strong> {{ s.tattooConsent.hasDisease ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Allergy Risk:</strong> {{ s.tattooConsent.understandsAllergyRisk ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Infection Risk:</strong> {{ s.tattooConsent.understandsInfectionRisk ? 'Yes' : 'No' }}</p>
+          <p><strong>Received Aftercare Info:</strong> {{ s.tattooConsent.receiptOfAftercare ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Healing Variation:</strong> {{ s.tattooConsent.understandsVariation ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Permanence:</strong> {{ s.tattooConsent.understandsPermanence ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Voluntary Choice:</strong> {{ s.tattooConsent.understandsChoice ? 'Yes' : 'No' }}</p>
+          <p><strong>Releases Artist from Liability:</strong> {{ s.tattooConsent.releaseArtist ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands FDA Info:</strong> {{ s.tattooConsent.understandsFDA ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Medical Risks:</strong> {{ s.tattooConsent.understandsMedicalRisk ? 'Yes' : 'No' }}</p>
+          <p><strong>Agrees to Aftercare:</strong> {{ s.tattooConsent.agreesToAftercare ? 'Yes' : 'No' }}</p>
+          <p><strong>Gives Tattoo Consent:</strong> {{ s.tattooConsent.consentsToTattoo ? 'Yes' : 'No' }}</p>
+        </div>
 
-      <!-- Piercing Consent -->
-      <div *ngIf="s.piercingConsent">
-        <h6 class="text-danger">Piercing Consent</h6>
-        <p><strong>Date Signed:</strong> {{ s.piercingConsent.dateSigned | date }}</p>
-        <p><strong>Understands Healing Process:</strong> {{ s.piercingConsent.understandsHealingProcess ? 'Yes' : 'No' }}</p>
-        <p><strong>Agrees to Aftercare:</strong> {{ s.piercingConsent.agreesToAftercare ? 'Yes' : 'No' }}</p>
-        <p><strong>Consents to Piercing:</strong> {{ s.piercingConsent.consentsToPiercing ? 'Yes' : 'No' }}</p>
-      </div>
+        <div *ngIf="s.piercingConsent">
+          <h6 class="text-danger">Piercing Consent</h6>
+          <p><strong>Date Signed:</strong> {{ s.piercingConsent.dateSigned | date }}</p>
+          <p><strong>Understands Healing Process:</strong> {{ s.piercingConsent.understandsHealingProcess ? 'Yes' : 'No' }}</p>
+          <p><strong>Agrees to Aftercare:</strong> {{ s.piercingConsent.agreesToAftercare ? 'Yes' : 'No' }}</p>
+          <p><strong>Consents to Piercing:</strong> {{ s.piercingConsent.consentsToPiercing ? 'Yes' : 'No' }}</p>
+        </div>
 
-      <!-- Parental Consent -->
-      <div *ngIf="s.parentalConsent">
-        <h6 class="text-danger">Parental Consent</h6>
-        <p><strong>Date Signed:</strong> {{ s.parentalConsent.dateSigned | date }}</p>
-        <p><strong>Parent/Guardian Name:</strong> {{ s.parentalConsent.parentName }}</p>
-        <p><strong>Phone Number:</strong> {{ s.parentalConsent.parentPhone }}</p>
-        <p><strong>Relationship to Minor:</strong> {{ s.parentalConsent.relationship }}</p>
-        <p><strong>Service Description:</strong> {{ s.parentalConsent.serviceDescription }}</p>
-        <p><strong>Signature:</strong> {{ s.parentalConsent.signature }}</p>
-        <p><strong>Release Liability:</strong> {{ s.parentalConsent.releaseLiability ? 'Yes' : 'No' }}</p>
-        <p><strong>Confirmed Relationship:</strong> {{ s.parentalConsent.confirmRelationship ? 'Yes' : 'No' }}</p>
-        <p><strong>Understands Healing Responsibility:</strong> {{ s.parentalConsent.understandsHealing ? 'Yes' : 'No' }}</p>
+        <div *ngIf="s.parentalConsent">
+          <h6 class="text-danger">Parental Consent</h6>
+          <p><strong>Date Signed:</strong> {{ s.parentalConsent.dateSigned | date }}</p>
+          <p><strong>Parent/Guardian Name:</strong> {{ s.parentalConsent.parentName }}</p>
+          <p><strong>Phone Number:</strong> {{ s.parentalConsent.parentPhone }}</p>
+          <p><strong>Relationship to Minor:</strong> {{ s.parentalConsent.relationship }}</p>
+          <p><strong>Service Description:</strong> {{ s.parentalConsent.serviceDescription }}</p>
+          <p><strong>Signature:</strong> {{ s.parentalConsent.signature }}</p>
+          <p><strong>Release Liability:</strong> {{ s.parentalConsent.releaseLiability ? 'Yes' : 'No' }}</p>
+          <p><strong>Confirmed Relationship:</strong> {{ s.parentalConsent.confirmRelationship ? 'Yes' : 'No' }}</p>
+          <p><strong>Understands Healing Responsibility:</strong> {{ s.parentalConsent.understandsHealing ? 'Yes' : 'No' }}</p>
+        </div>
       </div>
     </div>
   </div>

@@ -9,9 +9,9 @@ export interface TattooConsent {
   drugsOrAlcohol: boolean;
   skinCondition: boolean;
   approveDesign: boolean;
-  isNotPregnant: boolean;
+  notPregnant: boolean;
   hasDisease: boolean;
-  isMinor: boolean;
+  minor: boolean;
   understandsAllergyRisk: boolean;
   understandsInfectionRisk: boolean;
   receiptOfAftercare: boolean;

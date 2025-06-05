@@ -16,7 +16,7 @@ export class TattooConsentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('form', { static: true }) form!: NgForm;
 
-  consent: TattooConsent = {
+  consent: TattooConsent & { customer?: Customer; service?: ShopService } = {
     intakeID: 0,
     customerID: 0,
     serviceID: 0,
@@ -25,9 +25,9 @@ export class TattooConsentComponent implements OnInit, AfterViewInit {
     drugsOrAlcohol: false,
     skinCondition: false,
     approveDesign: false,
-    isNotPregnant: false,
+    notPregnant: false,
     hasDisease: false,
-    isMinor: false,
+    minor: false,
     understandsAllergyRisk: false,
     understandsInfectionRisk: false,
     receiptOfAftercare: false,
@@ -45,7 +45,6 @@ export class TattooConsentComponent implements OnInit, AfterViewInit {
   private alreadyFinalized = false;
 
   ngOnInit() {
-    // Initial setup can stay, but finalizeConsent will overwrite if needed
     if (this.customer) {
       this.consent.customerID = this.customer.customerID!;
       this.consent.customer = this.customer;
@@ -83,7 +82,6 @@ export class TattooConsentComponent implements OnInit, AfterViewInit {
     this.consent.serviceID = this.selectedService.serviceID;
     this.consent.dateSigned = new Date().toISOString();
 
-    // Remove nested objects before emitting
     delete (this.consent as any).customer;
     delete (this.consent as any).service;
 
@@ -93,4 +91,7 @@ export class TattooConsentComponent implements OnInit, AfterViewInit {
     this.consentFilled.emit(this.consent);
   }
 
+  getConsent(): TattooConsent {
+    return this.consent;
+  }
 }

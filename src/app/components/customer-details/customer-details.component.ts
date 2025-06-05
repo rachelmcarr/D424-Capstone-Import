@@ -44,11 +44,13 @@ export class CustomerDetailsComponent implements OnInit {
       }
     });
 
-    // Fetch services first
     this.shopService.getByCustomer(this.customerID).subscribe(services => {
-      this.services = services;
+      console.log('Services loaded:', services); // log full array
+      this.services = services.map(service => ({
+        ...service,
+        showServiceDetails: false // 🔹 Add toggle property here
+      }));
 
-      // Fetch consents and attach them to matching service
       this.tattooService.getByCustomerId(this.customerID).subscribe(tattoos => {
         tattoos.forEach((consent: any) => {
           const match = this.services.find(s => s.serviceID === consent.serviceID);
@@ -73,8 +75,12 @@ export class CustomerDetailsComponent implements OnInit {
   }
 
   toggleServiceExpansion(serviceId: number): void {
-    // Make sure both sides are numbers (not string vs number)
     const id = Number(serviceId);
     this.expandedServiceId = this.expandedServiceId === id ? null : id;
+  }
+
+  // 🔹 Optional: For toggling service detail block separately if you want
+  toggleServiceDetails(service: any): void {
+    service.showServiceDetails = !service.showServiceDetails;
   }
 }

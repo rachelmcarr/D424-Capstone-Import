@@ -18,10 +18,10 @@ export class PiercingConsentComponent implements OnInit, AfterViewInit {
 
   private alreadyFinalized = false;
 
-  consent: PiercingConsent = {
+  consent: PiercingConsent & { customer?: Customer; service?: ShopService } = {
     intakeID: 0,
     customerID: 0,
-    shopServiceID: 0,
+    serviceID: 0,
     customer: {} as Customer,
     service: {} as ShopService,
     understandsHealingProcess: false,
@@ -31,50 +31,53 @@ export class PiercingConsentComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit() {
-    if (this.customer) {
-      this.consent.customerID = this.customer.customerID!;
-      this.consent.customer = this.customer;
-    }
-
-    if (this.selectedService) {
-      this.consent.shopServiceID = this.selectedService.serviceID!;
-      this.consent.service = this.selectedService;
-    } else {
-      console.error('PiercingConsentComponent is missing selectedService input!');
-    }
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      if (this.form?.valueChanges) {
-        this.form.valueChanges.subscribe(() => {
-          if (this.form.valid && !this.alreadyFinalized) {
-            this.finalizeConsent();
-          }
-        });
+      if (this.customer) {
+        this.consent.customerID = this.customer.customerID!;
+        this.consent.customer = this.customer;
       }
-    });
-  }
-
-  finalizeConsent() {
-    if (this.alreadyFinalized) return;
-
-    if (!this.selectedService?.serviceID) {
-      console.error('Cannot finalize consent: invalid shopServiceID.');
-      return;
+  
+      if (this.selectedService) {
+        this.consent.serviceID = this.selectedService.serviceID!;
+        this.consent.service = this.selectedService;
+      } else {
+        console.error('PiercingConsentComponent is missing selectedService input!');
+      }
     }
-
-    this.alreadyFinalized = true;
-    this.consent.dateSigned = new Date().toISOString();
-    this.consent.customer = this.customer;
-    this.consent.service = this.selectedService;
-
-    console.log('PiercingConsent finalized:', this.consent);
-    this.consentFilled.emit(this.consent);
+  
+    ngAfterViewInit(): void {
+      setTimeout(() => {
+        if (this.form?.valueChanges) {
+          this.form.valueChanges.subscribe(() => {
+            if (this.form.valid && !this.alreadyFinalized) {
+              this.finalizeConsent();
+            }
+          });
+        }
+      });
+    }
+  
+    finalizeConsent() {
+      if (this.alreadyFinalized) return;
+  
+      if (!this.selectedService?.serviceID || !this.customer?.customerID) {
+        console.error('Cannot finalize consent: missing customer or service ID.');
+        return;
+      }
+  
+      this.consent.customerID = this.customer.customerID;
+      this.consent.serviceID = this.selectedService.serviceID;
+      this.consent.dateSigned = new Date().toISOString();
+  
+      delete (this.consent as any).customer;
+      delete (this.consent as any).service;
+  
+      this.alreadyFinalized = true;
+  
+      console.log('PiercingConsent finalized:', this.consent);
+      this.consentFilled.emit(this.consent);
+    }
+  
+    getConsent(): PiercingConsent {
+      return this.consent;
+    }
   }
-
-  /** Optional getter method for outside access like IntakeWizardComponent **/
-  getConsent(): PiercingConsent {
-    return this.consent;
-  }
-}

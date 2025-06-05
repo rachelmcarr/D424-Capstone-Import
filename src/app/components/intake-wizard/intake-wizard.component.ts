@@ -81,7 +81,13 @@ export class IntakeWizardComponent implements OnInit {
 
   nextStep() {
     if (this.step === 3 && !this.selectedService) {
-      this.shopServiceFormComponent.triggerSubmit();
+      setTimeout(() => {
+        if (this.shopServiceFormComponent) {
+          this.shopServiceFormComponent.triggerSubmit();
+        } else {
+          console.warn('ShopServiceFormComponent is not yet available.');
+        }
+      });
       return;
     }
     if (this.step === 3 && this.intake.isMinor) this.step = 4;
@@ -213,7 +219,7 @@ export class IntakeWizardComponent implements OnInit {
 
       if (this.selectedServiceType === 'Tattoo' && this.tattooConsentComponent && !this.tattooConsent) {
         this.tattooConsentComponent.finalizeConsent();
-        this.tattooConsent = this.tattooConsentComponent.getConsent?.() || this.tattooConsentComponent['consent'];
+        this.tattooConsent = this.tattooConsentComponent.getConsent();
       }
 
       if (this.selectedServiceType === 'Piercing' && this.piercingConsentComponent && !this.piercingConsent) {
@@ -221,21 +227,16 @@ export class IntakeWizardComponent implements OnInit {
         this.piercingConsent = this.piercingConsentComponent.getConsent?.() || this.piercingConsentComponent['consent'];
       }
 
-      this.intake.dateSubmitted = new Date().toISOString();
-      this.intake.conditionDetails = this.selectedConditions.join(', ');
-
-      console.log('Submitting intake:', this.intake);
-
       const intakePayload = {
-        customerID: this.intake.customer.customerID,
-        serviceID: this.intake.service.serviceID,
-        dateSubmitted: this.intake.dateSubmitted,
+        customerID: this.customer.customerID!,
+        serviceID: this.selectedService.serviceID!,
+        dateSubmitted: new Date().toISOString(),
         hasAllergies: this.intake.hasAllergies,
         allergyDetails: this.intake.allergyDetails,
         takesMedications: this.intake.takesMedications,
         medicationDetails: this.intake.medicationDetails,
         hasMedicalConditions: this.intake.hasMedicalConditions,
-        conditionDetails: this.intake.conditionDetails,
+        conditionDetails: this.selectedConditions.join(', '),
         isMinor: this.intake.isMinor,
       };
 
@@ -244,29 +245,44 @@ export class IntakeWizardComponent implements OnInit {
           const intakeID = savedIntake.intakeID;
 
           if (this.intake.isMinor && this.parentalConsent) {
+            const cleaned = { ...this.parentalConsent };
+            delete (cleaned as any).customer;
+            delete (cleaned as any).service;
+            delete cleaned.intakeID;
+
+            cleaned.serviceID = cleaned.shopServiceID;
+            delete cleaned.shopServiceID;
+
             this.parentalConsentService.submitConsent({
-              intakeID: intakeID,
-              customerID: this.customer.customerID,
-              serviceID: this.selectedService.serviceID,
-              ...this.parentalConsent
+              customerID: this.customer?.customerID!,
+              serviceID: this.selectedService?.serviceID!,
+              ...cleaned
             }).subscribe();
           }
 
           if (this.selectedServiceType === 'Tattoo' && this.tattooConsent) {
+            const cleaned = { ...this.tattooConsent };
+            delete (cleaned as any).customer;
+            delete (cleaned as any).service;
+            delete cleaned.intakeID;
+
             this.tattooConsentService.submitConsent({
-              intakeID: intakeID,
-              customerID: this.customer.customerID,
-              serviceID: this.selectedService.serviceID,
-              ...this.tattooConsent
+              customerID: this.customer?.customerID!,
+              serviceID: this.selectedService?.serviceID!,
+              ...cleaned
             }).subscribe();
           }
 
           if (this.selectedServiceType === 'Piercing' && this.piercingConsent) {
+            const cleaned = { ...this.piercingConsent };
+            delete (cleaned as any).customer;
+            delete (cleaned as any).service;
+            delete cleaned.intakeID;
+
             this.piercingConsentService.submitConsent({
-              intakeID: intakeID,
-              customerID: this.customer.customerID,
-              serviceID: this.selectedService.serviceID,
-              ...this.piercingConsent
+              customerID: this.customer?.customerID!,
+              serviceID: this.selectedService?.serviceID!,
+              ...cleaned
             }).subscribe();
           }
 
