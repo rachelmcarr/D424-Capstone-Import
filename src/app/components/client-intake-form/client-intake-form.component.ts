@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ClientIntakeService, ClientIntake } from '../../services/client-intake.service';
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
 import { Customer } from '../../services/customer.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-intake-form',
@@ -35,7 +36,8 @@ export class ClientIntakeFormComponent {
 
   constructor(
     private intakeService: ClientIntakeService,
-    private shopServiceService: ShopServiceService
+    private shopServiceService: ShopServiceService,
+    private datePipe: DatePipe
   ) {}
 
   // Replace number with full object
@@ -70,7 +72,7 @@ export class ClientIntakeFormComponent {
   }
 
   onSubmit(form: NgForm) {
-    this.intake.dateSubmitted = new Date().toISOString();
+    this.intake.dateSubmitted = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
 
     this.intakeService.add(this.intake).subscribe({
       next: () => {

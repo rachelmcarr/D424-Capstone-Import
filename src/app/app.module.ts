@@ -24,6 +24,7 @@ import { PublicArtistsDetailComponent } from './components/public-artists-detail
 import { IntakeWizardComponent } from './components/intake-wizard/intake-wizard.component';
 import { CustomerLookupComponent } from './components/customer-lookup/customer-lookup.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -52,9 +53,7 @@ import { CustomerDetailsComponent } from './components/customer-details/customer
     AppRoutingModule,
     NgbModule
   ],
-  providers: [
-    provideHttpClient(withInterceptorsFromDi()) // ✅ modern HttpClient setup
-  ],
+  providers: [provideHttpClient(withInterceptorsFromDi()), DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

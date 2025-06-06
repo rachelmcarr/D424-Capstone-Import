@@ -8,6 +8,7 @@ import { ShopServiceService, ShopService } from '../../services/shop-service.ser
 import { TattooConsentComponent } from '../tattoo-consent/tattoo-consent.component';
 import { PiercingConsentComponent } from '../piercing-consent/piercing-consent.component';
 import { ShopServiceFormComponent } from '../shop-service-form/shop-service-form.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-intake-wizard',
@@ -26,7 +27,8 @@ export class IntakeWizardComponent implements OnInit {
     private tattooConsentService: TattooConsentService,
     private piercingConsentService: PiercingConsentService,
     private parentalConsentService: ParentalConsentService,
-    private shopServiceService: ShopServiceService
+    private shopServiceService: ShopServiceService,
+    private datePipe: DatePipe
   ) {}
 
   customer: Customer | null = null;
@@ -35,7 +37,7 @@ export class IntakeWizardComponent implements OnInit {
   intake: ClientIntake = {
     customer: {} as Customer,
     service: {} as ShopService,
-    dateSubmitted: new Date().toISOString(),
+    dateSubmitted: '',
     hasAllergies: false,
     allergyDetails: '',
     takesMedications: false,
@@ -230,7 +232,7 @@ export class IntakeWizardComponent implements OnInit {
       const intakePayload = {
         customerID: this.customer.customerID!,
         serviceID: this.selectedService.serviceID!,
-        dateSubmitted: new Date().toISOString(),
+        dateSubmitted: this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!,
         hasAllergies: this.intake.hasAllergies,
         allergyDetails: this.intake.allergyDetails,
         takesMedications: this.intake.takesMedications,

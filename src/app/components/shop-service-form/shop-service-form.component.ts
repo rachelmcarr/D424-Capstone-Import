@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtistService, Artist } from '../../services/artist.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-shop-service-form',
@@ -26,7 +27,7 @@ export class ShopServiceFormComponent {
     price: 0,
     imageURL: '',
     category: '',
-    createdAt: new Date().toISOString(),
+    createdAt: '',
     inkInfo: '',
     jewelryInfo: '',
     artistID: undefined,
@@ -38,7 +39,8 @@ export class ShopServiceFormComponent {
     private serviceService: ShopServiceService,
     private artistService: ArtistService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class ShopServiceFormComponent {
   }
 
   onSubmit(form?: NgForm) {
-    this.service.createdAt = new Date().toISOString();
+    this.service.createdAt = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
     if (this.customerID) {
       this.service.customer = { customerID: this.customerID } as any;
     }

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ParentalConsent } from '../../services/parental-consent.service';
 import { Customer } from '../../services/customer.service';
 import { ShopService } from '../../services/shop-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-parental-consent',
@@ -17,6 +18,10 @@ export class ParentalConsentComponent implements OnInit, AfterViewInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   private alreadyFinalized = false;
+
+  constructor(
+    private datePipe: DatePipe
+  ) {}
 
   consent: ParentalConsent = {
     intakeID: 0,
@@ -70,7 +75,7 @@ export class ParentalConsentComponent implements OnInit, AfterViewInit {
     }
 
     this.alreadyFinalized = true;
-    this.consent.dateSigned = new Date().toISOString();
+    this.consent.dateSigned = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
     this.consent.customer = this.customer;
     this.consent.service = this.selectedService;
 

@@ -3,11 +3,13 @@ import { NgForm } from '@angular/forms';
 import { PiercingConsent } from '../../services/piercing-consent.service';
 import { Customer } from '../../services/customer.service';
 import { ShopService } from '../../services/shop-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-piercing-consent',
   templateUrl: './piercing-consent.component.html'
 })
+
 export class PiercingConsentComponent implements OnInit, AfterViewInit {
   @Input() customer!: Customer;
   @Input() selectedService!: ShopService;
@@ -17,6 +19,10 @@ export class PiercingConsentComponent implements OnInit, AfterViewInit {
   @ViewChild('form', { static: true }) form!: NgForm;
 
   private alreadyFinalized = false;
+
+  constructor(
+    private datePipe: DatePipe
+  ) {}
 
   consent: PiercingConsent & { customer?: Customer; service?: ShopService } = {
     intakeID: 0,
@@ -66,7 +72,7 @@ export class PiercingConsentComponent implements OnInit, AfterViewInit {
   
       this.consent.customerID = this.customer.customerID;
       this.consent.serviceID = this.selectedService.serviceID;
-      this.consent.dateSigned = new Date().toISOString();
+      this.consent.dateSigned = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
   
       delete (this.consent as any).customer;
       delete (this.consent as any).service;

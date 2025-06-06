@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Customer, CustomerService } from '../../services/customer.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-form',
@@ -29,7 +30,9 @@ export class CustomerFormComponent implements OnChanges {
     updatedAt: ''
   };
 
-  constructor(private customerService: CustomerService) {}
+  constructor(private customerService: CustomerService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['existingCustomer'] && this.existingCustomer) {
@@ -38,7 +41,7 @@ export class CustomerFormComponent implements OnChanges {
   }
 
   onSubmit(form: NgForm) {
-    const timestamp = new Date().toISOString();
+    const timestamp = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
     this.customer.updatedAt = timestamp;
     if (this.existingCustomer?.customerID) {
       this.customerService.update(this.customer).subscribe({
