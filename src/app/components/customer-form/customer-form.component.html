@@ -31,15 +31,38 @@
 
     <div class="col-md-6">
       <label class="form-label required">Email</label>
-      <input type="email" name="email" [(ngModel)]="customer.email" required #email="ngModel" class="form-control bg-black text-white" />
-      <div *ngIf="email.invalid && email.touched" class="form-error">Valid email is required.</div>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="customer.email"
+        required
+        email
+        #email="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="email.invalid && email.touched" class="form-error">
+        <div *ngIf="email.errors?.['required']">Email is required.</div>
+        <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+      </div>
     </div>
 
     <div class="col-md-6">
       <label class="form-label required">Phone</label>
-      <input type="text" name="phone" [(ngModel)]="customer.phone" required #phone="ngModel" class="form-control bg-black text-white" />
-      <div *ngIf="phone.invalid && phone.touched" class="form-error">Valid phone number is required.</div>
+      <input
+        type="tel"
+        name="phone"
+        [(ngModel)]="customer.phone"
+        required
+        pattern="^[0-9]{10}$"
+        #phone="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="phone.invalid && phone.touched" class="form-error">
+        <div *ngIf="phone.errors?.['required']">Phone number is required.</div>
+        <div *ngIf="phone.errors?.['pattern']">Enter a valid 10-digit phone number (digits only).</div>
+      </div>
     </div>
+
 
     <div class="col-md-6">
       <label class="form-label required">Birth Date</label>
@@ -74,14 +97,36 @@
 
     <div class="col-md-4">
       <label class="form-label required">State</label>
-      <input type="text" name="state" [(ngModel)]="customer.state" required #state="ngModel" class="form-control bg-black text-white" />
-      <div *ngIf="state.invalid && state.touched" class="form-error">State is required.</div>
+      <select
+        class="form-select bg-black text-white"
+        name="state"
+        [(ngModel)]="customer.state"
+        required
+        #state="ngModel"
+      >
+        <option value="" disabled selected>Select a state</option>
+        <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+      </select>
+      <div *ngIf="state.invalid && state.touched" class="form-error">
+        State is required.
+      </div>
     </div>
 
     <div class="col-md-4">
       <label class="form-label required">ZIP Code</label>
-      <input type="text" name="zip" [(ngModel)]="customer.zip" required #zip="ngModel" class="form-control bg-black text-white" />
-      <div *ngIf="zip.invalid && zip.touched" class="form-error">ZIP Code is required.</div>
+      <input
+        type="text"
+        name="zip"
+        [(ngModel)]="customer.zip"
+        required
+        pattern="^[0-9]{5}$"
+        #zip="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="zip.invalid && zip.touched" class="form-error">
+        <div *ngIf="zip.errors?.['required']">ZIP code is required.</div>
+        <div *ngIf="zip.errors?.['pattern']">Enter a valid 5-digit ZIP code.</div>
+      </div>
     </div>
 
     <div class="col-md-12">

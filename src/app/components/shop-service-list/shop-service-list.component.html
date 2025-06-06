@@ -27,6 +27,7 @@
           <th>Category</th>
           <th>Price</th>
           <th>Description</th>
+          <th>Service Date</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -36,6 +37,7 @@
           <td>{{ s.category }}</td>
           <td>${{ s.price }}</td>
           <td>{{ s.description }}</td>
+          <td>{{ s.createdAt | date:'mediumDate' }}</td>
           <td>
             <button class="btn btn-sm btn-outline-light me-2" (click)="editService(s)">Edit</button>
             <button *ngIf="s.serviceID !== undefined" class="btn btn-sm btn-outline-danger" (click)="deleteService(s.serviceID)">Delete</button>
