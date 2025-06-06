@@ -4,6 +4,7 @@ import { ClientIntakeService, ClientIntake } from '../../services/client-intake.
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
 import { Customer } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-client-intake-form',
@@ -37,8 +38,13 @@ export class ClientIntakeFormComponent {
   constructor(
     private intakeService: ClientIntakeService,
     private shopServiceService: ShopServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) {}
+
+  logout(): void {
+    this.authService.logout();
+  }
 
   // Replace number with full object
   onCustomerSelected(customer: Customer) {

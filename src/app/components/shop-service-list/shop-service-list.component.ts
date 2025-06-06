@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopServiceService, ShopService } from '../../services/shop-service.service';
 import { ArtistService, Artist } from '../../services/artist.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-shop-service-list',
@@ -14,7 +15,8 @@ export class ShopServiceListComponent implements OnInit {
 
   constructor(
     private serviceService: ShopServiceService,
-    private artistService: ArtistService
+    private artistService: ArtistService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -100,5 +102,9 @@ export class ShopServiceListComponent implements OnInit {
       next: (data) => this.artists = data,
       error: (err) => console.error('Failed to load artists', err)
     });
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

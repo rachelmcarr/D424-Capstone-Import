@@ -17,6 +17,8 @@ import { PublicArtistsComponent } from './components/public-artists/public-artis
 import { PublicArtistsDetailComponent } from './components/public-artists-details/public-artists-detail.component';
 import { IntakeWizardComponent } from './components/intake-wizard/intake-wizard.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { StaffLoginComponent } from './components/staff-login/staff-login.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -31,11 +33,12 @@ export const routes: Routes = [
     { path: 'add-service', component: ShopServiceFormComponent},
     { path: 'services', component: ShopServiceListComponent},
     { path: 'tattoo-consent', component: TattooConsentComponent},
-    { path: 'portal', component: PortalComponent},
+    { path: 'portal', component: PortalComponent, canActivate: [AuthGuard]},
     { path: 'public-artists', component: PublicArtistsComponent},
     { path: 'public-artists/:id', component: PublicArtistsDetailComponent },
     { path: 'intake-wizard', component: IntakeWizardComponent},
-    { path: 'customers/:id', component: CustomerDetailsComponent }
+    { path: 'customers/:id', component: CustomerDetailsComponent },
+    { path: 'login', component: StaffLoginComponent },
 ];
 
 @NgModule({

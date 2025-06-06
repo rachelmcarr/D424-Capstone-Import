@@ -25,6 +25,7 @@ import { IntakeWizardComponent } from './components/intake-wizard/intake-wizard.
 import { CustomerLookupComponent } from './components/customer-lookup/customer-lookup.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { DatePipe } from '@angular/common';
+import { StaffLoginComponent } from './components/staff-login/staff-login.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { DatePipe } from '@angular/common';
     PublicArtistsDetailComponent,
     IntakeWizardComponent,
     CustomerLookupComponent,
-    CustomerDetailsComponent
+    CustomerDetailsComponent,
+    StaffLoginComponent
   ],
   imports: [
     BrowserModule,

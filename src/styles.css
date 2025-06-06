@@ -475,3 +475,14 @@ label.required::after {
   white-space: nowrap;
 }
 
+.logout-link {
+  color: white;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+

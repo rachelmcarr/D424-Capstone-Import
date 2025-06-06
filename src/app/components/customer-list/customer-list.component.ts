@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer, CustomerService } from '../../services/customer.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -12,7 +13,8 @@ export class CustomerListComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +67,10 @@ export class CustomerListComponent implements OnInit {
 
   viewDetails(customer: any) {
     this.router.navigate(['/customers', customer.customerID]);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
 }

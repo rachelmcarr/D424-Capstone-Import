@@ -1,7 +1,7 @@
 <div class="wizard container py-5">
 
-  <!-- Hero-style Staff Portal Nav -->
-  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-5 border-bottom">
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
     <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
     <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
       <a routerLink="/portal">Home</a>
@@ -9,7 +9,7 @@
       <a routerLink="/artists">Artists</a>
       <a routerLink="/services">Services</a>
       <a routerLink="/intake-wizard">Intake Wizard</a>
-      <a routerLink="/home">Exit Staff Portal</a>
+      <a (click)="logout()" class="nav-link logout-link">Logout</a>
     </div>
   </nav>
 

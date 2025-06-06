@@ -9,6 +9,7 @@ import { TattooConsentComponent } from '../tattoo-consent/tattoo-consent.compone
 import { PiercingConsentComponent } from '../piercing-consent/piercing-consent.component';
 import { ShopServiceFormComponent } from '../shop-service-form/shop-service-form.component';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-intake-wizard',
@@ -28,7 +29,8 @@ export class IntakeWizardComponent implements OnInit {
     private piercingConsentService: PiercingConsentService,
     private parentalConsentService: ParentalConsentService,
     private shopServiceService: ShopServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) {}
 
   customer: Customer | null = null;
@@ -79,6 +81,10 @@ export class IntakeWizardComponent implements OnInit {
       next: (data) => this.services = data,
       error: (err) => console.error('Failed to load services', err)
     });
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   nextStep() {

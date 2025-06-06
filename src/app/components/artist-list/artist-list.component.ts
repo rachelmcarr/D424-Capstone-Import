@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtistService, Artist } from '../../services/artist.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-artist-list',
@@ -9,10 +10,16 @@ export class ArtistListComponent implements OnInit {
   artists: Artist[] = [];
   editingArtist: Artist | null = null;
 
-  constructor(private artistService: ArtistService) {}
+  constructor(private artistService: ArtistService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadArtists();
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   loadArtists(): void {
