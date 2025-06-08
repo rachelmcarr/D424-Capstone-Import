@@ -1,0 +1,56 @@
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+        <a routerLink="/customers">Customers</a>
+        <a routerLink="/artists">Artists</a>
+        <a routerLink="/services">Services</a>
+        <a routerLink="/intake-wizard">Intake Wizard</a>
+        <a (click)="logout()" class="btn btn-sm btn-outline-light">Logout</a>
+    </div>
+  </nav>
+
+<div class="container py-5">
+
+  <!-- Welcome -->
+  <div class="welcome text-center">
+    <h1 class="title">Staff Portal</h1>
+    <p class="subtitle">Welcome to the Rare Oddities Staff Portal. Select a section below to manage shop operations or assist new clients.</p>
+  </div>
+
+  <!-- Portal Sections -->
+  <div class="portal-sections row justify-content-center g-4 mt-4">
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <h5 class="section-title text-danger">Customers</h5>
+        <p class="section-description">Manage customer records and profiles.</p>
+        <a routerLink="/customers" class="btn btn-outline-light mt-3">Open</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <h5 class="section-title text-danger">Artists</h5>
+        <p class="section-description">Update artist bios and gallery info.</p>
+        <a routerLink="/artists" class="btn btn-outline-light mt-3">Open</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <h5 class="section-title text-danger">Services</h5>
+        <p class="section-description">Add or update service offerings.</p>
+        <a routerLink="/services" class="btn btn-outline-light mt-3">Open</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="portal-card">
+        <h5 class="section-title text-danger">Intake Wizard</h5>
+        <p class="section-description">Begin a new client intake session.</p>
+        <a routerLink="/intake-wizard" class="btn btn-outline-light mt-3">Start Wizard</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+/* =========================
+   PUBLIC THEME STYLES - public-theme.css
+   ========================= */
+
+/* Hero Profile Section */
+.hero-profile {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.big-name {
+  font-size: 10vw;
+  font-weight: 600;
+  line-height: 1;
+  margin: 2rem 0;
+  word-break: break-word;
+  text-transform: uppercase;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid white;
+  margin: 2rem auto;
+  width: 90%;
+}
+
+.sub-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.portfolio-btn-wrapper {
+  margin-bottom: 2rem;
+}
+
+.portfolio-btn {
+  background: white;
+  color: black;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.portfolio-btn:hover {
+  background-color: #ff3b3f;
+  color: white;
+}
+
+.artist-photo-container {
+  margin-bottom: 3rem;
+}
+
+.artist-photo {
+  max-width: 250px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Gallery Section */
+.gallery-section {
+  padding: 2rem;
+}
+
+.gallery-title {
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.gallery-thumb {
+  width: 200px;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+/* Not Found */
+.not-found {
+  padding: 4rem;
+  text-align: center;
+}
+
+.not-found-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff3b3f;
+}

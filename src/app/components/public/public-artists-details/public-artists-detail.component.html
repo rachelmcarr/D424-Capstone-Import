@@ -1,0 +1,64 @@
+<!-- Hero-Style Navigation -->
+<nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3">
+  <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+  <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+    <a routerLink="/">Home</a>
+    <a routerLink="/about">About</a>
+
+    <div class="dropdown position-relative">
+      <span class="text-white dropdown-toggle" style="cursor: pointer;" data-bs-toggle="dropdown">
+        Artists
+      </span>
+      <ul class="dropdown-menu start-50 translate-middle-x">
+        <li><a class="dropdown-item" routerLink="/public-artists/1">Bri Fawvor</a></li>
+        <li><a class="dropdown-item" routerLink="/public-artists/2">Sling Shot</a></li>
+      </ul>
+    </div>
+
+    <a routerLink="/contact">Contact</a>
+    <a routerLink="/intake-wizard" class="btn btn-sm btn-outline-light">Staff Portal</a>
+  </div>
+</nav>
+
+
+<main class="main-content text-center px-4 py-8" *ngIf="artist; else notFound">
+  <h1 class="big-name">
+    <span class="goth">{{ artist.firstName.charAt(0) }}</span>{{ artist.firstName.slice(1) }}
+    <span class="goth">{{ artist.lastName.charAt(0) }}</span>{{ artist.lastName.slice(1) }}
+  </h1>
+
+  <hr />
+
+  <div class="sub-info">
+    <span>📞 {{ artist.phone }}</span>
+    <span>✉️ {{ artist.email }}</span>
+    <span>{{ artist.bio }}</span>
+  </div>
+
+  <!-- Optional portfolio button -->
+  <div *ngIf="artist.portfolioURL" class="portfolio-btn-wrapper">
+    <a [href]="artist.portfolioURL" target="_blank" class="portfolio-btn">View Portfolio</a>
+  </div>
+
+  <!-- Optional artist photo -->
+  <div *ngIf="artist.artistPhoto" class="artist-photo-container">
+    <img [src]="artist.artistPhoto" [alt]="artist.firstName + ' ' + artist.lastName" class="artist-photo" />
+  </div>
+
+  <!-- Optional gallery -->
+  <section class="gallery-section" *ngIf="artist.gallery?.length">
+    <h2 class="gallery-title">Gallery</h2>
+    <div class="gallery-grid">
+      <img *ngFor="let image of artist.gallery"
+           [src]="image"
+           [alt]="artist.firstName + ' artwork'"
+           class="gallery-thumb" />
+    </div>
+  </section>
+</main>
+
+<ng-template #notFound>
+  <div class="not-found">
+    <p class="not-found-text">Artist not found.</p>
+  </div>
+</ng-template>

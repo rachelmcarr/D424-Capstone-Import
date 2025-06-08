@@ -1,0 +1,97 @@
+  <!-- Global Hero Navigation -->
+<nav *ngIf="showNav" class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+  <div class="brand">Rare Oddities</div>
+  <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+    <a routerLink="/portal">Home</a>
+    <a routerLink="/customers">Customers</a>
+    <a routerLink="/artists">Artists</a>
+    <a routerLink="/services">Services</a>
+    <a routerLink="/intake-wizard">Intake Wizard</a>
+  </div>
+</nav>
+
+<div class="container py-5">
+
+  <!-- Page Heading -->
+  <h2 class="text-danger text-center mb-4">Add Artist</h2>
+
+  <!-- Add Artist Form -->
+  <form #artistForm="ngForm" (ngSubmit)="onSubmit(artistForm)" class="row g-3 text-light bg-dark p-4 rounded border border-light shadow">
+    <div class="col-md-6">
+      <label class="form-label required">First Name</label>
+      <input type="text" name="firstName" [(ngModel)]="artist.firstName" required #firstName="ngModel" class="form-control bg-black text-white" />
+      <div *ngIf="firstName.invalid && firstName.touched" class="form-error">First name is required.</div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label required">Last Name</label>
+      <input type="text" name="lastName" [(ngModel)]="artist.lastName" required #lastName="ngModel" class="form-control bg-black text-white" />
+      <div *ngIf="lastName.invalid && lastName.touched" class="form-error">Last name is required.</div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="artist.email"
+        required
+        email
+        #email="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="email.invalid && email.touched" class="form-error">
+        <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Phone</label>
+      <input
+        type="tel"
+        name="phone"
+        [(ngModel)]="artist.phone"
+        required
+        pattern="^[0-9]{10}$"
+        #phone="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="phone.invalid && phone.touched" class="form-error">
+        <div *ngIf="phone.errors?.['pattern']">Enter a valid 10-digit phone number (digits only).</div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Birth Date</label>
+      <input type="date" name="birthDate" [(ngModel)]="artist.birthDate" class="form-control bg-black text-white" />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label required">Category</label>    
+      <select name="category" class="form-control bg-black text-white" required>
+        <option value="">-- Select --</option>
+        <option value="Tattoo">Tattoo</option>
+        <option value="Piercing">Piercing</option>
+      </select>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Profile Photo URL</label>
+      <input type="text" name="artistPhoto" [(ngModel)]="artist.artistPhoto" class="form-control bg-black text-white" />
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Bio</label>
+      <textarea name="bio" [(ngModel)]="artist.bio" class="form-control bg-black text-white"></textarea>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Portfolio URL</label>
+      <input type="text" name="portfolioURL" [(ngModel)]="artist.portfolioURL" class="form-control bg-black text-white" />
+    </div>
+
+    <div class="col-12 text-center mt-4">
+      <button type="submit" class="btn btn-outline-light">Submit</button>
+    </div>
+  </form>
+</div>

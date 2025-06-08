@@ -1,0 +1,124 @@
+ <!-- Navigation -->
+  <nav *ngIf="showNav" class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+        <a routerLink="/customers">Customers</a>
+        <a routerLink="/artists">Artists</a>
+        <a routerLink="/services">Services</a>
+        <a routerLink="/intake-wizard">Intake Wizard</a>
+    </div>
+  </nav>
+
+<h2 class="text-danger mb-4 text-center">Parental Consent Form</h2>
+
+<form #form="ngForm" (ngSubmit)="finalizeConsent()" class="text-light bg-dark p-4 rounded border border-light shadow">
+  <!-- Hidden or pre-filled -->
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" required hidden />
+
+  <div class="form-group">
+    <label class="form-label required">Customer ID:</label>
+    <span class="text-white ms-2">{{ consent.customerID }}</span>
+  </div>
+
+  <div class="form-check mb-3">
+    <input
+      type="checkbox"
+      id="releaseLiability"
+      name="releaseLiability"
+      [(ngModel)]="consent.releaseLiability"
+      class="form-check-input"
+      required
+    />
+    <label for="releaseLiability" class="form-check-label required">
+      I release the artist and the studio from any liability regarding this procedure.
+    </label>
+  </div>
+
+  <div class="form-check mb-3">
+    <input
+      type="checkbox"
+      id="confirmRelationship"
+      name="confirmRelationship"
+      [(ngModel)]="consent.confirmRelationship"
+      class="form-check-input"
+      required
+    />
+    <label for="confirmRelationship" class="form-check-label required">
+      I confirm that I am the parent or legal guardian of the minor receiving this service.
+    </label>
+  </div>
+
+  <div class="form-check mb-4">
+    <input
+      type="checkbox"
+      id="understandsHealing"
+      name="understandsHealing"
+      [(ngModel)]="consent.understandsHealing"
+      class="form-check-input"
+      required
+    />
+    <label for="understandsHealing" class="form-check-label required">
+      I understand that proper aftercare is essential for healing and take responsibility for monitoring it.
+    </label>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label required">Service Description:</label>
+    <input
+      type="text"
+      name="serviceDescription"
+      [(ngModel)]="consent.serviceDescription"
+      class="form-control bg-black text-white"
+      required
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label required">Parent/Guardian Name:</label>
+    <input
+      type="text"
+      name="parentName"
+      [(ngModel)]="consent.parentName"
+      class="form-control bg-black text-white"
+      required
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label required">Phone Number:</label>
+    <input
+      type="tel"
+      name="parentPhone"
+      [(ngModel)]="consent.parentPhone"
+      class="form-control bg-black text-white"
+      required
+    />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label required">Relationship to Minor:</label>
+    <input
+      type="text"
+      name="relationship"
+      [(ngModel)]="consent.relationship"
+      class="form-control bg-black text-white"
+      required
+    />
+  </div>
+
+  <div class="mb-4">
+    <label class="form-label required">Signature (type full name):</label>
+    <input
+      type="text"
+      name="signature"
+      [(ngModel)]="consent.signature"
+      class="form-control bg-black text-white"
+      required
+    />
+  </div>
+
+  <div class="text-center mt-4" *ngIf="showSaveButton">
+    <button type="submit" class="btn btn-outline-light" [disabled]="!form.valid">Save Consent</button>
+  </div>
+</form>

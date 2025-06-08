@@ -1,0 +1,131 @@
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+        <a routerLink="/customers">Customers</a>
+        <a routerLink="/artists">Artists</a>
+        <a routerLink="/services">Services</a>
+        <a routerLink="/intake-wizard">Intake Wizard</a>
+        <a (click)="logout()" class="btn btn-sm btn-outline-light">Logout</a>
+    </div>
+  </nav>
+  
+  <div class="container py-5">
+
+  <!-- Page Heading -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="list-title">Artist List</h2>
+    <button routerLink="/add-artist" class="btn btn-danger fw-bold">+ Add Artist</button>
+  </div>
+
+  <!-- Artist Table -->
+  <div class="table-responsive">
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let artist of artists">
+          <td><img [src]="artist.artistPhoto" alt="{{ artist.firstName }}" class="img-thumbnail" style="width: 80px;" /></td>
+          <td>{{ artist.firstName }} {{ artist.lastName }}</td>
+          <td>{{ artist.artistCategory }}</td>
+          <td>{{ artist.email }}</td>
+          <td>{{ artist.phone }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="editArtist(artist)">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteArtist(artist.artistID!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Edit Panel -->
+  <div *ngIf="editingArtist" class="bg-dark border border-light rounded p-4 mt-5 shadow">
+    <h3 class="text-danger mb-3">Edit Artist</h3>
+    <form (ngSubmit)="saveArtist()" #editForm="ngForm" class="row g-3 text-light">
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input class="form-control bg-black text-white" name="firstName" [(ngModel)]="editingArtist.firstName" required />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input class="form-control bg-black text-white" name="lastName" [(ngModel)]="editingArtist.lastName" required />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input class="form-control bg-black text-white" name="email" [(ngModel)]="editingArtist.email" type="email" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input class="form-control bg-black text-white" name="phone" [(ngModel)]="editingArtist.phone" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Birth Date</label>
+        <input class="form-control bg-black text-white" type="date" name="birthDate" [(ngModel)]="editingArtist.birthDate" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Category</label>
+        <input class="form-control bg-black text-white" name="artistCategory" [(ngModel)]="editingArtist.artistCategory" />
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Photo URL</label>
+        <input class="form-control bg-black text-white" name="artistPhoto" [(ngModel)]="editingArtist.artistPhoto" />
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Bio</label>
+        <textarea class="form-control bg-black text-white" name="bio" [(ngModel)]="editingArtist.bio"></textarea>
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Portfolio URL</label>
+        <input class="form-control bg-black text-white" name="portfolioURL" [(ngModel)]="editingArtist.portfolioURL" />
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Gallery Images</label>
+        <div *ngFor="let image of editingArtist.gallery; let i = index" class="d-flex align-items-center mb-2">
+          <div class="d-flex align-items-center gap-2">
+            <img
+              [src]="editingArtist.gallery[i]"
+              alt="Preview"
+              width="60"
+              height="60"
+              class="rounded border"
+              *ngIf="editingArtist.gallery[i]"
+              style="object-fit: cover;"
+            />
+            <input
+              [(ngModel)]="editingArtist.gallery[i]"
+              name="gallery{{ i }}"
+              class="form-control bg-black text-white"
+              placeholder="Image path"
+            />
+          </div>
+          <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeGalleryImage(i)">Remove</button>
+        </div>
+        <button type="button" class="btn btn-outline-light btn-sm mt-2" (click)="addGalleryImage()">+ Add Image</button>
+      </div>
+
+      <div class="col-12 text-center mt-3">
+        <button type="submit" class="btn btn-outline-light me-2">Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

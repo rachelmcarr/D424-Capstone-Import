@@ -1,488 +1,207 @@
-/* ========== Base Styles ========== */
-body {
-  font-family: "Century Gothic", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: black;
-  color: white;
-  line-height: 1.6;
-}
+/* =========================
+   GLOBAL STYLES - styles.css
+   ========================= */
 
-h1, h2, h3 {
-  margin: 0;
-  color: #ff3b3f;
-  text-align: center;
-}
-
-a, button {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: 0.3s ease;
-}
-
-/* ========== Navigation ========== */
-.primaryNav {
+   /* Hero Navigation */
+.hero-nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background-color: black;
-  border-bottom: 2px solid white;
-  gap: 30px;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-.primaryNav a,
-.primaryNav .dropbtn {
-  all: unset;
-  font-weight: 500;
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  display: inline-block;
-  vertical-align: middle;
+  padding: 1rem 2rem;
   text-transform: uppercase;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: 1.1;
-}
-
-.primaryNav .dropdown {
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-}
-
-.primaryNav a:hover,
-.primaryNav .dropbtn:hover {
-  border: 1px solid white;
   font-weight: bold;
-}
-
-/* ========== Dropdown Menu ========== */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #111;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  z-index: 1000;
-  border: 1px solid white;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid #222;
-}
-
-.dropdown-content a:last-child {
-  border-bottom: none;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* ========== Portal Link ========== */
-.portal-link {
-  background-color: #ff3b3f;
-  color: black;
-  border-radius: 5px;
-  font-weight: bold;
-  padding: 10px 15px;
-  border: 1px solid white;
-}
-
-.portal-link:hover {
-  background-color: white;
-  color: black;
-}
-
-/* ========== Sections & Typography ========== */
-p {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 1rem;
-  font-size: 1.1rem;
-}
-
-.motto {
-  background-color: #111;
-  padding: 2rem;
-  margin: 2rem 0;
-  text-align: center;
-  border-top: 1px solid white;
   border-bottom: 1px solid white;
 }
 
-.motto strong {
-  display: block;
-  font-size: 1.4rem;
-  color: #ff3b3f;
-  margin-bottom: 0.5rem;
+.nav-links a,
+.nav-links .dropdown-toggle {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
-.intro {
+.nav-links a:hover,
+.nav-links .dropdown-toggle:hover {
+  color: white;
   background-color: black;
-  padding: 2rem;
-  text-align: center;
 }
 
-.intro a {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: transparent;
+.nav-links .btn-outline-light {
   border: 1px solid white;
-  font-weight: bold;
+  color: white;
 }
 
-.intro a:hover {
+.nav-links .btn-outline-light:hover {
   background-color: white;
   color: black;
 }
 
-/* ========== Form & Input Styling ========== */
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px;
-  background-color: #111;
-  border: 1px solid #555;
+/* Custom dropdown style for hero-nav */
+.hero-nav .dropdown-menu {
+  background-color: #111 !important;
+  top: 100% !important;
+  border: 1px solid #333;
   color: white;
-  border-radius: 5px;
-  font-family: inherit;
-  margin-bottom: 1rem;
+  box-shadow: none;
+}
+
+/* Ensure items match the theme */
+.hero-nav .dropdown-item {
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.hero-nav .dropdown-item:hover {
+  background-color: #222;
+  color: white;
+}
+
+.hero-nav .dropdown-menu {
+  transition: background-color 0.3s ease;
+}
+
+
+.brand {
+  font-size: 1.5rem;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #888;
-}
-
-input[type="checkbox"] {
-  margin-right: 10px;
-}
-
-/* ========== Buttons ========== */
-button {
-  padding: 10px 20px;
-  margin: 1rem 0.5rem 0;
-  background-color: transparent;
-  border: 1px solid white;
+body {
+  background: black;
   color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  font-family: 'BR Segma', sans-serif;
 }
 
-button:hover {
-  background-color: #ff3b3f;
-  color: black;
-  transform: scale(1.03);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ========== Forms ========== */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* ========== Tables (Artists & Services) ========== */
-.service-table,
-.artist-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-  background-color: #111;
-  color: white;
-  border: 1px solid white;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.service-table th,
-.service-table td,
-.artist-table th,
-.artist-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #333;
-  text-align: left;
-  vertical-align: top;
-}
-
-.service-table thead,
-.artist-table thead {
-  background-color: #222;
-}
-
-.service-table th,
-.artist-table th {
-  font-weight: bold;
-  color: #ff3b3f;
-}
-
-/* ========== Wizard Container ========== */
-.wizard {
-
-  background-color: #000;
-  color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
-}
-
-/* ========== Artist Profile Picture ========== */
-.profile-pic {
-  display: block;
-  margin: 2rem auto;
-  max-width: 220px;
-  width: 100%;
+img {
+  max-width: 100%;
   height: auto;
-  border-radius: 10px;
-  border: 2px solid #ff3b3f;
-  box-shadow: 0 0 15px rgba(255, 59, 63, 0.2);
-  object-fit: cover;
 }
 
-/* ========== Artist Gallery ========== */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1rem;
-  padding: 2rem;
-  justify-items: center;
-}
-
-.gallery-grid img {
-  width: 100%;
-  max-width: 220px;
-  height: auto;
-  border-radius: 10px;
-  border: 2px solid #444;
-  object-fit: cover;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery-grid img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-}
-
-/* ========== Hero Section ========== */
-.hero-section {
-  height: 100vh;
-  background: url('/assets/hero-bg.jpg') no-repeat center center/cover;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1;
-}
-
-.hero-section * {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-nav {
-  width: 100%;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.95rem;
-  z-index: 2;
-}
-
-.hero-nav .brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ff3b3f;
-}
-
-.hero-nav .nav-links a {
-  margin-left: 1.5rem;
-  font-weight: 500;
-  text-transform: uppercase;
+a {
   text-decoration: none;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.hero-nav .nav-links a:hover {
-  color: #ff3b3f;
-}
-
-.hero-content {
-  text-align: center;
-  padding-bottom: 4rem;
-}
-
-.hero-content h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
-}
-
-.hero-content p {
-  font-size: 1.25rem;
-  color: #ddd;
-}
-
-.hero-content .btn {
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid white;
-  background-color: transparent;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-radius: 5px;
+  color: inherit;
   transition: all 0.3s ease;
 }
 
-.hero-content .btn:hover {
-  background-color: #ff3b3f;
-  color: black;
-  border-color: #ff3b3f;
-}
-
-/* ========== Responsive ========== */
-@media (max-width: 768px) {
-  .primaryNav {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .dropdown-content {
-    position: static;
-    width: 100%;
-    box-shadow: none;
-    border: none;
-  }
-
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-}
-/* ========== Bootstrap Dropdown Fix for Dark Theme ========== */
-.dropdown-menu {
-  background-color: #111 !important;
-  border: 1px solid white;
-  border-radius: 5px;
-  padding: 0;
-  min-width: 160px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-.dropdown-menu .dropdown-item {
-  color: white;
-  padding: 10px 16px;
-  border-bottom: 1px solid #222;
-  background-color: transparent;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-menu .dropdown-item:hover {
-  background-color: #222;
-  color: #ff3b3f;
-}
-
-.dropdown-menu .dropdown-item:last-child {
-  border-bottom: none;
-}
-
-.dropdown-toggle:focus {
-  box-shadow: none !important;
-  outline: none;
-}
-
-label.required::after {
-    content: ' *';
-    color: red;
-  }
-
-  .ng-invalid.ng-touched {
-    border-color: #dc3545;
-    background-color: #2c0b0e !important;
-  }
-
-  .form-error {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-  }
-
-  .list-group-item-action:hover {
-  background-color: #343a40 !important;
-  border-color: #ffffff44;
-}
-
-::placeholder {
-  color: #ccc !important;
-  opacity: 1; /* Override browser default opacity */
-}
-
-/* FINAL fix: reset form-control width inside input-groups */
-.input-group {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-}
-
-.input-group .form-control {
-  width: auto !important;
-  flex: 1 1 auto;
-  margin: 0 !important;
-}
-
-.input-group .btn {
-  margin: 0 !important;
-  white-space: nowrap;
-}
-
-.logout-link {
-  color: white;
-  text-transform: uppercase;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid;
-  border-radius: 0.25rem;
-  font-weight: bold;
+button {
+  border: none;
+  background: none;
   cursor: pointer;
-  text-decoration: none;
+  font-family: inherit;
 }
 
+/* Font face for Gothic initials */
+@font-face {
+  font-family: 'Old English Five';
+  src: url('/assets/fonts/OldEnglishFive.ttf') format('truetype');
+}
+
+/* Utility Gothic Class */
+.goth {
+  font-family: 'Old English Five', serif;
+  font-weight: normal;
+  font-size: inherit;         /* Match surrounding text */
+  vertical-align: baseline;   /* Aligns better with normal text */
+  line-height: 1;
+}
+
+/* Typography */
+.display-1 {
+  font-size: 4rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.display-2 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.display-3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
+.letter-spacing-wide {
+  letter-spacing: 0.1em;
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+/* Spacing */
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-8 { padding-left: 2rem; padding-right: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+.mt-8 { margin-top: 2rem; }
+.mt-12 { margin-top: 3rem; }

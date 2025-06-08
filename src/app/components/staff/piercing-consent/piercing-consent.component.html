@@ -1,0 +1,70 @@
+<!-- Navigation -->
+  <nav *ngIf="showNav" class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+        <a routerLink="/customers">Customers</a>
+        <a routerLink="/artists">Artists</a>
+        <a routerLink="/services">Services</a>
+        <a routerLink="/intake-wizard">Intake Wizard</a>
+    </div>
+  </nav>
+
+
+<h2 class="text-danger mb-4 text-center">Piercing Consent Form</h2>
+
+<form #form="ngForm" (ngSubmit)="finalizeConsent()" class="text-light bg-dark p-4 rounded border border-light shadow">
+  <!-- Hidden or pre-filled -->
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" required hidden />
+
+  <div class="form-group">
+    <label class="form-label required">Customer ID:</label>
+    <span class="text-white ms-2">{{ consent.customerID }}</span>
+  </div>
+
+  <div class="form-check mb-3">
+    <input
+      type="checkbox"
+      id="understandsHealingProcess"
+      name="understandsHealingProcess"
+      [(ngModel)]="consent.understandsHealingProcess"
+      class="form-check-input"
+      required
+    />
+    <label for="understandsHealingProcess" class="form-check-label required">
+      I understand the healing process and risks associated with piercings.
+    </label>
+  </div>
+
+  <div class="form-check mb-3">
+    <input
+      type="checkbox"
+      id="agreesToAftercare"
+      name="agreesToAftercare"
+      [(ngModel)]="consent.agreesToAftercare"
+      class="form-check-input"
+      required
+    />
+    <label for="agreesToAftercare" class="form-check-label required">
+      I agree to follow the aftercare instructions provided.
+    </label>
+  </div>
+
+  <div class="form-check mb-4">
+    <input
+      type="checkbox"
+      id="consentsToPiercing"
+      name="consentsToPiercing"
+      [(ngModel)]="consent.consentsToPiercing"
+      class="form-check-input"
+      required
+    />
+    <label for="consentsToPiercing" class="form-check-label required">
+      I consent to receiving a piercing.
+    </label>
+  </div>
+
+  <div class="text-center mt-4" *ngIf="showSaveButton">
+    <button type="submit" class="btn btn-outline-light" [disabled]="!form.valid">Save Consent</button>
+  </div>
+</form>

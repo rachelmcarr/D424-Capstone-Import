@@ -1,0 +1,107 @@
+ <!-- Global Hero Navigation -->
+<nav *ngIf="showNav" class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+  <div class="brand">Rare Oddities</div>
+  <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+    <a routerLink="/portal">Home</a>
+    <a routerLink="/customers">Customers</a>
+    <a routerLink="/artists">Artists</a>
+    <a routerLink="/services">Services</a>
+    <a routerLink="/intake-wizard">Intake Wizard</a>
+  </div>
+</nav>
+
+<h2 class="text-danger mb-4 text-center">Tattoo Consent Form</h2>
+
+<form #form="ngForm" (ngSubmit)="finalizeConsent()" class="text-light bg-dark p-4 rounded border border-light shadow">
+  <!-- Hidden or pre-filled -->
+  <input type="number" name="intakeID" [(ngModel)]="consent.intakeID" required hidden />
+
+  <div class="form-group">
+    <label class="form-label required">Customer ID:</label>
+    <span class="text-white ms-2">{{ consent.customerID }}</span>
+  </div>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="drugsOrAlcohol" [(ngModel)]="consent.drugsOrAlcohol" class="form-check-input me-2" required />
+    I am not under the influence of drugs or alcohol.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="skinCondition" [(ngModel)]="consent.skinCondition" class="form-check-input me-2" required />
+    I do not have acne, freckles, moles, or sunburn in the area to be tattooed.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="approveDesign" [(ngModel)]="consent.approveDesign" class="form-check-input me-2" required />
+    I have looked over my design and give full consent to the application of my tattoo.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="notPregnant" [(ngModel)]="consent.notPregnant" class="form-check-input me-2" required />
+    I confirm that I am not pregnant or nursing.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="hasDisease" [(ngModel)]="consent.hasDisease" class="form-check-input me-2" required />
+    I do not have any communicable diseases or bloodborne illnesses.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsAllergyRisk" [(ngModel)]="consent.understandsAllergyRisk" class="form-check-input me-2" required />
+    I acknowledge allergic reactions are possible from dyes, pigments, or processes.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsInfectionRisk" [(ngModel)]="consent.understandsInfectionRisk" class="form-check-input me-2" required />
+    I acknowledge that infection is possible and know when to seek medical care.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="receiptOfAftercare" [(ngModel)]="consent.receiptOfAftercare" class="form-check-input me-2" required />
+    I have received and reviewed aftercare instructions.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsVariation" [(ngModel)]="consent.understandsVariation" class="form-check-input me-2" required />
+    I understand that healing and color retention vary by skin type.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsPermanence" [(ngModel)]="consent.understandsPermanence" class="form-check-input me-2" required />
+    I understand tattoos are permanent and removal may not be complete.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsChoice" [(ngModel)]="consent.understandsChoice" class="form-check-input me-2" required />
+    I am choosing to be tattooed willingly and voluntarily.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="releaseArtist" [(ngModel)]="consent.releaseArtist" class="form-check-input me-2" required />
+    I release the artist and shop from liability related to the tattoo.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsFDA" [(ngModel)]="consent.understandsFDA" class="form-check-input me-2" required />
+    I understand that tattoo inks are not FDA-approved.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="understandsMedicalRisk" [(ngModel)]="consent.understandsMedicalRisk" class="form-check-input me-2" required />
+    I understand tattooing may have medical risks and complications.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="agreesToAftercare" [(ngModel)]="consent.agreesToAftercare" class="form-check-input me-2" required />
+    I agree to follow all aftercare instructions.
+  </label>
+
+  <label class="form-check-label required">
+    <input type="checkbox" name="consentsToTattoo" [(ngModel)]="consent.consentsToTattoo" class="form-check-input me-2" required />
+    I consent to receiving a tattoo.
+  </label>
+
+  <div class="text-center mt-4" *ngIf="showSaveButton">
+    <button type="submit" class="btn btn-outline-light" [disabled]="!form.valid">Save Consent</button>
+  </div>
+</form>

@@ -1,0 +1,66 @@
+<h2>Client Intake Form</h2>
+
+<!-- Global Hero Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a (click)="logout()" class="logout-link">Logout</a>
+    </div>
+  </nav>
+
+<form #intakeForm="ngForm" (ngSubmit)="onSubmit(intakeForm)">
+  <label>
+    Customer ID:
+    <input type="number" name="customerID" [(ngModel)]="intake.customer" placeholder="Customer" required />
+  </label>
+  
+  <label>
+    Service ID:
+    <input type="number" name="serviceID" [(ngModel)]="intake.service.serviceID" placeholder="Service ID" required />
+  </label>
+
+
+  <label>
+    <input type="checkbox" name="hasAllergies" [(ngModel)]="intake.hasAllergies" />
+    List any allergies:
+  </label>
+  <input type="text" name="allergyDetails" [(ngModel)]="intake.allergyDetails" placeholder="Allergy details" />
+
+  <label>
+    <input type="checkbox" name="takesMedications" [(ngModel)]="intake.takesMedications" />
+    List any medications:
+  </label>
+  <input type="text" name="medicationDetails" [(ngModel)]="intake.medicationDetails" placeholder="Medication details" />
+
+  <div>
+    <label>Do any of the following apply to you?</label>
+  </div>
+  
+  <div>
+    <label>Select all that apply:</label>
+    <div *ngFor="let condition of medicalConditionsList">
+      <input
+        type="checkbox"
+        [value]="condition"
+        (change)="onConditionChange($event)"
+        [checked]="selectedConditions.includes(condition)"
+      />
+      {{ condition }}
+    </div>
+  
+    <!-- Optional: Include a hidden field to store as comma-separated -->
+    <input type="hidden" [(ngModel)]="intake.conditionDetails" name="conditionDetails" />
+  </div>  
+
+  <label>
+    <input type="checkbox" name="isMinor" [(ngModel)]="intake.isMinor" />
+    Is a minor?
+  </label><br>
+
+  <button type="submit">Submit</button>
+</form>

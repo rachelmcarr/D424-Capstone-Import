@@ -1,0 +1,145 @@
+  <!-- Navigation -->
+  <nav class="hero-nav d-flex justify-content-between align-items-center px-4 pt-3 mb-4 border-bottom">
+    <div class="brand text-danger fw-bold fs-4">Rare Oddities</div>
+    <div class="nav-links d-none d-md-flex gap-4 text-uppercase align-items-center">
+      <a routerLink="/portal">Home</a>
+      <a routerLink="/customers">Customers</a>
+      <a routerLink="/artists">Artists</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/intake-wizard">Intake Wizard</a>
+      <a (click)="logout()" class="btn btn-sm btn-outline-light">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="list-title">Customer List</h2>
+    <button routerLink="/add-customer" class="btn btn-danger fw-bold">+ Add Customer</button>
+  </div>
+
+  <!-- Customer Table -->
+  <div class="table-responsive">
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Date of Birth</th>
+          <th>License</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.firstName }}</td>
+          <td>{{ customer.lastName }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>{{ customer.birthDate | date }}</td>
+          <td>{{ customer.driverLicense }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="editCustomer(customer)">Edit</button>
+            <button class="btn btn-sm btn-outline-light me-2" (click)="viewDetails(customer)">View Details</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteCustomer(customer.customerID!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Edit Panel -->
+  <div *ngIf="editingCustomer" class="bg-dark border border-light rounded p-4 mt-5 shadow">
+    <h3 class="text-danger text-center mb-4">Edit Customer</h3>
+
+    <form (ngSubmit)="updateCustomer(editForm)" #editForm="ngForm" class="row g-3 text-light">
+      <input type="hidden" name="customerID" [(ngModel)]="editingCustomer.customerID" />
+      <input type="hidden" name="createdAt" [(ngModel)]="editingCustomer.createdAt" />
+      <input type="hidden" name="updatedAt" [(ngModel)]="editingCustomer.updatedAt" />
+
+      <div class="col-md-6">
+        <label class="form-label required">First Name</label>
+        <input type="text" name="firstName" [(ngModel)]="editingCustomer.firstName" required #firstName="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="firstName.invalid && firstName.touched" class="form-error">First name is required.</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label required">Last Name</label>
+        <input type="text" name="lastName" [(ngModel)]="editingCustomer.lastName" required #lastName="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="lastName.invalid && lastName.touched" class="form-error">Last name is required.</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label required">Email</label>
+        <input type="email" name="email" [(ngModel)]="editingCustomer.email" required email #email="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="email.invalid && email.touched" class="form-error">
+          <div *ngIf="email.errors?.['required']">Email is required.</div>
+          <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label required">Phone</label>
+        <input type="tel" name="phone" [(ngModel)]="editingCustomer.phone" required pattern="^[0-9]{10}$" #phone="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="phone.invalid && phone.touched" class="form-error">
+          <div *ngIf="phone.errors?.['required']">Phone number is required.</div>
+          <div *ngIf="phone.errors?.['pattern']">Enter a valid 10-digit phone number (digits only).</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label required">Birth Date</label>
+        <input type="date" name="birthDate" [(ngModel)]="editingCustomer.birthDate" required #birthDate="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="birthDate.invalid && birthDate.touched" class="form-error">Birth date is required.</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Driver License</label>
+        <input type="text" name="driverLicense" [(ngModel)]="editingCustomer.driverLicense" class="form-control bg-black text-white" />
+      </div>
+
+      <div class="col-md-8">
+        <label class="form-label required">Address</label>
+        <input type="text" name="address" [(ngModel)]="editingCustomer.address" required #address="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="address.invalid && address.touched" class="form-error">Address is required.</div>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label required">City</label>
+        <input type="text" name="city" [(ngModel)]="editingCustomer.city" required #city="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="city.invalid && city.touched" class="form-error">City is required.</div>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label required">State</label>
+        <select name="state" [(ngModel)]="editingCustomer.state" required #state="ngModel" class="form-select bg-black text-white">
+          <option value="" disabled>Select a state</option>
+          <option *ngFor="let s of states" [value]="s">{{ s }}</option>
+        </select>
+        <div *ngIf="state.invalid && state.touched" class="form-error">State is required.</div>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label required">ZIP Code</label>
+        <input type="text" name="zip" [(ngModel)]="editingCustomer.zip" required pattern="^[0-9]{5}$" #zip="ngModel" class="form-control bg-black text-white" />
+        <div *ngIf="zip.invalid && zip.touched" class="form-error">
+          <div *ngIf="zip.errors?.['required']">ZIP code is required.</div>
+          <div *ngIf="zip.errors?.['pattern']">Enter a valid 5-digit ZIP code.</div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Customer Photo (URL)</label>
+        <input type="text" name="customerPhoto" [(ngModel)]="editingCustomer.customerPhoto" class="form-control bg-black text-white" />
+      </div>
+
+      <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-outline-light me-2" [disabled]="!editForm.valid">Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
