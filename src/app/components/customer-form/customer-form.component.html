@@ -66,7 +66,15 @@
 
     <div class="col-md-6">
       <label class="form-label required">Birth Date</label>
-      <input type="date" name="birthDate" [(ngModel)]="customer.birthDate" required #birthDate="ngModel" class="form-control bg-black text-white" />
+      <input
+        type="date"
+        name="birthDate"
+        [(ngModel)]="customer.birthDate"
+        (ngModelChange)="onBirthDateChange($event)"
+        required
+        #birthDate="ngModel"
+        class="form-control bg-black text-white"
+      />
       <div *ngIf="birthDate.invalid && birthDate.touched" class="form-error">Birth date is required.</div>
     </div>
 

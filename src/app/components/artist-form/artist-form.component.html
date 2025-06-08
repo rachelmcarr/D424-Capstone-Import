@@ -18,23 +18,47 @@
   <!-- Add Artist Form -->
   <form #artistForm="ngForm" (ngSubmit)="onSubmit(artistForm)" class="row g-3 text-light bg-dark p-4 rounded border border-light shadow">
     <div class="col-md-6">
-      <label class="form-label">First Name</label>
-      <input type="text" name="firstName" [(ngModel)]="artist.firstName" class="form-control bg-black text-white" required />
+      <label class="form-label required">First Name</label>
+      <input type="text" name="firstName" [(ngModel)]="artist.firstName" required #firstName="ngModel" class="form-control bg-black text-white" />
+      <div *ngIf="firstName.invalid && firstName.touched" class="form-error">First name is required.</div>
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Last Name</label>
-      <input type="text" name="lastName" [(ngModel)]="artist.lastName" class="form-control bg-black text-white" required />
+      <label class="form-label required">Last Name</label>
+      <input type="text" name="lastName" [(ngModel)]="artist.lastName" required #lastName="ngModel" class="form-control bg-black text-white" />
+      <div *ngIf="lastName.invalid && lastName.touched" class="form-error">Last name is required.</div>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Email</label>
-      <input type="email" name="email" [(ngModel)]="artist.email" class="form-control bg-black text-white" />
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="artist.email"
+        required
+        email
+        #email="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="email.invalid && email.touched" class="form-error">
+        <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+      </div>
     </div>
 
     <div class="col-md-6">
       <label class="form-label">Phone</label>
-      <input type="text" name="phone" [(ngModel)]="artist.phone" class="form-control bg-black text-white" />
+      <input
+        type="tel"
+        name="phone"
+        [(ngModel)]="artist.phone"
+        required
+        pattern="^[0-9]{10}$"
+        #phone="ngModel"
+        class="form-control bg-black text-white"
+      />
+      <div *ngIf="phone.invalid && phone.touched" class="form-error">
+        <div *ngIf="phone.errors?.['pattern']">Enter a valid 10-digit phone number (digits only).</div>
+      </div>
     </div>
 
     <div class="col-md-6">
@@ -43,12 +67,16 @@
     </div>
 
     <div class="col-md-6">
-      <label class="form-label">Category</label>
-      <input type="text" name="artistCategory" [(ngModel)]="artist.artistCategory" class="form-control bg-black text-white" />
+      <label class="form-label required">Category</label>    
+      <select name="category" class="form-control bg-black text-white" required>
+        <option value="">-- Select --</option>
+        <option value="Tattoo">Tattoo</option>
+        <option value="Piercing">Piercing</option>
+      </select>
     </div>
 
     <div class="col-md-12">
-      <label class="form-label">Photo URL</label>
+      <label class="form-label">Profile Photo URL</label>
       <input type="text" name="artistPhoto" [(ngModel)]="artist.artistPhoto" class="form-control bg-black text-white" />
     </div>
 

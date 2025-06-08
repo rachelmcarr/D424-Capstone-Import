@@ -68,4 +68,17 @@ export class ArtistListComponent implements OnInit {
       });
     }
   }
+
+  addGalleryImage(): void {
+    if (this.editingArtist) {
+      if (!this.editingArtist.gallery) {
+        this.editingArtist.gallery = [];
+      }
+      this.editingArtist.gallery.push('');
+    }
+  }
+
+  removeGalleryImage(index: number): void {
+    this.editingArtist?.gallery.splice(index, 1);
+  }
 }

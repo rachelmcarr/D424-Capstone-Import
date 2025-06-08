@@ -48,6 +48,25 @@ export class CustomerFormComponent implements OnChanges {
     }
   }
 
+  checkIfMinor(birthDate: string | Date): boolean {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    const age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    const dayDiff = today.getDate() - birth.getDate();
+
+    return (
+      age < 18 ||
+      (age === 18 && monthDiff < 0) ||
+      (age === 18 && monthDiff === 0 && dayDiff < 0)
+    );
+  }
+
+  onBirthDateChange(date: string) {
+    this.customer.birthDate = date;
+    this.isMinor = this.checkIfMinor(date);
+  }
+
   onSubmit(form: NgForm) {
     const timestamp = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
     this.customer.updatedAt = timestamp;

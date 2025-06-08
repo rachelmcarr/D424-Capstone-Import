@@ -13,8 +13,8 @@
         Artists
       </span>
       <ul class="dropdown-menu start-50 translate-middle-x">
-        <li><a class="dropdown-item" routerLink="/public-artists/4">Bri Fawvor</a></li>
-        <li><a class="dropdown-item" routerLink="/public-artists/5">Sling Shot</a></li>
+        <li><a class="dropdown-item" routerLink="/public-artists/1">Bri Fawvor</a></li>
+        <li><a class="dropdown-item" routerLink="/public-artists/2">Sling Shot</a></li>
       </ul>
     </div>
 
@@ -40,6 +40,8 @@
       <div class="col-md-6">
         <div class="p-4 rounded border border-light bg-dark shadow">
           <h5 class="text-light text-uppercase">About the Artist</h5>
+          <p>{{artist.phone}}</p>
+          <p>{{artist.email}}</p>
           <p>{{ artist.bio }}</p>
           <div *ngIf="artist.portfolioURL" class="text-center mt-3">
             <a class="btn btn-outline-light" [href]="artist.portfolioURL" target="_blank">
