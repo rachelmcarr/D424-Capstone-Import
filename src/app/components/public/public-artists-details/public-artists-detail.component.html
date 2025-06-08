@@ -16,37 +16,29 @@
     </div>
 
     <a routerLink="/contact">Contact</a>
-    <a routerLink="/intake-wizard" class="btn btn-sm btn-outline-light">Staff Portal</a>
+    <a routerLink="/portal" class="btn btn-sm btn-outline-light">Staff Portal</a>
   </div>
 </nav>
 
-
-<main class="main-content text-center px-4 py-8" *ngIf="artist; else notFound">
+<main class="artist-hero" *ngIf="artist; else notFound">
   <h1 class="big-name">
-    <span class="goth">{{ artist.firstName.charAt(0) }}</span>{{ artist.firstName.slice(1) }}
-    <span class="goth">{{ artist.lastName.charAt(0) }}</span>{{ artist.lastName.slice(1) }}
+    <span class="goth">{{ artist.firstName.charAt(0) }}</span>{{ artist.firstName.slice(1).toUpperCase() }}
+    <span class="goth">{{ artist.lastName.charAt(0) }}</span>{{ artist.lastName.slice(1).toUpperCase() }}
   </h1>
 
-  <hr />
-
-  <div class="sub-info">
-    <span>📞 {{ artist.phone }}</span>
-    <span>✉️ {{ artist.email }}</span>
-    <span>{{ artist.bio }}</span>
+  <hr class="hero-divider" />
+  <div class="hero-subinfo">
+    <div class="contact-item">{{ artist.phone }}</div>
+    <div class="contact-item" *ngIf="artist.bio">{{ artist.bio }}</div>
+    <div class="contact-item">{{ artist.email }}</div>
+    <a *ngIf="artist.portfolioURL" [href]="artist.portfolioURL" target="_blank" class="portfolio-link">View Portfolio</a>
   </div>
 
-  <!-- Optional portfolio button -->
-  <div *ngIf="artist.portfolioURL" class="portfolio-btn-wrapper">
-    <a [href]="artist.portfolioURL" target="_blank" class="portfolio-btn">View Portfolio</a>
-  </div>
-
-  <!-- Optional artist photo -->
-  <div *ngIf="artist.artistPhoto" class="artist-photo-container">
+  <div *ngIf="artist.artistPhoto" class="artist-photo-wrapper">
     <img [src]="artist.artistPhoto" [alt]="artist.firstName + ' ' + artist.lastName" class="artist-photo" />
   </div>
 
-  <!-- Optional gallery -->
-  <section class="gallery-section" *ngIf="artist.gallery?.length">
+  <section *ngIf="artist.gallery?.length" class="gallery-section">
     <h2 class="gallery-title">Gallery</h2>
     <div class="gallery-grid">
       <img *ngFor="let image of artist.gallery"
@@ -62,3 +54,4 @@
     <p class="not-found-text">Artist not found.</p>
   </div>
 </ng-template>
+

@@ -1,93 +1,121 @@
 /* =========================
-   PUBLIC THEME STYLES - public-theme.css
+   PUBLIC THEME STYLES
    ========================= */
 
-/* Hero Profile Section */
-.hero-profile {
+/* === Hero Profile Section === */
+.artist-profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 2rem;
 }
 
 .big-name {
-  font-size: 10vw;
+  font-size: 9vw;
   font-weight: 600;
   line-height: 1;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
   word-break: break-word;
-  text-transform: uppercase;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid white;
-  margin: 2rem auto;
-  width: 90%;
+.artist-hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
 }
 
-.sub-info {
+.hero-subinfo {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  font-size: 0.8rem;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  font-weight: 500;
-  margin-bottom: 2rem;
-}
-
-.portfolio-btn-wrapper {
-  margin-bottom: 2rem;
-}
-
-.portfolio-btn {
-  background: white;
-  color: black;
-  text-transform: uppercase;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.portfolio-btn:hover {
-  background-color: #ff3b3f;
+  font-family: monospace;
   color: white;
 }
 
-.artist-photo-container {
-  margin-bottom: 3rem;
+.hero-divider {
+  border: none;
+  border-top: 1px solid white;
+  width: 90%;
+  margin: 1rem auto;
+}
+
+.portfolio-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: white;
+  border: 1px solid white;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.portfolio-link:hover {
+  background-color: white;
+  color: black;
+}
+
+.artist-photo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 3rem;
 }
 
 .artist-photo {
-  max-width: 250px;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 3px solid white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
 }
 
-/* Gallery Section */
+.artist-photo:hover {
+  transform: scale(1.05);
+}
+
+/* === Gallery Section === */
 .gallery-section {
-  padding: 2rem;
+  padding: 0 2rem;
 }
 
 .gallery-title {
   font-size: 2rem;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin: 3rem 0 1.5rem;
+  letter-spacing: 0.1em;
 }
 
 .gallery-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 1400px;
 }
 
 .gallery-thumb {
-  width: 200px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border: 2px solid white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
 }
 
-/* Not Found */
+.gallery-thumb:hover {
+  transform: scale(1.03);
+}
+
+
+/* === Not Found === */
 .not-found {
   padding: 4rem;
   text-align: center;
@@ -97,4 +125,39 @@ hr {
   font-size: 1.2rem;
   font-weight: bold;
   color: #ff3b3f;
+}
+
+/* === Utilities === */
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mb-5 {
+  margin-bottom: 3rem;
 }
