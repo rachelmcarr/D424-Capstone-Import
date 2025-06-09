@@ -13,7 +13,7 @@
 
   <div class="container py-5">
 
-  <h2 class="text-danger text-center mb-4">{{ existingCustomer ? 'Edit' : 'Add' }} Customer</h2>
+  <h2 class="text-center mb-4">{{ existingCustomer ? 'Edit' : 'Add' }} Customer</h2>
 
   <form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)" class="row g-3 text-light bg-dark p-4 rounded border border-light shadow">
     <input type="hidden" name="customerID" [(ngModel)]="customer.customerID" />

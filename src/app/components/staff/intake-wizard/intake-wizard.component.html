@@ -31,7 +31,7 @@
 
   <!-- STEP 1: Customer -->
   <div *ngIf="step === 1">
-    <h2 class="text-danger text-center mb-4">Step 1: Select or Add Customer</h2>
+    <h2 class="text-center mb-4">Step 1: Select or Add Customer</h2>
     <app-customer-lookup (customerSelected)="useExistingCustomer($event)"></app-customer-lookup>
 
     <div *ngIf="!customer && !isIncompleteCustomer" class="mt-4">
@@ -58,7 +58,7 @@
 
   <!-- STEP 2: Medical Info -->
   <div *ngIf="step === 2">
-    <h2 class="text-danger text-center mb-4">Step 2: Medical Info</h2>
+    <h2 class="text-center mb-4">Step 2: Medical Info</h2>
 
     <label class="form-label">Select any medical conditions:</label>
     <div class="row mb-3">
@@ -91,7 +91,7 @@
 
   <!-- STEP 3: Add Service -->
   <div *ngIf="step === 3">
-    <h2 class="text-danger text-center mb-4">Step 3: Add Service</h2>
+    <h2 class="text-center mb-4">Step 3: Add Service</h2>
 
     <app-shop-service-form
       [customerID]="customer?.customerID ?? 0"
@@ -112,7 +112,7 @@
 
   <!-- STEP 4: Parental Consent -->
 <div *ngIf="step === 4 && intake.isMinor">
-  <h2 class="text-danger text-center mb-4">Step 4: Parental Consent</h2>
+  <h2 class="text-center mb-4">Step 4: Parental Consent</h2>
   <app-parental-consent
     *ngIf="customer?.customerID != null && selectedServiceID != null"
     [customer]="customer!"
@@ -131,7 +131,7 @@
 <div *ngIf="step === 5">
   <ng-container [ngSwitch]="selectedServiceType">
     <div *ngSwitchCase="'Tattoo'">
-      <h2 class="text-danger text-center mb-4">Step 5: Tattoo Consent</h2>
+      <h2 class="text-center mb-4">Step 5: Tattoo Consent</h2>
       <app-tattoo-consent
         *ngIf="customer?.customerID != null && selectedServiceID != null"
         [customer]="customer!"
@@ -142,7 +142,7 @@
     </div>
 
     <div *ngSwitchCase="'Piercing'">
-      <h2 class="text-danger text-center mb-4">Step 5: Piercing Consent</h2>
+      <h2 class="text-center mb-4">Step 5: Piercing Consent</h2>
       <app-piercing-consent
         *ngIf="customer?.customerID != null && selectedServiceID != null"
         [customer]="customer!"
