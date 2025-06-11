@@ -40,9 +40,9 @@ public class Customer {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "customer")
-    @JsonIgnoreProperties({"customer", "tattooConsent", "piercingConsent", "parentalConsent"})
-    private List<ShopService> services = new ArrayList<>();
+    // @OneToMany(mappedBy = "customer")
+// @JsonIgnoreProperties({"customer", "tattooConsent", "piercingConsent", "parentalConsent"})
+// private List<ShopService> services = new ArrayList<>();
 
     // Constructors
     public Customer() {}
@@ -160,13 +160,13 @@ public class Customer {
         this.updatedAt = updatedAt;
     }
 
-    public List<ShopService> getServices() {
-        return services;
-    }
-
-    public void setServices(List<ShopService> services) {
-        this.services = services;
-    }
+    // public List<ShopService> getServices() {
+//     return services;
+// }
+//
+// public void setServices(List<ShopService> services) {
+//     this.services = services;
+// }
 
     // Helper method for service/consent binding
     public Long fetchCustomerID() {
