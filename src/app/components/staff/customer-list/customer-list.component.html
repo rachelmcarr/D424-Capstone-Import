@@ -53,7 +53,7 @@
 
   <!-- Edit Panel -->
   <div *ngIf="editingCustomer" class="bg-dark border border-light rounded p-4 mt-5 shadow">
-    <h3 class="text-danger text-center mb-4">Edit Customer</h3>
+    <h3 class="text-center mb-4">Edit Customer</h3>
 
     <form (ngSubmit)="updateCustomer(editForm)" #editForm="ngForm" class="row g-3 text-light">
       <input type="hidden" name="customerID" [(ngModel)]="editingCustomer.customerID" />
