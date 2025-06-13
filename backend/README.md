@@ -6,3 +6,4 @@ B.  Design and develop a fully functional full stack (mobile or web) software pr
 2. search functionality with multiple row results and displays
 3. a database component with the functionality to securely add, modify, and delete the data
 4. ability to generate reports with multiple columns, multiple rows, date-time stamps, and title
+5. validation functionality
