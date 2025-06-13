@@ -24,3 +24,5 @@ D. Explain how the software product was tested, including the following:
 2. unit test scripts
 3. the results of the unit tests based on the provided test plan, including screenshots
 4. summaries of changes resulting from completed tests
+
+adding C. 
