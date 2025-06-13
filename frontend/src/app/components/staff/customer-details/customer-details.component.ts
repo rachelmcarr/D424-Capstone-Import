@@ -6,6 +6,7 @@ import { TattooConsentService } from '../../../services/tattoo-consent.service';
 import { PiercingConsentService } from '../../../services/piercing-consent.service';
 import { ParentalConsentService } from '../../../services/parental-consent.service';
 import { ShopServiceService } from '../../../services/shop-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-details',
@@ -29,7 +30,8 @@ export class CustomerDetailsComponent implements OnInit {
     private tattooService: TattooConsentService,
     private piercingService: PiercingConsentService,
     private parentalService: ParentalConsentService,
-    private shopService: ShopServiceService
+    private shopService: ShopServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,10 @@ export class CustomerDetailsComponent implements OnInit {
         });
       });
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/customers']);
   }
 
   toggleServiceExpansion(serviceId: number): void {
