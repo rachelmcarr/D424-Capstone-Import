@@ -37,7 +37,8 @@
     <div *ngIf="!customer && !isIncompleteCustomer" class="mt-4">
       <app-customer-form 
         (customerCreated)="useNewCustomer($event)" 
-        [showNav]="false">
+        [showNav]="false"
+        [showBackButton]="false">
       </app-customer-form>
     </div>
 
@@ -96,6 +97,7 @@
     <app-shop-service-form
       [customerID]="customer?.customerID ?? 0"
       (serviceCreated)="handleServiceCreated($event)"
+      [showBackButton]="false"
     ></app-shop-service-form>
 
     <p *ngIf="intake.isMinor" class="text-center text-warning">

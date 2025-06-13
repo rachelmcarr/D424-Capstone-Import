@@ -31,6 +31,10 @@ export class ArtistFormComponent {
     private router: Router
   ) {}
 
+  goBack() {
+    this.router.navigate(['/artists']);
+  }
+
   addGalleryImage() {
     this.artist.gallery.push('');
   }

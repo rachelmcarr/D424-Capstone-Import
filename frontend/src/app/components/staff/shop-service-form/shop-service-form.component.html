@@ -13,6 +13,10 @@
 
 <div class="container py-5">
 
+  <button *ngIf="showBackButton" class="btn btn-sm btn-outline-light mt-2 ms-2" (click)="goBack()">
+      ← Back
+   </button>
+
   <!-- Page Title -->
   <h2 class="text-center mb-4">Add New Service</h2>
 

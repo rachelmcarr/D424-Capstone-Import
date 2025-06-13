@@ -13,6 +13,10 @@
 
   <div class="container py-5">
 
+    <button *ngIf="showBackButton" class="btn btn-sm btn-outline-light mt-2 ms-2" (click)="goBack()">
+      ← Back
+   </button>
+
   <h2 class="text-center mb-4">{{ existingCustomer ? 'Edit' : 'Add' }} Customer</h2>
 
   <form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)" class="row g-3 text-light bg-dark p-4 rounded border border-light shadow">

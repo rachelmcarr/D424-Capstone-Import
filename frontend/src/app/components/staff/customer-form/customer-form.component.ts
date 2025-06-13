@@ -15,6 +15,7 @@ export class CustomerFormComponent implements OnChanges {
   @Input() isMinor: boolean = false;
   @Output() customerCreated = new EventEmitter<Customer>();
   @Output() customerUpdated = new EventEmitter<Customer>();
+  @Input() showBackButton: boolean = true;
 
   customer: Customer = {
     firstName: '',
@@ -44,6 +45,10 @@ export class CustomerFormComponent implements OnChanges {
     private datePipe: DatePipe,
     private router: Router
   ) {}
+
+  goBack() {
+    this.router.navigate(['/customers']);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['existingCustomer'] && this.existingCustomer) {

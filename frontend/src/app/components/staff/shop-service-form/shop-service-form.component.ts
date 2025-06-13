@@ -18,6 +18,7 @@ export class ShopServiceFormComponent {
   @Input() customerID!: number;
   @Input() showNav: boolean = true;
   @ViewChild('serviceForm') serviceForm!: NgForm;
+  @Input() showBackButton: boolean = true;
 
   service: ShopService = {
     title: '',
@@ -50,6 +51,10 @@ export class ShopServiceFormComponent {
       next: (artists) => (this.artists = artists),
       error: (err) => console.error('Failed to load artists', err)
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/services']);
   }
 
   onSubmit(form?: NgForm) {
