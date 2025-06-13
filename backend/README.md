@@ -8,4 +8,5 @@ B.  Design and develop a fully functional full stack (mobile or web) software pr
 4. ability to generate reports with multiple columns, multiple rows, date-time stamps, and title
 5. validation functionality 
 6. industry-appropriate security features
-7. design elements that make the application scalable
+7. design elements that make the application scalable 
+8. a user-friendly, functional GUI
