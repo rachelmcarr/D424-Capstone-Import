@@ -20,9 +20,10 @@ C. Create each of the following forms of documentation for the software product 
 5. user guide for running the application from a user perspective
 
 D. Explain how the software product was tested, including the following:
+
 1. a test plan for a unit test, including screenshots
 2. unit test scripts
 3. the results of the unit tests based on the provided test plan, including screenshots
 4. summaries of changes resulting from completed tests
 
-adding C. 
+E. Provide a Panopto video recording that includes a demonstration of the functionality of the software application and a summary of the tool or tools used.
