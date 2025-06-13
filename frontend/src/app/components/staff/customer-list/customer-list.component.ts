@@ -68,6 +68,7 @@ export class CustomerListComponent implements OnInit {
       this.customerService.delete(customerID).subscribe({
         next: () => {
           this.customers = this.customers.filter(c => c.customerID !== customerID);
+          alert('Customer deleted.');
         },
         error: (err) => {
           console.error('Failed to delete customer', err);

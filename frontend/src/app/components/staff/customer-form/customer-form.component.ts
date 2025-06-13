@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 import { NgForm } from '@angular/forms';
 import { Customer, CustomerService } from '../../../services/customer.service';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-form',
@@ -40,7 +41,8 @@ export class CustomerFormComponent implements OnChanges {
   ];
 
   constructor(private customerService: CustomerService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,6 +79,7 @@ export class CustomerFormComponent implements OnChanges {
           this.customerService.setCustomer(updated); // ✅ store for wizard
           alert('Customer updated!');
           this.customerUpdated.emit(updated);
+          this.router.navigate(['/customers']);
         },
         error: err => {
           console.error(err);
@@ -91,6 +94,7 @@ export class CustomerFormComponent implements OnChanges {
           alert('Customer created!');
           this.customerCreated.emit(newCustomer);
           form.resetForm();
+          this.router.navigate(['/customers']);
         },
         error: err => {
           console.error(err);

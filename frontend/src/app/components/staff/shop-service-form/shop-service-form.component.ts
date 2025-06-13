@@ -73,6 +73,7 @@ export class ShopServiceFormComponent {
       next: (newService) => {
         this.serviceCreated.emit(newService);
         form?.resetForm();
+        this.router.navigate(['/services']);
       },
       error: err => {
         console.error(err);

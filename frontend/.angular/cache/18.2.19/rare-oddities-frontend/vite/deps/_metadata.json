@@ -1,0 +1,67 @@
+{
+  "hash": "79a9e7f1",
+  "configHash": "25ad9275",
+  "lockfileHash": "ccd91915",
+  "browserHash": "f9228c14",
+  "optimized": {
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "7ed3ed6d",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "7ba9c5e0",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "e96e9367",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "95e23c90",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "577dea65",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "4380c60f",
+      "needsInterop": false
+    },
+    "@ng-bootstrap/ng-bootstrap": {
+      "src": "../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/fesm2022/ng-bootstrap.mjs",
+      "file": "@ng-bootstrap_ng-bootstrap.js",
+      "fileHash": "84c1b9aa",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-TLQUUJ55": {
+      "file": "chunk-TLQUUJ55.js"
+    },
+    "chunk-2A7HNAEB": {
+      "file": "chunk-2A7HNAEB.js"
+    },
+    "chunk-BVQL45ED": {
+      "file": "chunk-BVQL45ED.js"
+    },
+    "chunk-4675OXYH": {
+      "file": "chunk-4675OXYH.js"
+    },
+    "chunk-4QHR2JEP": {
+      "file": "chunk-4QHR2JEP.js"
+    }
+  }
+}
