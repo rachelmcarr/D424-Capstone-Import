@@ -1,41 +1,35 @@
 # =========================
 # Frontend (Angular / Node)
 # =========================
-/dist
-/tmp
-/out-tsc
-/bazel-out
-/node_modules
-/.angular/cache
-.npm/
-npm-debug.log
-yarn-error.log
-.sass-cache/
-.connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-.history/*
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/cache/
+frontend/.npm/
+frontend/npm-debug.log
+frontend/yarn-error.log
+frontend/.sass-cache/
+frontend/.connect.lock
+frontend/coverage/
+frontend/libpeerconnection.log
+frontend/testem.log
+frontend/typings/
+frontend/.history/
 
 # =========================
 # Backend (Java / Spring Boot / Maven)
 # =========================
-target/
-.mvn/
+backend/target/
+backend/.mvn/
 *.class
 *.jar
 *.war
 *.log
 
-!**/src/main/**/target/
-!**/src/test/**/target/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Spring Boot wrapper exceptions
 !.mvn/wrapper/maven-wrapper.jar
 
 # =========================
-# IDEs
+# IDEs and Editors
 # =========================
 # VS Code
 .vscode/
@@ -67,7 +61,12 @@ target/
 .sts4-cache
 
 # =========================
-# System Files
+# OS/System Files
 # =========================
 .DS_Store
 Thumbs.db
+
+# =========================
+# Misc
+# =========================
+*.tsbuildinfo

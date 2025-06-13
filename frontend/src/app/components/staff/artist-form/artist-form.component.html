@@ -90,6 +90,31 @@
       <input type="text" name="portfolioURL" [(ngModel)]="artist.portfolioURL" class="form-control bg-black text-white" />
     </div>
 
+    <div class="col-md-12">
+      <label class="form-label">Gallery Images</label><br>
+      <div *ngFor="let image of artist.gallery; let i = index" class="d-flex align-items-center mb-2">
+        <div class="d-flex align-items-center gap-2">
+          <img
+            [src]="artist.gallery[i]"
+            alt="Preview"
+            width="60"
+            height="60"
+            class="rounded border"
+            *ngIf="artist.gallery[i]"
+            style="object-fit: cover;"
+          />
+          <input
+            [(ngModel)]="artist.gallery[i]"
+            name="gallery{{ i }}"
+            class="form-control bg-black text-white"
+            placeholder="Image path"
+          />
+        </div>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeGalleryImage(i)">Remove</button>
+      </div>
+      <button type="button" class="btn btn-outline-light btn-sm mt-2" (click)="addGalleryImage()">+ Add Image</button>
+    </div>
+
     <div class="col-12 text-center mt-4">
       <button type="submit" class="btn btn-outline-light">Submit</button>
     </div>

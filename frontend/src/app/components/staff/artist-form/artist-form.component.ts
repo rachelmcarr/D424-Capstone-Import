@@ -31,12 +31,20 @@ export class ArtistFormComponent {
     private router: Router
   ) {}
 
+  addGalleryImage() {
+    this.artist.gallery.push('');
+  }
+
+  removeGalleryImage(index: number) {
+    this.artist.gallery.splice(index, 1);
+  }
+
   onSubmit(form: NgForm) {
     this.artistService.add(this.artist).subscribe({
       next: () => {
         alert('Artist added successfully!');
         form.resetForm();
-        this.router.navigate(['/artists']);
+        this.router.navigate(['/portal/artists']);
       },
       error: (err) => {
         console.error(err);
