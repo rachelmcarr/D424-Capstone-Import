@@ -5,7 +5,6 @@ services:
     rootDir: backend
     buildCommand: ./mvnw clean package -DskipTests
     staticPublishPath: target
-    plan: free
     envVars:
       - key: JAVA_VERSION
         value: 17
