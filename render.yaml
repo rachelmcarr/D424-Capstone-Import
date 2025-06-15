@@ -1,10 +1,10 @@
 services:
   - type: web
     name: rare-oddities-backend
-    runtime: docker
+    runtime: static
     rootDir: backend
     buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/*.jar
+    staticPublishPath: target
     plan: free
     envVars:
       - key: JAVA_VERSION
