@@ -17,7 +17,7 @@ export interface PiercingConsent {
   providedIn: 'root'
 })
 export class PiercingConsentService {
-  private apiUrl = 'http://localhost:8080/api/piercing-consents';
+  private apiUrl = 'https://rare-oddities-backend-production.up.railway.app/api/piercing-consents';
 
   constructor(private http: HttpClient) {}
 

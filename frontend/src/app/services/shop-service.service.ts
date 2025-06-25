@@ -35,7 +35,7 @@ export interface ShopService {
   providedIn: 'root'
 })
 export class ShopServiceService {
-  private apiUrl = 'http://localhost:8080/api/services';
+  private apiUrl = 'https://rare-oddities-backend-production.up.railway.app/api/services';
 
   constructor(private http: HttpClient) {}
 
@@ -45,7 +45,7 @@ export class ShopServiceService {
   }
 
   getByCustomer(customerId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/api/services/customer/${customerId}`);
+    return this.http.get<any[]>(`https://rare-oddities-backend-production.up.railway.app/api/services/customer/${customerId}`);
   }
 
   /** Get a service by ID */
@@ -69,7 +69,7 @@ export class ShopServiceService {
   }
 
   assignCustomer(serviceId: number, customerId: number) {
-  return this.http.put(`http://localhost:8080/api/services/${serviceId}/assign-customer/${customerId}`, {});
+  return this.http.put(`https://rare-oddities-backend-production.up.railway.app/api/services/${serviceId}/assign-customer/${customerId}`, {});
 }
 
 }

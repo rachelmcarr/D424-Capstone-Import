@@ -26,7 +26,7 @@ export interface ParentalConsent {
   providedIn: 'root'
 })
 export class ParentalConsentService {
-  private apiUrl = 'http://localhost:8080/api/parental-consents';
+  private apiUrl = 'https://rare-oddities-backend-production.up.railway.app/api/parental-consents';
 
   constructor(private http: HttpClient) {}
 

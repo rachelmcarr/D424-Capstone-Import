@@ -38,7 +38,8 @@
       <app-customer-form 
         (customerCreated)="useNewCustomer($event)" 
         [showNav]="false"
-        [showBackButton]="false">
+        [showBackButton]="false"
+        [isWizard]="true">
       </app-customer-form>
     </div>
 
@@ -48,6 +49,7 @@
         [existingCustomer]="customer!" 
         [showNav]="false" 
         [isMinor]="intake.isMinor" 
+        [isWizard]="true"
         (customerUpdated)="onCustomerUpdated($event)">
       </app-customer-form>
     </div>
@@ -98,6 +100,7 @@
       [customerID]="customer?.customerID ?? 0"
       (serviceCreated)="handleServiceCreated($event)"
       [showBackButton]="false"
+      [isWizard]="true"
     ></app-shop-service-form>
 
     <p *ngIf="intake.isMinor" class="text-center text-warning">

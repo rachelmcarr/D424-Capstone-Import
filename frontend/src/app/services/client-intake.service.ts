@@ -22,7 +22,7 @@ export interface ClientIntake {
   providedIn: 'root'
 })
 export class ClientIntakeService {
-  private apiUrl = 'http://localhost:8080/api/client-intakes';
+  private apiUrl = 'https://rare-oddities-backend-production.up.railway.app/api/client-intakes';
 
   constructor(private http: HttpClient) {}
 
@@ -39,7 +39,7 @@ export class ClientIntakeService {
   }
 
   submitIntake(intake: any): Observable<any> {
-    return this.http.post('http://localhost:8080/api/client-intakes', intake);
+    return this.http.post('https://rare-oddities-backend-production.up.railway.app/api/client-intakes', intake);
   }
   
 }

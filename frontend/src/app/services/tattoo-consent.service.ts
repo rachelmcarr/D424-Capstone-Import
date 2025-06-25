@@ -31,7 +31,7 @@ export interface TattooConsent {
   providedIn: 'root'
 })
 export class TattooConsentService {
-  private apiUrl = 'http://localhost:8080/api/tattoo-consents';
+  private apiUrl = 'https://rare-oddities-backend-production.up.railway.app/api/tattoo-consents';
 
   constructor(private http: HttpClient) {}
 

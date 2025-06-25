@@ -16,6 +16,7 @@ export class CustomerFormComponent implements OnChanges {
   @Output() customerCreated = new EventEmitter<Customer>();
   @Output() customerUpdated = new EventEmitter<Customer>();
   @Input() showBackButton: boolean = true;
+  @Input() isWizard: boolean = false;
 
   customer: Customer = {
     firstName: '',
@@ -78,13 +79,17 @@ export class CustomerFormComponent implements OnChanges {
   onSubmit(form: NgForm) {
     const timestamp = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
     this.customer.updatedAt = timestamp;
+
     if (this.existingCustomer?.customerID) {
       this.customerService.update(this.customer).subscribe({
         next: (updated) => {
           this.customerService.setCustomer(updated); // ✅ store for wizard
           alert('Customer updated!');
           this.customerUpdated.emit(updated);
-          this.router.navigate(['/customers']);
+
+          if (!this.isWizard) {
+            this.router.navigate(['/customers']);
+          }
         },
         error: err => {
           console.error(err);
@@ -99,7 +104,10 @@ export class CustomerFormComponent implements OnChanges {
           alert('Customer created!');
           this.customerCreated.emit(newCustomer);
           form.resetForm();
-          this.router.navigate(['/customers']);
+
+          if (!this.isWizard) {
+            this.router.navigate(['/customers']);
+          }
         },
         error: err => {
           console.error(err);
@@ -107,5 +115,5 @@ export class CustomerFormComponent implements OnChanges {
         }
       });
     }
-  }  
+  }
 }

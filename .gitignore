@@ -19,7 +19,7 @@ frontend/.history/
 # Backend (Java / Spring Boot / Maven)
 # =========================
 backend/target/
-backend/.mvn/
+#backend/.mvn/
 *.class
 *.jar
 *.war

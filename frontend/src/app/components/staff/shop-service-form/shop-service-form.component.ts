@@ -19,6 +19,7 @@ export class ShopServiceFormComponent {
   @Input() showNav: boolean = true;
   @ViewChild('serviceForm') serviceForm!: NgForm;
   @Input() showBackButton: boolean = true;
+  @Input() isWizard: boolean = false;
 
   service: ShopService = {
     title: '',
@@ -59,6 +60,7 @@ export class ShopServiceFormComponent {
 
   onSubmit(form?: NgForm) {
     this.service.createdAt = this.datePipe.transform(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')!;
+    
     if (this.customerID) {
       this.service.customer = { customerID: this.customerID } as any;
     }
@@ -78,7 +80,10 @@ export class ShopServiceFormComponent {
       next: (newService) => {
         this.serviceCreated.emit(newService);
         form?.resetForm();
-        this.router.navigate(['/customers']);
+
+        if (!this.isWizard) {
+          this.router.navigate(['/customers']);
+        }
       },
       error: err => {
         console.error(err);
