@@ -43,7 +43,9 @@ Rare Oddities is designed to streamline operations for body art studios, with fe
 - MySQL  
 
 **Deployment:**  
-- Hosted with Render (Spring Boot) and Vercel (Angular)
+- Frontend: Angular application deployed using Firebase Hosting (https://rare-oddities.web.app/)
+- Backend: Spring Boot API deployed using Railway
+- Database: MySQL database hosted on Railway (expired)
 
 ## Object-Oriented Design
 
@@ -72,3 +74,24 @@ I was the sole developer for the project, responsible for:
 - Frontend development (Angular components and services)  
 - UI/UX design and responsive layout  
 - Deployment and documentation
+
+## Login Info (Demo)
+
+Admin Login:
+- Username: admin
+- Password: password123
+
+## Why It Matters
+
+This project proves my ability to:
+- Deliver full-stack web apps independently
+- Think like both a developer and end user
+- Handle real-world logic around legal consent and data relationships
+- Build clean, modern UI and scalable backend APIs
+
+## Contact
+
+Rachel Carr | rachelxcarr@gmail.com
+
+
+
